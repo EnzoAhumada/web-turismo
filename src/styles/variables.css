@@ -1,0 +1,60 @@
+/* ─────────────────────────────────────────
+   THAKIGO – Design Tokens
+   Base font-size: 10px (1rem = 10px)
+───────────────────────────────────────── */
+:root {
+  /* Colors */
+  --color-primary:  #071B3A;
+  --color-navy:     #031126;
+  --color-gold:     #FFB800;
+  --color-orange:   #FF9D00;
+  --color-white:    #FFFFFF;
+  --color-soft:     #F5F7FA;
+  --color-text:     #1a2b45;
+  --color-muted:    #6b7a99;
+  --color-border:   #e0e6f0;
+  --color-success:  #22c55e;
+  --color-danger:   #ef4444;
+  --color-dark-text: #cbd5e1;
+
+  /* Shadows */
+  --shadow-sm:   0 0.1rem 0.4rem rgba(3, 17, 38, 0.08);
+  --shadow-card: 0 0.2rem 1.2rem rgba(3, 17, 38, 0.12);
+  --shadow-lg:   0 0.4rem 2.4rem rgba(3, 17, 38, 0.18);
+
+  /* Border radius */
+  --radius-xs:   0.4rem;
+  --radius-sm:   0.8rem;
+  --radius-card: 1.2rem;
+  --radius-lg:   1.6rem;
+  --radius-xl:   2.4rem;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --space-1:  0.4rem;
+  --space-2:  0.8rem;
+  --space-3:  1.2rem;
+  --space-4:  1.6rem;
+  --space-5:  2.0rem;
+  --space-6:  2.4rem;
+  --space-8:  3.2rem;
+  --space-10: 4.0rem;
+  --space-12: 4.8rem;
+  --space-16: 6.4rem;
+
+  /* Typography scale */
+  --text-xs:  1.1rem;
+  --text-sm:  1.3rem;
+  --text-base:1.5rem;
+  --text-lg:  1.7rem;
+  --text-xl:  2.0rem;
+  --text-2xl: 2.4rem;
+  --text-3xl: 3.0rem;
+  --text-4xl: 3.6rem;
+  --text-5xl: 4.8rem;
+
+  /* Layout */
+  --header-h:  6.4rem;
+  --sidebar-w: 22rem;
+  --content-max: 128rem;
+}
