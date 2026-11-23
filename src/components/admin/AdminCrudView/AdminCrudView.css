@@ -1,0 +1,5 @@
+/* Additional styles for AdminCrudView */
+.admin-crud__subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}

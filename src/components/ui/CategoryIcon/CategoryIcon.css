@@ -1,0 +1,38 @@
+.cat-icon-link {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cat-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.cat-icon__circle {
+  width: 5.8rem;
+  height: 5.8rem;
+  border-radius: var(--radius-full);
+  border: 0.2rem solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cat-icon:hover .cat-icon__circle,
+.cat-icon.active .cat-icon__circle {
+  transform: translateY(-0.2rem) scale(1.04);
+  box-shadow: var(--shadow-card);
+}
+
+.cat-icon__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: center;
+  line-height: 1.25;
+}

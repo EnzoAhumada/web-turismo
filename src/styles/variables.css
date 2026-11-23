@@ -4,29 +4,44 @@
 ───────────────────────────────────────── */
 :root {
   /* Colors */
-  --color-primary:  #071B3A;
-  --color-navy:     #031126;
-  --color-gold:     #FFB800;
-  --color-orange:   #FF9D00;
-  --color-white:    #FFFFFF;
-  --color-soft:     #F5F7FA;
-  --color-text:     #1a2b45;
-  --color-muted:    #6b7a99;
-  --color-border:   #e0e6f0;
-  --color-success:  #22c55e;
-  --color-danger:   #ef4444;
+  --color-primary:   #071B3A;
+  --color-navy:      #031126;
+  --color-gold:      #FFB800;
+  --color-orange:    #FF9D00;
+  --color-white:     #FFFFFF;
+  --color-soft:      #F5F7FA;
+  --color-text:      #1a2b45;
+  --color-muted:     #64748b;
+  --color-border:    #e2e8f0;
+  --color-success:   #16a34a;
+  --color-danger:    #dc2626;
+  --color-dark-card: #0c2244;
+  --color-dark-line: rgba(255, 255, 255, 0.12);
   --color-dark-text: #cbd5e1;
 
+  /* Category accents */
+  --cat-cultura-bg:     #92400e;
+  --cat-gastronomia-bg: #c2410c;
+  --cat-astronomia-bg:  #1e1b4b;
+  --cat-naturaleza-bg:  #15803d;
+  --cat-religion-bg:    #0369a1;
+  --cat-mineria-bg:     #1f2937;
+  --cat-trekking-bg:    #047857;
+  --cat-fotografia-bg:  #3b0764;
+  --cat-eventos-bg:     #ea580c;
+  --cat-otros-bg:       #0f766e;
+
   /* Shadows */
-  --shadow-sm:   0 0.1rem 0.4rem rgba(3, 17, 38, 0.08);
-  --shadow-card: 0 0.2rem 1.2rem rgba(3, 17, 38, 0.12);
-  --shadow-lg:   0 0.4rem 2.4rem rgba(3, 17, 38, 0.18);
+  --shadow-xs:   0 0.1rem 0.2rem rgba(3, 17, 38, 0.05);
+  --shadow-sm:   0 0.2rem 0.6rem rgba(3, 17, 38, 0.06);
+  --shadow-card: 0 0.4rem 1.6rem rgba(3, 17, 38, 0.08);
+  --shadow-lg:   0 1.0rem 3.0rem rgba(3, 17, 38, 0.14);
 
   /* Border radius */
-  --radius-xs:   0.4rem;
+  --radius-xs:   0.6rem;
   --radius-sm:   0.8rem;
-  --radius-card: 1.2rem;
-  --radius-lg:   1.6rem;
+  --radius-card: 1.4rem;
+  --radius-lg:   1.8rem;
   --radius-xl:   2.4rem;
   --radius-full: 9999px;
 
@@ -43,18 +58,19 @@
   --space-16: 6.4rem;
 
   /* Typography scale */
-  --text-xs:  1.1rem;
-  --text-sm:  1.3rem;
-  --text-base:1.5rem;
-  --text-lg:  1.7rem;
-  --text-xl:  2.0rem;
-  --text-2xl: 2.4rem;
-  --text-3xl: 3.0rem;
-  --text-4xl: 3.6rem;
-  --text-5xl: 4.8rem;
+  --text-xs:   1.2rem;
+  --text-sm:   1.35rem;
+  --text-base: 1.5rem;
+  --text-lg:   1.7rem;
+  --text-xl:   2.0rem;
+  --text-2xl:  2.4rem;
+  --text-3xl:  3.0rem;
+  --text-4xl:  3.6rem;
+  --text-5xl:  4.8rem;
 
   /* Layout */
-  --header-h:  6.4rem;
-  --sidebar-w: 22rem;
-  --content-max: 128rem;
+  --header-h:     7.2rem;
+  --bottom-nav-h: 6.8rem;
+  --sidebar-w:    24rem;
+  --content-max:  128rem;
 }

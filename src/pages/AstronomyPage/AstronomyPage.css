@@ -1,0 +1,309 @@
+.astro-banner {
+  background: radial-gradient(circle at top right, rgba(30, 58, 138, 0.45), transparent 55%),
+              linear-gradient(180deg, #020b1a 0%, #031126 100%);
+  padding-block: var(--space-8) var(--space-6);
+  border-bottom: 0.1rem solid var(--color-dark-line);
+}
+
+.astro-banner__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+.astro-banner__back:hover {
+  color: var(--color-gold);
+}
+
+.astro-banner__eyebrow {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-2);
+}
+
+.astro-banner__title {
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  color: var(--color-white);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-2);
+}
+
+.astro-banner__subtitle {
+  font-size: var(--text-base);
+  color: rgba(203, 213, 225, 0.78);
+}
+
+.astro-layout {
+  display: grid;
+  grid-template-columns: 1fr 32rem;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.astro-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.astro-panel {
+  background: rgba(12, 34, 68, 0.72);
+  border: 0.1rem solid var(--color-dark-line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.astro-panel--tip {
+  background: rgba(255, 184, 0, 0.08);
+  border-color: rgba(255, 184, 0, 0.25);
+}
+
+.astro-panel__title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: var(--space-4);
+}
+
+.astro-panel__title--icon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-gold);
+}
+
+.astro-panel__text {
+  font-size: var(--text-sm);
+  color: rgba(203, 213, 225, 0.85);
+  line-height: 1.65;
+}
+
+.astro-conditions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--space-3);
+  padding-bottom: var(--space-5);
+  border-bottom: 0.1rem solid var(--color-dark-line);
+}
+
+.astro-condition-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.astro-condition-item__icon {
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.astro-condition-item__label {
+  font-size: var(--text-xs);
+  color: rgba(203, 213, 225, 0.7);
+}
+
+.astro-condition-item__value {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.astro-best-hours {
+  padding-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.astro-best-hours__label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.astro-best-hours__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.astro-hour-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.06);
+  border: 0.1rem solid var(--color-dark-line);
+  font-size: var(--text-xs);
+  color: rgba(203, 213, 225, 0.85);
+}
+
+.astro-hour-pill--best {
+  border-color: rgba(255, 184, 0, 0.4);
+  color: var(--color-gold);
+}
+
+.astro-spots-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.astro-spot-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.04);
+  border: 0.1rem solid rgba(255, 255, 255, 0.08);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.astro-spot-row:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 184, 0, 0.4);
+}
+
+.astro-spot-row__img-wrap {
+  width: 7.8rem;
+  height: 7.8rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.astro-spot-row__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.astro-spot-row__title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: 0.3rem;
+}
+
+.astro-spot-row__desc {
+  font-size: var(--text-xs);
+  color: rgba(203, 213, 225, 0.65);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.astro-spot-row__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.astro-spot-row__meta .star-rating__value {
+  color: var(--color-white);
+}
+
+.astro-spot-row__dist {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--text-xs);
+  color: rgba(203, 213, 225, 0.72);
+}
+
+.astro-spot-row__chevron {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.astro-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.astro-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.astro-event-item__date {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.astro-event-item__title {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--color-white);
+  margin-bottom: 0.2rem;
+}
+
+.astro-event-item__desc {
+  font-size: var(--text-xs);
+  color: rgba(203, 213, 225, 0.68);
+}
+
+.astro-link {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.astro-gear-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.astro-gear-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: rgba(203, 213, 225, 0.85);
+}
+
+.astro-gear-list li svg {
+  color: var(--color-gold);
+}
+
+@media (max-width: 75rem) {
+  .astro-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 48rem) {
+  .astro-banner__title {
+    font-size: var(--text-3xl);
+  }
+}

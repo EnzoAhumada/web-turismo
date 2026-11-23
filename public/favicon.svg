@@ -1,4 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <polygon points="16,4 28,24 4,24" fill="#FFB800"/>
-  <circle cx="16" cy="20" r="5" fill="#071B3A"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="tg-mtn" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#071B3A" />
+      <stop offset="55%" stop-color="#0D6E7A" />
+      <stop offset="100%" stop-color="#FF9D00" />
+    </linearGradient>
+    <linearGradient id="tg-sun" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFB800" />
+      <stop offset="100%" stop-color="#FF7A00" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#031126" />
+  <circle cx="48" cy="18" r="7" fill="url(#tg-sun)" />
+  <path d="M16 14l1.5 3.5L21 19l-3.5 1.5L16 24l-1.5-3.5L11 19l3.5-1.5z" fill="#FFB800" />
+  <path d="M8 48L24 22l10 13 8-10 14 23H35c-2-5-8-8-3-13 3-3 7-5 7-5s-9 3-13 8c-4 5 1 10 1 10H8z" fill="url(#tg-mtn)" />
 </svg>

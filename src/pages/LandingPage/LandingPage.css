@@ -1,0 +1,221 @@
+.landing {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80') center/cover no-repeat;
+  padding: var(--space-6);
+}
+
+.landing__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(3, 17, 38, 0.88) 0%,
+    rgba(7, 27, 58, 0.72) 45%,
+    rgba(3, 17, 38, 0.94) 100%
+  );
+}
+
+.landing__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 42rem;
+  min-height: 54rem;
+  gap: var(--space-8);
+}
+
+.landing__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.landing__tagline {
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+.landing__welcome {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  text-align: left;
+  margin-top: auto;
+}
+
+.landing__headline-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.landing__headline {
+  font-size: 4.2rem;
+  font-weight: 800;
+  color: var(--color-white);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.landing__headline span {
+  display: block;
+}
+
+.landing__headline-heart {
+  color: var(--color-gold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing__subtitle {
+  font-size: var(--text-lg);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.45;
+  margin-bottom: var(--space-4);
+}
+
+.landing__cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.landing__guest-btn {
+  width: 100%;
+  padding: 1.3rem var(--space-5);
+  border-radius: var(--radius-full);
+  border: 0.15rem solid rgba(255, 184, 0, 0.55);
+  background: rgba(3, 17, 38, 0.55);
+  color: var(--color-gold);
+  font-size: var(--text-base);
+  font-weight: 700;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.landing__guest-btn:hover {
+  background: rgba(255, 184, 0, 0.14);
+  border-color: var(--color-gold);
+}
+
+/* Auth card */
+.landing__auth-card {
+  width: 100%;
+  background: rgba(7, 27, 58, 0.88);
+  backdrop-filter: blur(18px);
+  border: 0.1rem solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  box-shadow: var(--shadow-lg);
+}
+
+.landing__auth-top {
+  display: flex;
+  align-items: center;
+}
+
+.landing__auth-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.landing__auth-back:hover {
+  color: var(--color-gold);
+}
+
+.landing__auth-tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  padding: var(--space-1);
+}
+
+.landing__auth-tab {
+  flex: 1;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  border-radius: var(--radius-full);
+  transition: background 0.2s, color 0.2s;
+}
+
+.landing__auth-tab.active {
+  background: var(--color-gold);
+  color: var(--color-primary);
+}
+
+.landing__auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.landing__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: left;
+}
+
+.landing__field label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.landing__field input {
+  padding: var(--space-3) var(--space-4);
+  border: 0.1rem solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+  font-size: var(--text-base);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.landing__field input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.landing__field input:focus {
+  border-color: var(--color-gold);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.landing__field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+@media (max-width: 48rem) {
+  .landing__headline {
+    font-size: 3.4rem;
+  }
+
+  .landing__field-row {
+    grid-template-columns: 1fr;
+  }
+}
