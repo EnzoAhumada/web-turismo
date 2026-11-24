@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getPlaceById, getNearbyPlaces } from '../services/places.service';
 import { getRestaurantById, getOtherRestaurants } from '../services/restaurants.service';
@@ -127,6 +127,23 @@ export function useEntityDetail(entityType, id) {
     setShowFullDesc((prev) => !prev);
   }
 
+  const updateRatingSummary = useCallback(({ rating_promedio, resenas_count }) => {
+    setItem((prev) => {
+      if (!prev) return prev;
+      if (
+        prev.rating_promedio === rating_promedio &&
+        prev.resenas_count === resenas_count
+      ) {
+        return prev;
+      }
+      return {
+        ...prev,
+        rating_promedio,
+        resenas_count,
+      };
+    });
+  }, []);
+
   return {
     item,
     related,
@@ -134,6 +151,7 @@ export function useEntityDetail(entityType, id) {
     toggleFavorite,
     showFullDesc,
     toggleDesc,
+    updateRatingSummary,
     loading,
     error,
   };

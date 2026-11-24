@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getExperiences } from '../services/experiences.service';
 
-export const EXPERIENCE_TABS = ['Todas', 'Tours', 'Gastronomía', 'Aventura'];
+export const EXPERIENCE_TABS = ['Todas', 'Tours', 'Gastronomía', 'Aventura', 'Astroturismo', 'Cultura'];
 
 export function useExperiences() {
   const [activeTab, setActiveTab] = useState('Todas');

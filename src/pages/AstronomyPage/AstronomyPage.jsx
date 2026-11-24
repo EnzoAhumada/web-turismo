@@ -53,7 +53,14 @@ export default function AstronomyPage() {
                   </div>
 
                   <div className="astro-best-hours">
-                    <span className="astro-best-hours__label">Mejores horarios</span>
+                    <div className="astro-best-hours__head">
+                      <span className="astro-best-hours__label">Mejores horarios</span>
+                      {times[0]?.time && (
+                        <strong className="astro-best-hours__range">
+                          {times[0].time}
+                        </strong>
+                      )}
+                    </div>
                     <div className="astro-best-hours__list">
                       {times.map(({ id, time, label, icon, quality }) => (
                         <div key={id || time} className={`astro-hour-pill astro-hour-pill--${quality}`}>

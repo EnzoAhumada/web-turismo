@@ -3,6 +3,7 @@ import { useGamification } from '../../hooks/useGamification';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import Icon from '../../components/ui/Icon';
+import Button from '../../components/ui/Button';
 import LoadingState from '../../components/ui/LoadingState';
 import FeedbackBanner from '../../components/ui/FeedbackBanner';
 import './GamificationPage.css';
@@ -17,7 +18,18 @@ const MEDAL_PALETTE = [
 ];
 
 export default function GamificationPage() {
-  const { levelInfo, badges, challenges, leaderboard, loading, error } = useGamification();
+  const {
+    levelInfo,
+    badges,
+    challenges,
+    leaderboard,
+    loading,
+    busyChallengeId,
+    error,
+    feedback,
+    setFeedback,
+    handleCompleteChallenge,
+  } = useGamification();
 
   return (
     <>
@@ -25,6 +37,13 @@ export default function GamificationPage() {
       <main className="page-wrapper">
         <div className="container page-content">
           <FeedbackBanner type="error" message={error} />
+          {feedback && (
+            <FeedbackBanner
+              type={feedback.type}
+              message={feedback.message}
+              onDismiss={() => setFeedback(null)}
+            />
+          )}
 
           {loading ? (
             <LoadingState message="Cargando logros y tabla de posiciones..." />
@@ -32,12 +51,21 @@ export default function GamificationPage() {
             <>
               <section className="game-profile">
                 <div className="game-profile__avatar">
-                  <img src={levelInfo.avatar} alt={levelInfo.displayName} />
+                  {levelInfo.avatar ? (
+                    <img src={levelInfo.avatar} alt={levelInfo.displayName} />
+                  ) : (
+                    <span className="game-profile__initials">{levelInfo.initials}</span>
+                  )}
                   <span className="game-profile__level">Nv. {levelInfo.current}</span>
                 </div>
                 <div className="game-profile__info">
                   <h1 className="game-profile__name">{levelInfo.displayName}</h1>
-                  <p className="game-profile__title">{levelInfo.name}</p>
+                  <p className="game-profile__title">
+                    {levelInfo.name}
+                    {levelInfo.userRank
+                      ? ` · Puesto #${levelInfo.userRank} de ${levelInfo.totalTravelers}`
+                      : ''}
+                  </p>
                   <div className="game-xp">
                     <div className="game-xp__bar">
                       <div
@@ -46,7 +74,7 @@ export default function GamificationPage() {
                       />
                     </div>
                     <span className="game-xp__text">
-                      {levelInfo.xp} / {levelInfo.nextXp} XP
+                      {levelInfo.xp.toLocaleString('es-CL')} / {levelInfo.nextXp.toLocaleString('es-CL')} XP
                     </span>
                   </div>
                 </div>
@@ -95,6 +123,11 @@ export default function GamificationPage() {
                             </div>
                             <strong className="game-badge__name">{badge.name}</strong>
                             <p className="game-badge__desc">{badge.desc}</p>
+                            <span className="game-badge__xp">
+                              {badge.earned
+                                ? 'Desbloqueado'
+                                : `Requiere ${badge.xpRequired} XP`}
+                            </span>
                             {!badge.earned && (
                               <span className="game-badge__lock" aria-label="Bloqueada">
                                 <Icon name="lock" size={14} />
@@ -132,6 +165,27 @@ export default function GamificationPage() {
                             </div>
                             <span className="game-challenge__pct">{c.progress}%</span>
                           </div>
+                          {!c.done && (
+                            <div className="game-challenge__action">
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                disabled={busyChallengeId === c.id}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleCompleteChallenge(c);
+                                }}
+                              >
+                                <Icon name="check-circle" size={14} />
+                                <span>
+                                  {busyChallengeId === c.id
+                                    ? 'Registrando...'
+                                    : 'Marcar como completado'}
+                                </span>
+                              </Button>
+                            </div>
+                          )}
                         </li>
                       ))}
                     </ul>
@@ -140,7 +194,7 @@ export default function GamificationPage() {
 
                 <aside className="game-sidebar">
                   <div className="game-leaderboard">
-                    <h2 className="section-title">Tabla de posiciones</h2>
+                    <h2 className="section-title">Ranking de viajeros</h2>
                     <ol className="game-leaderboard-list">
                       {leaderboard.map((u) => (
                         <li key={u.id || u.rank} className={`game-lb-item ${u.isMe ? 'me' : ''}`}>
@@ -151,30 +205,27 @@ export default function GamificationPage() {
                           >
                             {u.rank <= 3 ? <Icon name="trophy" size={18} /> : u.rank}
                           </span>
-                          <img src={u.avatar} alt={u.name} className="game-lb-avatar" />
+                          {u.avatar ? (
+                            <img src={u.avatar} alt={u.name} className="game-lb-avatar" />
+                          ) : (
+                            <span className="game-lb-avatar game-lb-avatar--initials">
+                              {u.initials}
+                            </span>
+                          )}
                           <div className="game-lb-info">
                             <strong>
                               {u.name}
                               {u.isMe ? ' (tú)' : ''}
                             </strong>
                             <p>
-                              Nivel {u.level} · {u.xp.toLocaleString('es-CL')} XP
+                              Nv. {u.level} · {u.places} lugares · {u.badgesCount} logros
                             </p>
                           </div>
+                          <span className="game-lb-xp">{u.xp.toLocaleString('es-CL')} XP</span>
                         </li>
                       ))}
                     </ol>
                   </div>
-
-                  <Link to="/explorar" className="game-cta-card">
-                    <span className="game-cta-card__icon">
-                      <Icon name="compass" size={26} />
-                    </span>
-                    <div>
-                      <strong>¡Sigue explorando!</strong>
-                      <p>Descubre nuevos lugares y gana XP</p>
-                    </div>
-                  </Link>
                 </aside>
               </div>
             </>

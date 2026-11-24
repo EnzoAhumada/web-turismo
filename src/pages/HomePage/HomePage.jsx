@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useHomeData } from '../../hooks/useHomeData';
@@ -19,10 +20,24 @@ const QUICK_LINKS = [
   { to: '/experiencias', label: 'Experiencias', icon: 'compass',  desc: 'Tours y actividades guiadas' },
 ];
 
+function formatNewsDate(value) {
+  if (!value) return '';
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return '';
+  return parsed.toLocaleDateString('es-CL', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
 export default function HomePage() {
   const { profile } = useAuth();
-  const { featured, recommended, categories, weatherBanner, loading, error } = useHomeData();
+  const { featured, recommended, categories, weatherBanner, news, loading, error } = useHomeData();
+  const [selectedNews, setSelectedNews] = useState(null);
+  const [showAllNews, setShowAllNews] = useState(false);
   const nombre = profile?.nombre || 'Viajero';
+  const visibleNews = showAllNews ? news : news.slice(0, 6);
 
   return (
     <>
@@ -142,6 +157,68 @@ export default function HomePage() {
                   ))}
                 </div>
               </section>
+
+              {news.length > 0 && (
+                <section className="home-section home-news" aria-label="Noticias de Andacollo">
+                  <div className="section-header">
+                    <div>
+                      <h2 className="section-title">Noticias de Andacollo</h2>
+                      <p className="home-news__sub">
+                        Actualidad comunal, cultura, patrimonio y novedades para tu visita
+                      </p>
+                    </div>
+                    {news.length > 6 && (
+                      <button
+                        type="button"
+                        className="section-link home-news__toggle"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setShowAllNews((prev) => !prev);
+                        }}
+                      >
+                        {showAllNews ? 'Ver menos' : `Ver las ${news.length} noticias`}
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="home-news__grid">
+                    {visibleNews.map((item) => (
+                      <article key={item.id} className="home-news-card">
+                        <div className="home-news-card__img-wrap">
+                          <SmartImage
+                            src={item.imagen_url}
+                            alt={item.titulo}
+                            className="home-news-card__img"
+                          />
+                          <span className="home-news-card__cat">{item.categoria || 'Comuna'}</span>
+                        </div>
+                        <div className="home-news-card__body">
+                          <div className="home-news-card__meta">
+                            <span>{item.fuente || 'Andacollo'}</span>
+                            <span>·</span>
+                            <time dateTime={item.fecha_publicacion}>
+                              {formatNewsDate(item.fecha_publicacion)}
+                            </time>
+                          </div>
+                          <h3 className="home-news-card__title">{item.titulo}</h3>
+                          <p className="home-news-card__excerpt">{item.resumen}</p>
+                          <button
+                            type="button"
+                            className="home-news-card__btn"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setSelectedNews(item);
+                            }}
+                          >
+                            <span>Leer noticia</span>
+                            <Icon name="arrow-right" size={14} />
+                          </button>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
             </>
           )}
 
@@ -163,6 +240,80 @@ export default function HomePage() {
           </section>
         </div>
       </main>
+
+      {selectedNews && (
+        <div
+          className="home-news-modal-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="news-modal-title"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setSelectedNews(null);
+          }}
+        >
+          <article className="home-news-modal">
+            <button
+              type="button"
+              className="home-news-modal__close"
+              aria-label="Cerrar noticia"
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedNews(null);
+              }}
+            >
+              <Icon name="x" size={18} />
+            </button>
+            {selectedNews.imagen_url && (
+              <div className="home-news-modal__hero">
+                <SmartImage
+                  src={selectedNews.imagen_url}
+                  alt={selectedNews.titulo}
+                  className="home-news-modal__img"
+                />
+              </div>
+            )}
+            <div className="home-news-modal__body">
+              <div className="home-news-card__meta">
+                <span className="home-news-modal__badge">{selectedNews.categoria || 'Comuna'}</span>
+                <span>{selectedNews.fuente || 'Municipalidad de Andacollo'}</span>
+                <span>·</span>
+                <time dateTime={selectedNews.fecha_publicacion}>
+                  {formatNewsDate(selectedNews.fecha_publicacion)}
+                </time>
+              </div>
+              <h2 id="news-modal-title" className="home-news-modal__title">
+                {selectedNews.titulo}
+              </h2>
+              <p className="home-news-modal__lead">{selectedNews.resumen}</p>
+              <p className="home-news-modal__content">{selectedNews.contenido}</p>
+
+              <div className="home-news-modal__actions">
+                {selectedNews.url_externa && (
+                  <a
+                    href={selectedNews.url_externa}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="home-news-modal__ext"
+                  >
+                    <span>Ver fuente original</span>
+                    <Icon name="external-link" size={14} />
+                  </a>
+                )}
+                <button
+                  type="button"
+                  className="home-news-modal__done"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedNews(null);
+                  }}
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      )}
 
       <Footer />
     </>

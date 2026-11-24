@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEntityDetail } from '../../hooks/useEntityDetail';
 import DetailLayout from '../../components/layout/DetailLayout';
+import ReviewsSection from '../../components/ui/ReviewsSection';
 
 export default function AccommodationDetailPage() {
   const { id } = useParams();
@@ -12,6 +13,7 @@ export default function AccommodationDetailPage() {
     toggleFavorite,
     showFullDesc,
     toggleDesc,
+    updateRatingSummary,
     loading,
   } = useEntityDetail('alojamiento', id);
 
@@ -93,6 +95,14 @@ export default function AccommodationDetailPage() {
       showFullDesc={showFullDesc}
       onToggleDesc={toggleDesc}
       infoRows={infoRows}
+      reviewsSection={
+        <ReviewsSection
+          entityType="alojamiento"
+          entityId={id}
+          entityName={item?.nombre}
+          onSummaryChange={updateRatingSummary}
+        />
+      }
       relatedSection={{
         title: 'Otros alojamientos',
         linkTo: '/alojamientos',

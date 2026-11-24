@@ -711,3 +711,571 @@ ON CONFLICT (id) DO UPDATE SET
   procedencia = EXCLUDED.procedencia,
   intereses = EXCLUDED.intereses,
   updated_at = now();
+
+
+-- 16. NOTICIAS DE ANDACOLLO (10 noticias recientes precargadas)
+INSERT INTO public.noticias (
+  id, titulo, slug, resumen, contenido, imagen_url, fuente, url_externa,
+  categoria, origen, fecha_publicacion, destacada, activa
+)
+VALUES
+  (
+    'd0000000-0000-0000-0000-000000000001',
+    'Andacollo inicia preparativos logísticos y culturales para la Fiesta Grande en honor a la Virgen',
+    'andacollo-preparativos-fiesta-grande-virgen',
+    'Equipos municipales, bailes chinos y servicios de emergencia coordinan el plan integral de bienvenida para miles de peregrinos y visitantes.',
+    'La Ilustre Municipalidad de Andacollo junto a la Rectoría del Santuario, Carabineros y representantes de los Bailes Chinos dieron inicio a las mesas de coordinación para la tradicional Fiesta Grande de diciembre. El plan contempla refuerzo de puntos de hidratación, ferias de emprendedores locales en el eje de Plaza Videla, circuitos señalizados para visitantes y horarios extendidos en el comercio y recintos patrimoniales.',
+    'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?auto=format&fit=crop&w=1200&q=80',
+    'Municipalidad de Andacollo',
+    NULL,
+    'Patrimonio',
+    'manual',
+    now() - interval '1 day',
+    true,
+    true
+  ),
+  (
+    'd0000000-0000-0000-0000-000000000002',
+    'Observatorio Collowara abre temporada de cielos despejados con recorridos nocturnos familiares',
+    'observatorio-collowara-temporada-cielos-despejados',
+    'El recinto astronómico municipal renueva su cartelera de observaciones guiadas y talleres de astrofotografía en el Cerro Churqui.',
+    'Con más de 300 noches despejadas al año, el Observatorio Turístico Collowara inauguró su programación de temporada alta con tres turnos nocturnos guiados por especialistas locales. Los visitantes pueden observar cúmulos estelares, planetas y nebulosas mediante telescopios de gran apertura, además de disfrutar de charlas de cosmovisión andina y terrazas acondicionadas para astrofotografía.',
+    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80',
+    'Observatorio Collowara',
+    NULL,
+    'Astronomía',
+    'manual',
+    now() - interval '2 days',
+    false,
+    true
+  ),
+  (
+    'd0000000-0000-0000-0000-000000000003',
+    'Renuevan señalética turística y miradores de la Ruta Minera de Churrumata',
+    'renuevan-senaletica-ruta-minera-churrumata',
+    'Nuevos paneles interpretativos destacan la historia de los pirquineros, los trapiches tradicionales y el patrimonio aurífero de la comuna.',
+    'Con el objetivo de fortalecer el turismo patrimonial y seguro, se instalaron nuevos hitos informativos y zonas de descanso a lo largo del circuito del Parque Minero y Trapiche Churrumata. La iniciativa permite a los visitantes conocer en detalle el proceso artesanal de extracción y molienda de oro y cobre que ha marcado la identidad de Andacollo durante siglos.',
+    'https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?auto=format&fit=crop&w=1200&q=80',
+    'Corporación de Turismo Andacollo',
+    NULL,
+    'Turismo',
+    'manual',
+    now() - interval '3 days',
+    false,
+    true
+  ),
+  (
+    'd0000000-0000-0000-0000-000000000004',
+    'Feria Gastronómica y de Emprendedores Locales reúne sabores típicos en Plaza Videla',
+    'feria-gastronomica-emprendedores-plaza-videla',
+    'Churrascas recién horneadas, queso de cabra, miel del valle y artesanía en lapislázuli y cobre protagonizan los fines de semana en el centro.',
+    'Más de 35 productores y cocinerías tradicionales de la comuna participan cada fin de semana en la Feria de Emprendedores de Plaza Videla. La actividad ofrece degustaciones de gastronomía típica nortina, presentaciones de música folclórica local y talleres abiertos de orfebrería tradicional para familias y turistas.',
+    'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=80',
+    'Andacollo Conectado',
+    NULL,
+    'Cultura',
+    'manual',
+    now() - interval '4 days',
+    false,
+    true
+  ),
+  (
+    'd0000000-0000-0000-0000-000000000005',
+    'Bailes Chinos de Andacollo celebran jornada patrimonial con muestras abiertas a la comunidad',
+    'bailes-chinos-andacollo-jornada-patrimonial',
+    'Agrupaciones declaradas Patrimonio Cultural Inmaterial de la Humanidad compartieron historia, vestimentas e instrumentos con escolares y visitantes.',
+    'En el entorno del Templo Chico y el Museo de Ofrendas, distintas cofradías de Bailes Chinos de Andacollo realizaron un encuentro abierto donde relataron la tradición musical de flautas y tambores transmitida de generación en generación. La actividad buscó acercar el valor patrimonial de la danza devocional a quienes visitan la comuna fuera de las fiestas mayores.',
+    'https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=1200&q=80',
+    'Cultura Andacollo',
+    NULL,
+    'Patrimonio',
+    'manual',
+    now() - interval '5 days',
+    false,
+    true
+  ),
+  (
+    'd0000000-0000-0000-0000-000000000006',
+    'Habilitan nueva estación de descanso y punto fotográfico en Mirador Natural El Toro',
+    'nueva-estacion-descanso-mirador-el-toro',
+    'El acceso al mirador cuenta ahora con bancas sombreadas, barandas de seguridad y recomendaciones para disfrutar el atardecer sobre el valle.',
+    'El Mirador Natural El Toro, uno de los sitios preferidos por fotógrafos y viajeros para contemplar la puesta de sol sobre las montañas de la Región de Coquimbo, estrenó mejoras en su plataforma de observación. Se recomienda llevar abrigo ligero al caer la tarde y respetar las zonas habilitadas para proteger la flora nativa del sector.',
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+    'Municipalidad de Andacollo',
+    NULL,
+    'Turismo',
+    'manual',
+    now() - interval '6 days',
+    false,
+    true
+  ),
+  (
+    'd0000000-0000-0000-0000-000000000007',
+    'Anuncian calendario de caminatas guiadas por Quebrada de Chepiquilla y Cerro El Curque',
+    'calendario-caminatas-guiadas-chepiquilla-curque',
+    'Salidas grupales de dificultad baja y media acercan a los participantes a petroglifos ancestrales y ecosistemas precordilleranos.',
+    'Guías locales certificados publicaron el calendario mensual de excursiones interpretativas hacia la Quebrada de Chepiquilla y la ruta de petroglifos de Cerro El Curque. Cada salida incluye inducción de seguridad, relato arqueológico y consejos de turismo sustentable para conservar el entorno natural de Andacollo.',
+    'https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1200&q=80',
+    'Andacollo Outdoors',
+    NULL,
+    'Eventos',
+    'manual',
+    now() - interval '7 days',
+    false,
+    true
+  ),
+  (
+    'd0000000-0000-0000-0000-000000000008',
+    'Comercio y alojamientos de Andacollo se suman a campaña de hospitalidad y turismo seguro',
+    'comercio-alojamientos-campana-hospitalidad',
+    'Hostales, cabañas y restaurantes locales actualizan sus horarios, tarifas transparentes y estándares de atención para la temporada.',
+    'Más de 40 establecimientos de hospedaje y gastronomía de Andacollo participaron en la jornada de actualización de calidad turística. El acuerdo promueve información clara de horarios, reservas digitales y recomendaciones de rutas locales para mejorar la experiencia de quienes pernoctan en la comuna.',
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+    'Cámara de Comercio Andacollo',
+    NULL,
+    'Comuna',
+    'manual',
+    now() - interval '8 days',
+    false,
+    true
+  ),
+  (
+    'd0000000-0000-0000-0000-000000000009',
+    'Museo de Ofrendas extiende su horario de atención de fines de semana para delegaciones y familias',
+    'museo-ofrendas-extiende-horario-fin-semana',
+    'El recinto resguarda valiosas piezas históricas, exvotos y vestimentas que narran más de cuatro siglos de devoción en Andacollo.',
+    'Ante el aumento sostenido de visitas culturales, el Museo de Ofrendas anunció horarios continuados sábados y domingos, sumando mediación guiada gratuita cada hora. El espacio permite comprender el vínculo histórico entre la minería, la fe popular y las expresiones artísticas de la Región de Coquimbo.',
+    'https://images.unsplash.com/photo-1566127444979-b3d2b654e3d7?auto=format&fit=crop&w=1200&q=80',
+    'Patrimonio Coquimbo',
+    NULL,
+    'Cultura',
+    'manual',
+    now() - interval '9 days',
+    false,
+    true
+  ),
+  (
+    'd0000000-0000-0000-0000-000000000010',
+    'Noche de Estrellas Comunitaria invita a observar la Vía Láctea desde el Mirador Cruz Verde',
+    'noche-estrellas-comunitaria-mirador-cruz-verde',
+    'Actividad gratuita abierta a vecinos y turistas contará con telescopios portátiles, música ambiental y charla de cielo oscuro.',
+    'Con el fin de promover el cuidado de la contaminación lumínica y el astroturismo comunitario, agrupaciones locales organizan una nueva jornada de observación abierta en el Mirador Cruz Verde. La actividad inicia a las 20:30 horas y contempla orientación para identificar constelaciones australes a simple vista y con binoculares.',
+    'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1200&q=80',
+    'Andacollo Conectado',
+    NULL,
+    'Astronomía',
+    'manual',
+    now() - interval '10 days',
+    false,
+    true
+  )
+ON CONFLICT (slug) DO UPDATE SET
+  titulo = EXCLUDED.titulo,
+  resumen = EXCLUDED.resumen,
+  contenido = EXCLUDED.contenido,
+  imagen_url = EXCLUDED.imagen_url,
+  fuente = EXCLUDED.fuente,
+  categoria = EXCLUDED.categoria,
+  fecha_publicacion = EXCLUDED.fecha_publicacion,
+  destacada = EXCLUDED.destacada,
+  activa = EXCLUDED.activa;
+
+-- 17. INSIGNIAS ASIGNADAS A PERFILES COMUNITARIOS (Datos reales para ranking y perfil)
+INSERT INTO public.usuario_insignias (user_id, insignia_id)
+VALUES
+  ('a0000000-0000-0000-0000-000000000001', '90000000-0000-0000-0000-000000000001'),
+  ('a0000000-0000-0000-0000-000000000001', '90000000-0000-0000-0000-000000000002'),
+  ('a0000000-0000-0000-0000-000000000001', '90000000-0000-0000-0000-000000000003'),
+  ('a0000000-0000-0000-0000-000000000001', '90000000-0000-0000-0000-000000000004'),
+  ('a0000000-0000-0000-0000-000000000001', '90000000-0000-0000-0000-000000000005'),
+  ('a0000000-0000-0000-0000-000000000001', '90000000-0000-0000-0000-000000000006'),
+  ('a0000000-0000-0000-0000-000000000002', '90000000-0000-0000-0000-000000000001'),
+  ('a0000000-0000-0000-0000-000000000002', '90000000-0000-0000-0000-000000000002'),
+  ('a0000000-0000-0000-0000-000000000002', '90000000-0000-0000-0000-000000000003'),
+  ('a0000000-0000-0000-0000-000000000002', '90000000-0000-0000-0000-000000000004'),
+  ('a0000000-0000-0000-0000-000000000002', '90000000-0000-0000-0000-000000000005'),
+  ('a0000000-0000-0000-0000-000000000003', '90000000-0000-0000-0000-000000000001'),
+  ('a0000000-0000-0000-0000-000000000003', '90000000-0000-0000-0000-000000000002'),
+  ('a0000000-0000-0000-0000-000000000003', '90000000-0000-0000-0000-000000000003'),
+  ('a0000000-0000-0000-0000-000000000004', '90000000-0000-0000-0000-000000000001'),
+  ('a0000000-0000-0000-0000-000000000004', '90000000-0000-0000-0000-000000000002'),
+  ('a0000000-0000-0000-0000-000000000005', '90000000-0000-0000-0000-000000000001')
+ON CONFLICT (user_id, insignia_id) DO NOTHING;
+
+
+-- 18. RESEÑAS DE EJEMPLO (Comentarios y valoraciones reales de usuarios en Lugares, Restaurantes y Alojamientos)
+INSERT INTO public.resenas (id, user_id, tipo, item_id, calificacion, comentario, created_at)
+VALUES
+  -- LUGARES TURÍSTICOS (12 lugares × 2–3 reseñas = 26 reseñas)
+  (
+    'e0000000-0000-0000-0000-000000000001',
+    'a0000000-0000-0000-0000-000000000001',
+    'lugar', '20000000-0000-0000-0000-000000000001', 5,
+    'Impresionante arquitectura en pino oregón y adobe. Entrar a la Basílica Menor en la mañana, cuando la luz atraviesa los ventanales, es una experiencia inolvidable en Andacollo.',
+    now() - interval '2 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000002',
+    'a0000000-0000-0000-0000-000000000002',
+    'lugar', '20000000-0000-0000-0000-000000000001', 5,
+    'Un patrimonio vivo lleno de historia y devoción. Muy limpia, bien cuidada y con acceso gratuito junto a la Plaza Videla. Recomiendo visitarla junto al Templo Chico.',
+    now() - interval '6 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000003',
+    'a0000000-0000-0000-0000-000000000003',
+    'lugar', '20000000-0000-0000-0000-000000000001', 4,
+    'Bellísima iglesia monumental. Fui en fin de semana y había bastante gente, pero igual se puede recorrer con calma y sacar muy buenas fotos del altar y la fachada.',
+    now() - interval '11 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000004',
+    'a0000000-0000-0000-0000-000000000002',
+    'lugar', '20000000-0000-0000-0000-000000000002', 5,
+    'El cielo más limpio que he visto en Chile. Los guías explican con mucha paciencia, pudimos ver Saturno y nebulosas por los telescopios de la cúpula. Lleven chaqueta abrigada.',
+    now() - interval '1 day'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000005',
+    'a0000000-0000-0000-0000-000000000001',
+    'lugar', '20000000-0000-0000-0000-000000000002', 5,
+    'Observatorio Collowara supera cualquier expectativa. La terraza de observación y la charla de cosmovisión andina valen cada minuto. Conviene reservar con anticipación.',
+    now() - interval '5 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000006',
+    'a0000000-0000-0000-0000-000000000004',
+    'lugar', '20000000-0000-0000-0000-000000000002', 5,
+    'Fuimos en familia con niños y quedaron fascinados viendo la Luna y la Vía Láctea. Excelente organización y muy buena señalización en el camino al Cerro El Churqui.',
+    now() - interval '9 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000007',
+    'a0000000-0000-0000-0000-000000000003',
+    'lugar', '20000000-0000-0000-0000-000000000003', 5,
+    'Atardecer espectacular sobre los cerros de Andacollo. Fácil acceso desde la Ruta D-51 y perfecto para sacar fotografías panorámicas sin pagar entrada.',
+    now() - interval '3 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000008',
+    'a0000000-0000-0000-0000-000000000005',
+    'lugar', '20000000-0000-0000-0000-000000000003', 4,
+    'Vista muy amplia y tranquila. En la tarde corre bastante viento, así que recomiendo llevar cortaviento y agua si se quedan a ver las primeras estrellas.',
+    now() - interval '10 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000009',
+    'a0000000-0000-0000-0000-000000000001',
+    'lugar', '20000000-0000-0000-0000-000000000004', 5,
+    'Emociona recorrer las salas con los trajes antiguos de bailes chinos y los exvotos de más de un siglo. Muy buena explicación para entender la tradición de la Fiesta Grande.',
+    now() - interval '4 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000010',
+    'a0000000-0000-0000-0000-000000000004',
+    'lugar', '20000000-0000-0000-0000-000000000004', 5,
+    'Parada obligatoria si visitas el centro histórico. Entrada gratuita, piezas muy bien conservadas y personal muy amable para responder preguntas.',
+    now() - interval '12 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000011',
+    'a0000000-0000-0000-0000-000000000002',
+    'lugar', '20000000-0000-0000-0000-000000000005', 5,
+    'Si haces astrofotografía, esta cumbre es un paraíso. Cero contaminación lumínica directa y el silencio nocturno de la cordillera es increíble.',
+    now() - interval '3 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000012',
+    'a0000000-0000-0000-0000-000000000005',
+    'lugar', '20000000-0000-0000-0000-000000000005', 4,
+    'El cielo se ve nítido incluso a simple vista. Conviene subir en vehículo alto antes de que oscurezca y llevar linterna de luz roja.',
+    now() - interval '14 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000013',
+    'a0000000-0000-0000-0000-000000000001',
+    'lugar', '20000000-0000-0000-0000-000000000006', 5,
+    'Ver un trapiche de piedra funcionando y escuchar las historias de los pirquineros locales le da un valor enorme al viaje. Auténtica identidad minera de Andacollo.',
+    now() - interval '5 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000014',
+    'a0000000-0000-0000-0000-000000000003',
+    'lugar', '20000000-0000-0000-0000-000000000006', 4,
+    'Muy entretenido e informativo para ir con niños y adultos. Recomiendo ir en la mañana para evitar el sol fuerte del mediodía.',
+    now() - interval '13 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000015',
+    'a0000000-0000-0000-0000-000000000002',
+    'lugar', '20000000-0000-0000-0000-000000000007', 5,
+    'El Templo Chico tiene una atmósfera íntima y colonial preciosa. Sus altares antiguos y su tranquilidad contrastan maravillosamente con la magnitud de la Basílica Menor.',
+    now() - interval '4 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000016',
+    'a0000000-0000-0000-0000-000000000005',
+    'lugar', '20000000-0000-0000-0000-000000000007', 5,
+    'Un rincón histórico imprescindible a pasos de la plaza. Se recorre en menos de una hora y vale totalmente la pena conocer su historia del siglo XVIII.',
+    now() - interval '15 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000017',
+    'a0000000-0000-0000-0000-000000000004',
+    'lugar', '20000000-0000-0000-0000-000000000008', 5,
+    'Excelente ruta para conocer cómo se trabajaba el oro artesanalmente en la quebrada. Muy recomendable ir acompañado de un guía local.',
+    now() - interval '7 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000018',
+    'a0000000-0000-0000-0000-000000000003',
+    'lugar', '20000000-0000-0000-0000-000000000008', 4,
+    'Paisaje semiárido muy interesante y lleno de relatos de antiguos mineros. Llevar calzado cómodo y sombrero para caminar por la quebrada.',
+    now() - interval '16 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000019',
+    'a0000000-0000-0000-0000-000000000001',
+    'lugar', '20000000-0000-0000-0000-000000000009', 5,
+    'Un verdadero oasis escondido al sur de Andacollo. Caminata familiar muy agradable entre algarrobos y vertientes naturales.',
+    now() - interval '5 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000020',
+    'a0000000-0000-0000-0000-000000000005',
+    'lugar', '20000000-0000-0000-0000-000000000009', 4,
+    'Sendero tranquilo, ideal para desconectarse y fotografiar flora nativa. Muy recomendable combinarlo con un almuerzo en el sector de Chepiquilla.',
+    now() - interval '17 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000021',
+    'a0000000-0000-0000-0000-000000000002',
+    'lugar', '20000000-0000-0000-0000-000000000010', 5,
+    'Los petroglifos diaguitas son fascinantes y la vista hacia los valles transversales de Coquimbo es impresionante. Por favor cuidar el sitio sin tocar las rocas.',
+    now() - interval '6 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000022',
+    'a0000000-0000-0000-0000-000000000004',
+    'lugar', '20000000-0000-0000-0000-000000000010', 4,
+    'Ruta arqueológica muy valiosa. Tiene tramos de subida moderada, así que conviene llevar zapatillas de trekking y bastante agua.',
+    now() - interval '18 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000023',
+    'a0000000-0000-0000-0000-000000000003',
+    'lugar', '20000000-0000-0000-0000-000000000011', 5,
+    'Desde Cruz Verde se obtiene la mejor postal de la Basílica Menor iluminada al caer la tarde. Un lugar seguro, cercano y hermoso para fotografía nocturna.',
+    now() - interval '2 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000024',
+    'a0000000-0000-0000-0000-000000000001',
+    'lugar', '20000000-0000-0000-0000-000000000011', 5,
+    'Muy fácil de llegar desde el centro. Subimos con binoculares y disfrutamos una noche despejada increíble sobre toda la comuna.',
+    now() - interval '9 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000025',
+    'a0000000-0000-0000-0000-000000000005',
+    'lugar', '20000000-0000-0000-0000-000000000012', 5,
+    'Espacio cultural muy acogedor frente a la plaza. Encontré artesanías locales en piedra combarbalita y cobre con una atención muy cordial.',
+    now() - interval '8 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000026',
+    'a0000000-0000-0000-0000-000000000004',
+    'lugar', '20000000-0000-0000-0000-000000000012', 4,
+    'Buenas exposiciones fotográficas de la historia de Andacollo. Ideal para pasar un rato tranquilo y conocer el trabajo de artistas locales.',
+    now() - interval '19 days'
+  ),
+
+  -- RESTAURANTES (6 restaurantes × 2–3 reseñas = 14 reseñas)
+  (
+    'e0000000-0000-0000-0000-000000000027',
+    'a0000000-0000-0000-0000-000000000001',
+    'restaurante', '30000000-0000-0000-0000-000000000001', 5,
+    'El mejor cabrito al jugo de Andacollo, súper tierno y sabroso. Las churrascas recién salidas con queso de cabra local son un diez absoluto.',
+    now() - interval '2 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000028',
+    'a0000000-0000-0000-0000-000000000003',
+    'restaurante', '30000000-0000-0000-0000-000000000001', 5,
+    'Excelente atención familiar y platos muy abundantes. Pedimos cazuela de ave y empanadas de horno, todo casero y a precio justo.',
+    now() - interval '7 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000029',
+    'a0000000-0000-0000-0000-000000000005',
+    'restaurante', '30000000-0000-0000-0000-000000000001', 4,
+    'Muy rica comida tradicional en pleno centro. Los domingos se llena rápido al almuerzo, así que conviene llegar temprano.',
+    now() - interval '13 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000030',
+    'a0000000-0000-0000-0000-000000000004',
+    'restaurante', '30000000-0000-0000-0000-000000000002', 5,
+    'Picada auténtica con menú diario económico y muy contundente. Los porotos con riendas y el pan amasado tibio me recordaron la cocina de mi abuela.',
+    now() - interval '4 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000031',
+    'a0000000-0000-0000-0000-000000000002',
+    'restaurante', '30000000-0000-0000-0000-000000000002', 4,
+    'Rápido, sabroso y muy conveniente para almorzar durante el recorrido por Andacollo. El pastel de choclo es imperdible.',
+    now() - interval '11 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000032',
+    'a0000000-0000-0000-0000-000000000002',
+    'restaurante', '30000000-0000-0000-0000-000000000003', 5,
+    'Cenamos aquí antes de subir al Observatorio Collowara y fue una maravilla. Tabla de quesos caprinos, cordero exquisito y pisco artesanal de la región.',
+    now() - interval '1 day'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000033',
+    'a0000000-0000-0000-0000-000000000001',
+    'restaurante', '30000000-0000-0000-0000-000000000003', 5,
+    'Ambiente cálido, vista preciosa de las estrellas desde la terraza y un servicio muy dedicado. Ideal para una cena especial en pareja o familia.',
+    now() - interval '8 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000034',
+    'a0000000-0000-0000-0000-000000000003',
+    'restaurante', '30000000-0000-0000-0000-000000000004', 5,
+    'Desayuno andacollino de lujo: churrascas al rescoldo calentitas, té con hierbas del valle y queso de cabra fresco. Doña Rosa atiende con mucho cariño.',
+    now() - interval '3 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000035',
+    'a0000000-0000-0000-0000-000000000005',
+    'restaurante', '30000000-0000-0000-0000-000000000004', 4,
+    'Sencillo, limpio y con sabores muy caseros. Probé la carbonada y estaba deliciosa, además queda muy cerca del circuito de la Basílica.',
+    now() - interval '12 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000036',
+    'a0000000-0000-0000-0000-000000000002',
+    'restaurante', '30000000-0000-0000-0000-000000000005', 5,
+    'Qué rico café de grano y kuchen de nuez con papaya. La terraza frente a Plaza Videla es perfecta para descansar después de visitar el Museo de Ofrendas.',
+    now() - interval '5 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000037',
+    'a0000000-0000-0000-0000-000000000004',
+    'restaurante', '30000000-0000-0000-0000-000000000005', 5,
+    'Excelente pastelería local, ambiente tranquilo y buena música. Muy recomendable para la hora de once.',
+    now() - interval '10 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000038',
+    'a0000000-0000-0000-0000-000000000001',
+    'restaurante', '30000000-0000-0000-0000-000000000006', 5,
+    'Una experiencia gastronómica única: el asado caprino cocinado en horno solar queda increíblemente jugoso y además explican cómo funciona la cocina solar.',
+    now() - interval '4 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000039',
+    'a0000000-0000-0000-0000-000000000003',
+    'restaurante', '30000000-0000-0000-0000-000000000006', 5,
+    'Vale totalmente la pena desplazarse hasta Chepiquilla. Comida sustentable, panes tibios y un entorno rural precioso.',
+    now() - interval '14 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000040',
+    'a0000000-0000-0000-0000-000000000005',
+    'restaurante', '30000000-0000-0000-0000-000000000006', 4,
+    'Muy buena comida y experiencia educativa. Recuerden que atienden de viernes a domingo y es mejor llamar antes para reservar.',
+    now() - interval '20 days'
+  ),
+
+  -- ALOJAMIENTOS (6 alojamientos × 2 reseñas = 12 reseñas)
+  (
+    'e0000000-0000-0000-0000-000000000041',
+    'a0000000-0000-0000-0000-000000000001',
+    'alojamiento', '40000000-0000-0000-0000-000000000001', 5,
+    'Habitaciones impecables, estacionamiento seguro y un desayuno campestre delicioso con queso de cabra y pan amasado. A pocos minutos caminando de la Plaza Videla.',
+    now() - interval '3 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000042',
+    'a0000000-0000-0000-0000-000000000004',
+    'alojamiento', '40000000-0000-0000-0000-000000000001', 4,
+    'Muy buena relación precio-calidad y trato súper cordial. Excelente opción para familias que recorren el casco histórico.',
+    now() - interval '11 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000043',
+    'a0000000-0000-0000-0000-000000000002',
+    'alojamiento', '40000000-0000-0000-0000-000000000002', 5,
+    'Despertar con vista a los cerros y ver las estrellas desde la terraza privada en la noche no tiene precio. Cabañas muy equipadas, limpias y silenciosas.',
+    now() - interval '2 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000044',
+    'a0000000-0000-0000-0000-000000000003',
+    'alojamiento', '40000000-0000-0000-0000-000000000002', 5,
+    'Quedan muy cerca del Observatorio Collowara y tienen quincho para compartir en grupo. Volveríamos sin dudarlo.',
+    now() - interval '9 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000045',
+    'a0000000-0000-0000-0000-000000000005',
+    'alojamiento', '40000000-0000-0000-0000-000000000003', 5,
+    'Ubicación inmejorable frente al circuito de la Basílica Menor. Muy cómoda, camas abrigadas y personal siempre dispuesto a orientar sobre horarios de misas y paseos.',
+    now() - interval '5 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000046',
+    'a0000000-0000-0000-0000-000000000001',
+    'alojamiento', '40000000-0000-0000-0000-000000000003', 4,
+    'Hostería tradicional muy bien mantenida. Ideal si viajas sin auto porque tienes restaurantes y plazas a pasos.',
+    now() - interval '15 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000047',
+    'a0000000-0000-0000-0000-000000000004',
+    'alojamiento', '40000000-0000-0000-0000-000000000004', 5,
+    'Excelente comodidad en el acceso norte de Andacollo. Habitaciones amplias con climatización, buena señal de Wi-Fi y recepción 24 horas.',
+    now() - interval '4 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000048',
+    'a0000000-0000-0000-0000-000000000002',
+    'alojamiento', '40000000-0000-0000-0000-000000000004', 5,
+    'Muy buen hotel tanto para viajes de trabajo como en familia. Desayuno completo y acceso expedito hacia la Ruta D-51.',
+    now() - interval '12 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000049',
+    'a0000000-0000-0000-0000-000000000002',
+    'alojamiento', '40000000-0000-0000-0000-000000000005', 5,
+    'Dormir mirando el cielo estrellado desde la cama en estos domos geodésicos fue el punto alto de nuestro viaje por Coquimbo. Privacidad total y muy acogedores.',
+    now() - interval '1 day'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000050',
+    'a0000000-0000-0000-0000-000000000003',
+    'alojamiento', '40000000-0000-0000-0000-000000000005', 5,
+    'Experiencia mágica, súper bien calefaccionados para el frío nocturno de la altura y con atención muy detallista.',
+    now() - interval '7 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000051',
+    'a0000000-0000-0000-0000-000000000005',
+    'alojamiento', '40000000-0000-0000-0000-000000000006', 5,
+    'Residencial muy limpia, económica y con un patio interior precioso. Los dueños nos dieron excelentes datos de paseos y picadas.',
+    now() - interval '6 days'
+  ),
+  (
+    'e0000000-0000-0000-0000-000000000052',
+    'a0000000-0000-0000-0000-000000000004',
+    'alojamiento', '40000000-0000-0000-0000-000000000006', 4,
+    'Ambiente familiar, cocina compartida ordenada y muy buena ubicación sobre Av. Urmeneta. Muy recomendable si buscas presupuesto amigable.',
+    now() - interval '14 days'
+  )
+ON CONFLICT (user_id, tipo, item_id) DO UPDATE SET
+  calificacion = EXCLUDED.calificacion,
+  comentario = EXCLUDED.comentario,
+  created_at = EXCLUDED.created_at;

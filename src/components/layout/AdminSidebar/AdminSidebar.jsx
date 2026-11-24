@@ -5,7 +5,10 @@ import './AdminSidebar.css';
 
 const MENU = [
   { icon: 'grid',       label: 'Resumen',      to: '/admin' },
+  { icon: 'newspaper',  label: 'Noticias',     to: '/admin/noticias' },
   { icon: 'map-pin',    label: 'Lugares',      to: '/admin/lugares' },
+  { icon: 'moon-star',  label: 'Astronomía',   to: '/admin/astronomia' },
+  { icon: 'compass',    label: 'Experiencias', to: '/admin/experiencias' },
   { icon: 'utensils',   label: 'Restaurantes', to: '/admin/restaurantes' },
   { icon: 'building',   label: 'Alojamientos', to: '/admin/alojamientos' },
   { icon: 'calendar',   label: 'Eventos',      to: '/admin/eventos' },

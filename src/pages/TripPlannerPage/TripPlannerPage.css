@@ -234,3 +234,225 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+
+/* Itinerario de ejemplo y por franjas horarias */
+.planner-itinerary {
+  background: var(--color-white);
+  border: 0.1rem solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2.2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.planner-itinerary__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.4rem;
+  padding-bottom: 1.8rem;
+  margin-bottom: 2rem;
+  border-bottom: 0.1rem solid var(--color-border);
+}
+
+.planner-itinerary__kicker {
+  display: inline-block;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-orange);
+  margin-bottom: 0.4rem;
+}
+
+.planner-itinerary__title {
+  font-size: 2.1rem;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem;
+}
+
+.planner-itinerary__sub {
+  font-size: 1.35rem;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.planner-itinerary__pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.planner-itinerary__pills span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-full);
+  background: var(--color-soft);
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.planner-days {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.planner-day-card__title {
+  font-size: 1.7rem;
+  color: var(--color-primary);
+  margin: 0 0 1.4rem;
+}
+
+.planner-period {
+  margin-bottom: 1.8rem;
+}
+
+.planner-period__badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--color-gold);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.planner-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.planner-stop {
+  display: grid;
+  grid-template-columns: 6.2rem 1fr;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+
+.planner-stop__time {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  padding-top: 1.2rem;
+}
+
+.planner-stop__card {
+  background: var(--color-soft);
+  border: 0.1rem solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+}
+
+.planner-stop__top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.7rem;
+}
+
+.planner-stop__type {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--radius-full);
+  background: var(--color-white);
+  color: var(--color-primary);
+}
+
+.planner-stop__type--evento {
+  background: #fff6d8;
+  color: var(--color-primary);
+}
+
+.planner-stop__type--experiencia {
+  background: #e6f4f1;
+  color: #0b5d66;
+}
+
+.planner-stop__type--restaurante {
+  background: #fff0e0;
+  color: #b45309;
+}
+
+.planner-stop__cost {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.planner-stop__title {
+  font-size: 1.55rem;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem;
+}
+
+.planner-stop__desc {
+  font-size: 1.3rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+  margin: 0 0 1rem;
+}
+
+.planner-stop__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.planner-stop__dur {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1.2rem;
+  color: var(--color-muted);
+}
+
+.planner-stop__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.planner-stop__link:hover {
+  color: var(--color-orange);
+}
+
+.planner-itinerary__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-top: 2rem;
+  padding-top: 1.8rem;
+  border-top: 0.1rem solid var(--color-border);
+}
+
+@media (max-width: 42rem) {
+  .planner-stop {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .planner-stop__time {
+    padding-top: 0;
+  }
+}

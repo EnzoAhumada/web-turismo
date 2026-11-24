@@ -307,3 +307,18 @@
     font-size: var(--text-3xl);
   }
 }
+
+
+.astro-best-hours__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.astro-best-hours__range {
+  font-size: 1.45rem;
+  color: var(--color-gold);
+  font-weight: 700;
+}

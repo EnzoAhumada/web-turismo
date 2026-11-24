@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEntityDetail } from '../../hooks/useEntityDetail';
 import { PRICE_LABELS } from '../../hooks/useRestaurants';
 import DetailLayout from '../../components/layout/DetailLayout';
+import ReviewsSection from '../../components/ui/ReviewsSection';
 
 export default function RestaurantDetailPage() {
   const { id } = useParams();
@@ -13,6 +14,7 @@ export default function RestaurantDetailPage() {
     toggleFavorite,
     showFullDesc,
     toggleDesc,
+    updateRatingSummary,
     loading,
   } = useEntityDetail('restaurante', id);
 
@@ -91,6 +93,14 @@ export default function RestaurantDetailPage() {
       showFullDesc={showFullDesc}
       onToggleDesc={toggleDesc}
       infoRows={infoRows}
+      reviewsSection={
+        <ReviewsSection
+          entityType="restaurante"
+          entityId={id}
+          entityName={item?.nombre}
+          onSummaryChange={updateRatingSummary}
+        />
+      }
       relatedSection={{
         title: 'Otros restaurantes',
         linkTo: '/restaurantes',

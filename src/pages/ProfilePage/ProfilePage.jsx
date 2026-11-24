@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProfileStats } from '../../hooks/useProfileStats';
 import Header from '../../components/layout/Header';
@@ -14,14 +13,24 @@ export default function ProfilePage() {
     profile,
     displayName,
     xp,
+    nivel,
     nextThreshold,
     levelProgress,
+    dashboard,
     editing,
     setEditing,
     nombre,
     setNombre,
     apellido,
     setApellido,
+    ciudadOrigen,
+    setCiudadOrigen,
+    biografia,
+    setBiografia,
+    avatarUrl,
+    setAvatarUrl,
+    offlineMode,
+    handleToggleOffline,
     saving,
     feedback,
     setFeedback,
@@ -29,7 +38,9 @@ export default function ProfilePage() {
     signOut,
   } = useProfileStats();
 
-  const [offlineMode, setOfflineMode] = useState(false);
+  const placesCount = Number(profile?.lugares_visitados || 0);
+  const routesCount = Number(profile?.rutas_completadas || 0);
+  const reviewsCount = Number(profile?.resenas_count || 0);
 
   return (
     <>
@@ -48,8 +59,21 @@ export default function ProfilePage() {
             </div>
             <h1 className="profile-name">{displayName}</h1>
             <p className="profile-level-label">
-              Explorador nivel {profile?.nivel || 1} · {profile?.rol === 'admin' ? 'Administrador' : 'Viajero'}
+              Explorador nivel {nivel} · {profile?.titulo_nivel || 'Viajero Inicial'} ·{' '}
+              {profile?.rol === 'admin' ? 'Administrador' : 'Viajero'}
             </p>
+            {profile?.ciudad_origen && (
+              <p className="profile-origin">
+                <Icon name="map-pin" size={13} />
+                <span>{profile.ciudad_origen}</span>
+                {dashboard.userRank && (
+                  <span>
+                    · Puesto #{dashboard.userRank} de {dashboard.totalTravelers}
+                  </span>
+                )}
+              </p>
+            )}
+            {profile?.biografia && <p className="profile-bio">{profile.biografia}</p>}
             <div className="profile-xp-wrap">
               <div className="profile-xp__bar">
                 <div
@@ -68,8 +92,8 @@ export default function ProfilePage() {
               <span className="profile-row__icon">
                 <Icon name="award" size={20} />
               </span>
-              <span className="profile-row__label">Mis logros</span>
-              <span className="profile-row__count">{profile?.resenas_count ?? 7}</span>
+              <span className="profile-row__label">Mis logros y ranking</span>
+              <span className="profile-row__count">{dashboard.badgesCount}</span>
               <Icon name="chevron-right" size={18} className="profile-row__chevron" />
             </Link>
             <Link to="/planificador" className="profile-row">
@@ -77,7 +101,7 @@ export default function ProfilePage() {
                 <Icon name="route" size={20} />
               </span>
               <span className="profile-row__label">Rutas completadas</span>
-              <span className="profile-row__count">{profile?.rutas_completadas ?? 5}</span>
+              <span className="profile-row__count">{routesCount}</span>
               <Icon name="chevron-right" size={18} className="profile-row__chevron" />
             </Link>
             <Link to="/explorar" className="profile-row">
@@ -85,10 +109,42 @@ export default function ProfilePage() {
                 <Icon name="map-pin" size={20} />
               </span>
               <span className="profile-row__label">Lugares visitados</span>
-              <span className="profile-row__count">{profile?.lugares_visitados ?? 18}</span>
+              <span className="profile-row__count">{placesCount}</span>
               <Icon name="chevron-right" size={18} className="profile-row__chevron" />
             </Link>
+            <Link to="/favoritos" className="profile-row">
+              <span className="profile-row__icon">
+                <Icon name="heart" size={20} />
+              </span>
+              <span className="profile-row__label">Favoritos guardados</span>
+              <span className="profile-row__count">{dashboard.favoritesCount}</span>
+              <Icon name="chevron-right" size={18} className="profile-row__chevron" />
+            </Link>
+            <div className="profile-row">
+              <span className="profile-row__icon">
+                <Icon name="star" size={20} />
+              </span>
+              <span className="profile-row__label">Reseñas publicadas</span>
+              <span className="profile-row__count">{reviewsCount}</span>
+            </div>
           </section>
+
+          {dashboard.recentFavorites.length > 0 && (
+            <section className="profile-menu-card profile-recent-card" aria-label="Favoritos recientes">
+              <div className="profile-recent-card__head">
+                <h2>Tus favoritos recientes</h2>
+                <Link to="/favoritos">Ver todos</Link>
+              </div>
+              <div className="profile-recent-list">
+                {dashboard.recentFavorites.map((fav) => (
+                  <Link key={fav.id} to={fav.to} className="profile-recent-chip">
+                    <span className="profile-recent-chip__tag">{fav.label}</span>
+                    <strong>{fav.title}</strong>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           <section className="profile-menu-card" aria-label="Configuración y preferencias">
             <button
@@ -126,10 +182,7 @@ export default function ProfilePage() {
                 aria-checked={offlineMode}
                 aria-label="Activar modo offline"
                 className={`profile-toggle ${offlineMode ? 'on' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOfflineMode(!offlineMode);
-                }}
+                onClick={handleToggleOffline}
               >
                 <span className="profile-toggle__thumb" />
               </button>
@@ -156,6 +209,7 @@ export default function ProfilePage() {
                       type="text"
                       value={nombre}
                       onChange={(e) => setNombre(e.target.value)}
+                      required
                     />
                   </div>
                   <div className="profile-field">
@@ -168,27 +222,77 @@ export default function ProfilePage() {
                     />
                   </div>
                 </div>
-                <div className="profile-field">
-                  <label htmlFor="pf-email">Correo electrónico</label>
-                  <input id="pf-email" type="email" value={user?.email || ''} disabled />
+
+                <div className="profile-field-row">
+                  <div className="profile-field">
+                    <label htmlFor="pf-ciudad">Ciudad de origen</label>
+                    <input
+                      id="pf-ciudad"
+                      type="text"
+                      value={ciudadOrigen}
+                      onChange={(e) => setCiudadOrigen(e.target.value)}
+                      placeholder="Ej: La Serena, Coquimbo"
+                    />
+                  </div>
+                  <div className="profile-field">
+                    <label htmlFor="pf-avatar">URL de foto de perfil (opcional)</label>
+                    <input
+                      id="pf-avatar"
+                      type="url"
+                      value={avatarUrl}
+                      onChange={(e) => setAvatarUrl(e.target.value)}
+                      placeholder="https://..."
+                    />
+                  </div>
                 </div>
-                <Button type="submit" variant="gold" disabled={saving}>
-                  {saving ? 'Guardando...' : 'Guardar cambios'}
-                </Button>
+
+                <div className="profile-field">
+                  <label htmlFor="pf-bio">Sobre ti</label>
+                  <textarea
+                    id="pf-bio"
+                    rows="3"
+                    value={biografia}
+                    onChange={(e) => setBiografia(e.target.value)}
+                    placeholder="Comparte tus intereses turísticos en Andacollo..."
+                  />
+                </div>
+
+                <div className="profile-form__actions">
+                  <Button type="submit" variant="gold" disabled={saving}>
+                    {saving ? 'Guardando...' : 'Guardar cambios'}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setEditing(false);
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                </div>
               </form>
             </section>
           )}
 
-          <div className="profile-signout-wrap">
+          <div className="profile-actions-footer">
+            {profile?.rol === 'admin' && (
+              <Link to="/admin" className="profile-admin-link">
+                <Icon name="shield" size={16} />
+                <span>Ir al Panel de Administración</span>
+              </Link>
+            )}
             <Button
-              variant="danger"
-              fullWidth
+              type="button"
+              variant="outline"
               onClick={(e) => {
-                if (e && e.preventDefault) e.preventDefault();
+                e.preventDefault();
                 signOut();
               }}
             >
-              Cerrar sesión
+              <Icon name="log-out" size={16} />
+              <span>Cerrar sesión</span>
             </Button>
           </div>
         </div>

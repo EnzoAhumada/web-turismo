@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEntityDetail } from '../../hooks/useEntityDetail';
 import { googleMapsDirectionsUrl, googleMapsQuery } from '../../lib/andacolloGeo';
 import DetailLayout from '../../components/layout/DetailLayout';
+import ReviewsSection from '../../components/ui/ReviewsSection';
 
 export default function PlaceDetailPage() {
   const { id } = useParams();
@@ -12,6 +13,7 @@ export default function PlaceDetailPage() {
     toggleFavorite,
     showFullDesc,
     toggleDesc,
+    updateRatingSummary,
     loading,
     error,
   } = useEntityDetail('lugar', id);
@@ -96,6 +98,14 @@ export default function PlaceDetailPage() {
       showFullDesc={showFullDesc}
       onToggleDesc={toggleDesc}
       infoRows={infoRows}
+      reviewsSection={
+        <ReviewsSection
+          entityType="lugar"
+          entityId={id}
+          entityName={place?.nombre}
+          onSummaryChange={updateRatingSummary}
+        />
+      }
       relatedSection={{
         title: 'Otros lugares',
         linkTo: '/explorar',

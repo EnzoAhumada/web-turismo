@@ -28,6 +28,9 @@ import PlacesAdminPage from './pages/admin/PlacesAdminPage';
 import RestaurantsAdminPage from './pages/admin/RestaurantsAdminPage';
 import AccommodationsAdminPage from './pages/admin/AccommodationsAdminPage';
 import EventsAdminPage from './pages/admin/EventsAdminPage';
+import NewsAdminPage from './pages/admin/NewsAdminPage';
+import AstronomyAdminPage from './pages/admin/AstronomyAdminPage';
+import ExperiencesAdminPage from './pages/admin/ExperiencesAdminPage';
 
 export default function App() {
   return (
@@ -59,7 +62,10 @@ export default function App() {
 
           {/* Solo admin */}
           <Route path="/admin" element={<AdminRoute><DashboardPage /></AdminRoute>} />
+          <Route path="/admin/noticias" element={<AdminRoute><NewsAdminPage /></AdminRoute>} />
           <Route path="/admin/lugares" element={<AdminRoute><PlacesAdminPage /></AdminRoute>} />
+          <Route path="/admin/astronomia" element={<AdminRoute><AstronomyAdminPage /></AdminRoute>} />
+          <Route path="/admin/experiencias" element={<AdminRoute><ExperiencesAdminPage /></AdminRoute>} />
           <Route path="/admin/restaurantes" element={<AdminRoute><RestaurantsAdminPage /></AdminRoute>} />
           <Route path="/admin/alojamientos" element={<AdminRoute><AccommodationsAdminPage /></AdminRoute>} />
           <Route path="/admin/eventos" element={<AdminRoute><EventsAdminPage /></AdminRoute>} />

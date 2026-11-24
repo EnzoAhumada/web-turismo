@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useTripPlanner } from '../../hooks/useTripPlanner';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
@@ -19,15 +20,15 @@ export default function TripPlannerPage() {
     toggleInterest,
     budget,
     setBudget,
-    routeStops,
-    generated,
+    itinerary,
     loading,
     generating,
+    saving,
     feedback,
     setFeedback,
     handleGenerate,
     handleSaveRoute,
-    resetPlanner,
+    resetToExample,
   } = useTripPlanner();
 
   return (
@@ -44,7 +45,7 @@ export default function TripPlannerPage() {
           )}
 
           {loading ? (
-            <LoadingState message="Cargando planificador de rutas de Andacollo..." />
+            <LoadingState message="Cargando planificador e itinerario de ejemplo de Andacollo..." />
           ) : (
             <div className="planner-layout">
               <section className="planner-form-section">
@@ -121,71 +122,86 @@ export default function TripPlannerPage() {
                 </form>
               </section>
 
-              <section className="planner-result-section" aria-live="polite">
-                {generated ? (
-                  <>
-                    <div className="planner-result-header">
-                      <h2 className="section-title">Tu ruta para Andacollo</h2>
-                      <div className="planner-result-meta">
-                        <span className="chip active">{duration}</span>
-                        <span className="chip active">{budget}</span>
+              <section className="planner-result" aria-label="Itinerario sugerido">
+                {itinerary && (
+                  <div className="planner-itinerary">
+                    <div className="planner-itinerary__head">
+                      <div>
+                        <span className="planner-itinerary__kicker">
+                          {itinerary.isExample ? 'Ejemplo de itinerario' : 'Ruta personalizada'}
+                        </span>
+                        <h2 className="planner-itinerary__title">{itinerary.title}</h2>
+                        <p className="planner-itinerary__sub">{itinerary.subtitle}</p>
+                      </div>
+                      <div className="planner-itinerary__pills">
+                        <span>
+                          <Icon name="clock" size={14} /> {itinerary.duration}
+                        </span>
+                        <span>
+                          <Icon name="sparkles" size={14} /> {itinerary.estimatedCost}
+                        </span>
                       </div>
                     </div>
 
-                    <ol className="planner-timeline">
-                      {routeStops.map((stop, idx) => (
-                        <li key={stop.id || idx} className="planner-stop">
-                          <div className="planner-stop__time">{stop.time}</div>
-                          <div className="planner-stop__connector">
-                            <span className="planner-stop__dot">
-                              <Icon name={stop.icon || 'map-pin'} size={15} />
-                            </span>
-                            {idx < routeStops.length - 1 && (
-                              <span className="planner-stop__line" aria-hidden="true" />
-                            )}
-                          </div>
-                          <div className="planner-stop__card">
-                            <strong className="planner-stop__title">{stop.title}</strong>
-                            <p className="planner-stop__type">{stop.type}</p>
-                            <p className="planner-stop__duration">
-                              <Icon name="clock" size={13} />
-                              <span>{stop.duration}</span>
-                            </p>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
+                    <div className="planner-days">
+                      {itinerary.days.map((day) => (
+                        <article key={day.dayNumber} className="planner-day-card">
+                          <h3 className="planner-day-card__title">{day.label}</h3>
 
-                    <div className="planner-result-actions">
-                      <Button
-                        variant="primary"
-                        size="md"
-                        onClick={(e) => {
-                          if (e && e.preventDefault) e.preventDefault();
-                          handleSaveRoute();
-                        }}
-                      >
-                        Guardar ruta
-                      </Button>
-                      <Button
-                        variant="outline-dark"
-                        size="md"
-                        onClick={(e) => {
-                          if (e && e.preventDefault) e.preventDefault();
-                          resetPlanner();
-                        }}
-                      >
-                        Nueva búsqueda
-                      </Button>
+                          {day.blocks.map((block) => (
+                            <div key={`${day.dayNumber}-${block.period}`} className="planner-period">
+                              <span className="planner-period__badge">{block.period}</span>
+                              <ol className="planner-timeline">
+                                {block.stops.map((stop) => (
+                                  <li key={stop.id} className="planner-stop">
+                                    <div className="planner-stop__time">{stop.time}</div>
+                                    <div className="planner-stop__card">
+                                      <div className="planner-stop__top">
+                                        <span className={`planner-stop__type planner-stop__type--${stop.entityType}`}>
+                                          <Icon name={stop.icon} size={13} />
+                                          <span>{stop.typeLabel}</span>
+                                        </span>
+                                        <span className="planner-stop__cost">{stop.costLabel}</span>
+                                      </div>
+                                      <h4 className="planner-stop__title">{stop.title}</h4>
+                                      <p className="planner-stop__desc">{stop.description}</p>
+                                      <div className="planner-stop__footer">
+                                        <span className="planner-stop__dur">
+                                          <Icon name="clock" size={13} /> {stop.duration}
+                                        </span>
+                                        {stop.routePath && (
+                                          <Link to={stop.routePath} className="planner-stop__link">
+                                            <span>Ver ficha</span>
+                                            <Icon name="arrow-right" size={13} />
+                                          </Link>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ol>
+                            </div>
+                          ))}
+                        </article>
+                      ))}
                     </div>
-                  </>
-                ) : (
-                  <div className="planner-empty">
-                    <span className="planner-empty__icon">
-                      <Icon name="route" size={38} strokeWidth={1.6} />
-                    </span>
-                    <h2>Tu ruta aparecerá aquí</h2>
-                    <p>Configura tus preferencias y genera una ruta personalizada para Andacollo</p>
+
+                    <div className="planner-itinerary__actions">
+                      <Button
+                        type="button"
+                        variant="primary"
+                        onClick={handleSaveRoute}
+                        disabled={saving}
+                      >
+                        <Icon name="check-circle" size={16} />
+                        <span>{saving ? 'Guardando...' : 'Guardar en favoritos y completar (+120 XP)'}</span>
+                      </Button>
+                      {!itinerary.isExample && (
+                        <Button type="button" variant="outline" onClick={resetToExample}>
+                          Ver itinerario de ejemplo
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 )}
               </section>

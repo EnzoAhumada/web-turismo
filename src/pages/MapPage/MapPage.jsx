@@ -77,6 +77,36 @@ export default function MapPage() {
                 </button>
               ))}
             </div>
+
+            {!loading && (
+              <div className="map-mobile-results" aria-label="Resultados en el mapa">
+                {pins.length === 0 ? (
+                  <p className="map-mobile-results__empty">
+                    Sin resultados para tu búsqueda actual.
+                  </p>
+                ) : (
+                  <div className="map-mobile-results__strip">
+                    {pins.slice(0, 12).map((pin) => (
+                      <button
+                        key={pin.id}
+                        type="button"
+                        className={`map-mobile-pill ${selectedPin?.id === pin.id ? 'active' : ''}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          selectPin(pin);
+                        }}
+                      >
+                        <span
+                          className="map-place-item__dot"
+                          style={{ background: pin.color }}
+                        />
+                        <span>{pin.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           <FeedbackBanner type="error" message={error} />

@@ -24,10 +24,10 @@ export default function Card({
       <div className="card__body">
         <div className="card__top-row">
           <h3 className="card__title">{title}</h3>
-          {rating !== undefined && rating !== null && (
-            <span className="card__rating" aria-label={`Calificación ${rating}`}>
+          {rating !== undefined && rating !== null && Number(rating) > 0 && (
+            <span className="card__rating" aria-label={`Calificación ${Number(rating).toFixed(1)}`}>
               <Icon name="star" size={14} filled />
-              <span>{rating}</span>
+              <span>{Number(rating).toFixed(1)}</span>
             </span>
           )}
         </div>
@@ -40,7 +40,13 @@ export default function Card({
             </span>
           )}
           {reviewsCount !== undefined && reviewsCount !== null && (
-            <span className="card__reviews">({reviewsCount} reseñas)</span>
+            <span className="card__reviews">
+              {Number(reviewsCount) === 0
+                ? 'Sin reseñas'
+                : Number(reviewsCount) === 1
+                  ? '(1 reseña)'
+                  : `(${reviewsCount} reseñas)`}
+            </span>
           )}
           {metaExtra && <span className="card__extra">{metaExtra}</span>}
         </div>
