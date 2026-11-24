@@ -3,7 +3,7 @@ import AdminCrudView from '../../../components/admin/AdminCrudView';
 
 const FIELDS = [
   { key: 'nombre',       label: 'Nombre',                       type: 'text',     required: true },
-  { key: 'descripcion',  label: 'Descripción',                  type: 'textarea' },
+  { key: 'descripcion',  label: 'Descripción',                  type: 'richtext' },
   { key: 'imagen_url',   label: 'URL de imagen',                type: 'url' },
   { key: 'direccion',    label: 'Dirección',                    type: 'text' },
   { key: 'horario',      label: 'Horario',                      type: 'text' },

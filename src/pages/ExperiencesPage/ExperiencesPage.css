@@ -10,7 +10,7 @@
 .exp-hero__bg {
   position: absolute;
   inset: 0;
-  background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center/cover no-repeat;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Paisaje_de_Andacollo%2C_Chile.tif/lossy-page1-1600px-Paisaje_de_Andacollo%2C_Chile.tif.jpg') center/cover no-repeat;
 }
 
 .exp-hero__bg::after {

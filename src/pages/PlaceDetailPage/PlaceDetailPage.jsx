@@ -1,10 +1,10 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEntityDetail } from '../../hooks/useEntityDetail';
+import { googleMapsDirectionsUrl, googleMapsQuery } from '../../lib/andacolloGeo';
 import DetailLayout from '../../components/layout/DetailLayout';
 
 export default function PlaceDetailPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const {
     item: place,
     related: nearby,
@@ -13,14 +13,18 @@ export default function PlaceDetailPage() {
     showFullDesc,
     toggleDesc,
     loading,
+    error,
   } = useEntityDetail('lugar', id);
 
+  const mapsQuery = place
+    ? googleMapsQuery({ nombre: place.nombre, direccion: place.direccion })
+    : '';
+
   const statusBadges = [];
+  if (place?.categorias?.nombre) {
+    statusBadges.push({ label: place.categorias.nombre, className: 'place-status open' });
+  }
   if (place?.horario) {
-    statusBadges.push({
-      label: place.abierto_ahora === false ? 'Cerrado ahora' : 'Abierto ahora',
-      className: 'place-status open',
-    });
     statusBadges.push({ label: place.horario, className: 'place-hours' });
   }
 
@@ -28,34 +32,36 @@ export default function PlaceDetailPage() {
   if (place?.direccion) {
     infoRows.push({ icon: 'map-pin', label: 'Dirección', value: place.direccion });
   }
-  if (place?.tiempo_estimado) {
-    infoRows.push({ icon: 'clock', label: 'Tiempo estimado', value: place.tiempo_estimado });
+  if (place?.horario) {
+    infoRows.push({ icon: 'clock', label: 'Horario', value: place.horario });
+  }
+  if (place?.categorias?.nombre) {
+    infoRows.push({ icon: 'compass', label: 'Categoría', value: place.categorias.nombre });
   }
   if (place?.telefono) {
     infoRows.push({ icon: 'phone', label: 'Teléfono', value: place.telefono });
   }
-  if (place?.comuna) {
-    infoRows.push({
-      icon: 'globe',
-      label: 'Ubicación',
-      value: `${place.comuna}, Región de ${place.region || 'Coquimbo'}`,
-    });
-  }
 
   const actions = [
-    { label: 'Cómo llegar', icon: 'navigation', onClick: () => navigate('/mapa') },
     {
-      label: 'Llamar',
-      icon: 'phone',
-      href: place?.telefono ? `tel:${place.telefono.replace(/\s+/g, '')}` : undefined,
+      label: 'Cómo llegar',
+      icon: 'navigation',
+      onClick: () => window.open(googleMapsDirectionsUrl(mapsQuery), '_blank', 'noopener,noreferrer'),
     },
+    ...(place?.telefono
+      ? [{
+          label: 'Llamar',
+          icon: 'phone',
+          href: `tel:${place.telefono.replace(/\s+/g, '')}`,
+        }]
+      : []),
     { label: saved ? 'Guardado' : 'Guardar', icon: 'bookmark', onClick: toggleFavorite },
     {
       label: 'Compartir',
       icon: 'share',
       onClick: () => {
-        if (navigator.share) {
-          navigator.share({ title: place?.nombre, url: window.location.href }).catch(() => {});
+        if (navigator.share && place) {
+          navigator.share({ title: place.nombre, url: window.location.href }).catch(() => {});
         }
       },
     },
@@ -63,9 +69,9 @@ export default function PlaceDetailPage() {
 
   const sidebarCards = [
     {
-      icon: 'calendar',
-      title: '¿Cuándo ir?',
-      text: `La mejor época para visitar es: ${place?.mejor_epoca || 'Todo el año'}.`,
+      icon: 'map-pin',
+      title: 'En Andacollo',
+      text: place?.direccion || 'Lugar turístico de la comuna de Andacollo, Región de Coquimbo.',
     },
   ];
 
@@ -74,15 +80,15 @@ export default function PlaceDetailPage() {
       loading={loading}
       item={place}
       notFoundConfig={{
-        icon: 'search',
-        title: 'Lugar no encontrado',
+        icon: 'map-pin',
+        title: error || 'Lugar no encontrado',
         backTo: '/explorar',
-        backLabel: 'Volver al explorador',
+        backLabel: 'Volver a explorar',
       }}
       backTo="/explorar"
       saved={saved}
       onToggleFavorite={toggleFavorite}
-      subtitle={place?.subtitulo || place?.categorias?.nombre}
+      subtitle={place?.subtitulo || place?.categorias?.nombre || 'Lugar turístico · Andacollo'}
       rating={place?.rating_promedio}
       reviewsCount={place?.resenas_count}
       statusBadges={statusBadges}
@@ -91,12 +97,12 @@ export default function PlaceDetailPage() {
       onToggleDesc={toggleDesc}
       infoRows={infoRows}
       relatedSection={{
-        title: 'Lugares cercanos',
-        linkTo: '/mapa',
-        linkLabel: 'Ver en mapa',
+        title: 'Otros lugares',
+        linkTo: '/explorar',
+        linkLabel: 'Ver todos',
         items: nearby,
       }}
-      mapPreview={Boolean(place?.latitud || place?.imagen_url)}
+      mapQuery={mapsQuery}
       sidebarCards={sidebarCards}
     />
   );

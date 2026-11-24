@@ -9,7 +9,7 @@ export async function getPlaces({
 } = {}) {
   let query = supabase
     .from('lugares')
-    .select('*, categorias(id, nombre, slug, icono, color, color_fondo)');
+    .select('*, categorias(id, nombre, slug)');
 
   if (!includeInactive) {
     query = query.eq('activo', true);
@@ -40,7 +40,7 @@ export async function getPlaces({
 export async function getPlaceById(id) {
   const { data, error } = await supabase
     .from('lugares')
-    .select('*, categorias(id, nombre, slug, icono, color, color_fondo)')
+    .select('*, categorias(id, nombre, slug)')
     .eq('id', id)
     .maybeSingle();
   if (error) throw new Error('No se pudo cargar el detalle del lugar.');

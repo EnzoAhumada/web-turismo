@@ -10,7 +10,7 @@
 .rest-hero__bg {
   position: absolute;
   inset: 0;
-  background: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80') center/cover no-repeat;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Residencial_y_restaurante_La_Criollita_en_Andacollo%2C_Chile.jpg/1600px-Residencial_y_restaurante_La_Criollita_en_Andacollo%2C_Chile.jpg') center/cover no-repeat;
 }
 
 .rest-hero__overlay {

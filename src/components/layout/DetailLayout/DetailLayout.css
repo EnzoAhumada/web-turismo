@@ -246,6 +246,13 @@
   justify-content: center;
 }
 
+.place-map-preview__frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
 .place-map-preview__btn {
   background: var(--color-gold);
   color: var(--color-primary);
@@ -253,6 +260,15 @@
   font-size: var(--text-sm);
   padding: 0.9rem 2rem;
   border-radius: var(--radius-full);
+  text-decoration: none;
+}
+
+.place-map-preview__btn--float {
+  position: absolute;
+  left: 50%;
+  bottom: 1.2rem;
+  transform: translateX(-50%);
+  box-shadow: var(--shadow-card);
 }
 
 .place-sidebar-card {

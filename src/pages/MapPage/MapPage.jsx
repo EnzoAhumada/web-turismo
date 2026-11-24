@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMapExplorer } from '../../hooks/useMapExplorer';
+import { googleMapsDirectionsUrl, googleMapsEmbedUrl } from '../../lib/andacolloGeo';
 import Header from '../../components/layout/Header';
 import SmartImage from '../../components/ui/SmartImage';
 import Icon from '../../components/ui/Icon';
@@ -22,6 +24,13 @@ export default function MapPage() {
     loading,
     error,
   } = useMapExplorer();
+  const [zoom, setZoom] = useState(17);
+  const mapsQuery = selectedPin?.mapsQuery || 'Andacollo, Coquimbo, Chile';
+
+  function selectPin(pin) {
+    setSelectedPin(pin);
+    setZoom(18);
+  }
 
   return (
     <>
@@ -89,7 +98,7 @@ export default function MapPage() {
                     className={`map-place-item ${selectedPin?.id === pin.id ? 'active' : ''}`}
                     onClick={(e) => {
                       e.preventDefault();
-                      setSelectedPin(pin);
+                      selectPin(pin);
                     }}
                   >
                     <span
@@ -116,12 +125,15 @@ export default function MapPage() {
               <div className="map-selected-card__info">
                 <p className="map-selected-card__type">{selectedPin.categoryLabel}</p>
                 <h3 className="map-selected-card__title">{selectedPin.label}</h3>
+                <p className="map-selected-card__address">{selectedPin.address}</p>
                 <div className="map-selected-card__meta">
                   <StarRating value={selectedPin.rating} />
-                  <span className="map-selected-card__dist">
-                    <Icon name="map-pin" size={13} />
-                    <span>{selectedPin.distance}</span>
-                  </span>
+                  {selectedPin.distance && (
+                    <span className="map-selected-card__dist">
+                      <Icon name="map-pin" size={13} />
+                      <span>{selectedPin.distance}</span>
+                    </span>
+                  )}
                 </div>
                 <Link to={selectedPin.to} className="map-selected-card__link">
                   <span>Ver detalles</span>
@@ -132,40 +144,30 @@ export default function MapPage() {
           )}
         </aside>
 
-        <div className="map-area" role="region" aria-label="Mapa interactivo de Andacollo">
+        <div className="map-area" role="region" aria-label="Mapa de Andacollo en Google Maps">
           <div className="map-canvas">
-            <svg className="map-canvas__grid" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
-              <rect width="1000" height="700" fill="#eef2f6" />
-              <path d="M0 180 Q 320 220 550 150 T 1000 210" stroke="#dbe4ee" strokeWidth="22" fill="none" />
-              <path d="M120 0 Q 240 320 190 700" stroke="#ffffff" strokeWidth="18" fill="none" />
-              <path d="M0 440 L 1000 280" stroke="#ffffff" strokeWidth="16" fill="none" />
-              <path d="M460 0 L 580 700" stroke="#ffffff" strokeWidth="16" fill="none" />
-              <path d="M720 0 Q 670 360 820 700" stroke="#ffffff" strokeWidth="14" fill="none" />
-              <circle cx="500" cy="350" r="145" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="6 6" fill="rgba(255,255,255,0.28)" />
-              <circle cx="500" cy="350" r="260" stroke="#cbd5e1" strokeWidth="1.2" strokeDasharray="6 6" fill="none" />
-            </svg>
+            <iframe
+              key={`${selectedPin?.id || 'andacollo'}-${zoom}`}
+              className="map-canvas__frame"
+              title={selectedPin ? `Google Maps: ${selectedPin.label}` : 'Google Maps de Andacollo'}
+              src={googleMapsEmbedUrl(mapsQuery, zoom)}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
 
-            <div className="map-user-dot" title="Tu ubicación en Andacollo">
-              <span />
-            </div>
-
-            {pins.map((pin) => (
-              <button
-                key={pin.id}
-                type="button"
-                className={`map-pin ${selectedPin?.id === pin.id ? 'selected' : ''}`}
-                style={{ left: `${pin.x}%`, top: `${pin.y}%`, '--pin-color': pin.color }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedPin(pin);
-                }}
-                title={pin.label}
-                aria-label={`Pin: ${pin.label}`}
-              >
-                <Icon name="map-pin" size={26} filled />
-                <span className="map-pin__label">{pin.label}</span>
-              </button>
-            ))}
+            {selectedPin && (
+              <div className="map-focus" aria-live="polite">
+                <span className="map-focus__pin" style={{ '--pin-color': selectedPin.color }}>
+                  <span className="map-focus__ring" />
+                  <Icon name="map-pin" size={28} filled />
+                </span>
+                <div className="map-focus__card">
+                  <span className="map-focus__kicker">Ubicación seleccionada</span>
+                  <strong>{selectedPin.label}</strong>
+                  <span>{selectedPin.address}</span>
+                </div>
+              </div>
+            )}
 
             {selectedPin && (
               <Link to={selectedPin.to} className="map-mobile-preview">
@@ -196,19 +198,34 @@ export default function MapPage() {
             <button
               type="button"
               className="map-control-btn"
-              aria-label="Centrar ubicación"
-              onClick={(e) => e.preventDefault()}
+              aria-label="Acercar"
+              onClick={(e) => {
+                e.preventDefault();
+                setZoom((value) => Math.min(value + 1, 20));
+              }}
             >
-              <Icon name="locate" size={18} />
+              <Icon name="plus" size={18} />
             </button>
             <button
               type="button"
-              className="map-control-btn map-control-btn--dark"
-              aria-label="Brújula"
-              onClick={(e) => e.preventDefault()}
+              className="map-control-btn"
+              aria-label="Alejar"
+              onClick={(e) => {
+                e.preventDefault();
+                setZoom((value) => Math.max(value - 1, 12));
+              }}
             >
-              <Icon name="compass" size={18} />
+              <Icon name="minus" size={18} />
             </button>
+            <a
+              className="map-control-btn map-control-btn--dark"
+              href={googleMapsDirectionsUrl(mapsQuery)}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Cómo llegar en Google Maps"
+            >
+              <Icon name="navigation" size={18} />
+            </a>
           </div>
         </div>
       </main>

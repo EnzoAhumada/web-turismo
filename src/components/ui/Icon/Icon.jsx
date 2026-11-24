@@ -402,6 +402,7 @@ const PATHS = {
       <line x1="5" y1="12" x2="19" y2="12" />
     </>
   ),
+  minus: <line x1="5" y1="12" x2="19" y2="12" />,
   coffee: (
     <>
       <path d="M17 8h1a4 4 0 1 1 0 8h-1" />

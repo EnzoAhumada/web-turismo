@@ -1,133 +1,82 @@
-import { Link } from 'react-router-dom';
+import { useMemo, useState } from 'react';
 import { useEvents } from '../../hooks/useEvents';
-import Header from '../../components/layout/Header';
-import Footer from '../../components/layout/Footer';
-import SmartImage from '../../components/ui/SmartImage';
-import Icon from '../../components/ui/Icon';
+import CatalogLayout from '../../components/layout/CatalogLayout';
+import Card from '../../components/ui/Card';
 import FilterTabs from '../../components/ui/FilterTabs';
-import LoadingState from '../../components/ui/LoadingState';
-import EmptyState from '../../components/ui/EmptyState';
-import FeedbackBanner from '../../components/ui/FeedbackBanner';
-import './EventsPage.css';
+import Icon from '../../components/ui/Icon';
 
 export default function EventsPage() {
   const {
     activeTab,
     setActiveTab,
     events,
-    featuredEvent,
     savedEventIds,
     toggleSaveEvent,
     loading,
     error,
     formatDate,
   } = useEvents();
+  const [query, setQuery] = useState('');
+
+  const visibleEvents = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    if (!term) return events;
+    return events.filter((event) => {
+      const text = `${event.nombre || ''} ${event.descripcion || ''} ${event.categoria || ''}`.toLowerCase();
+      return text.includes(term);
+    });
+  }, [events, query]);
 
   return (
-    <>
-      <Header />
-      <main className="page-wrapper">
-        {activeTab === 'Próximos' && featuredEvent && (
-          <section className="events-featured">
-            <div
-              className="events-featured__bg"
-              style={{ backgroundImage: `url(${featuredEvent.imagen_url})` }}
-              aria-hidden="true"
+    <CatalogLayout
+      title="Eventos"
+      subtitle="Fiestas, celebraciones y actividades del calendario de Andacollo."
+      searchPlaceholder="Buscar evento"
+      onSearch={setQuery}
+      toolbar={(
+        <FilterTabs
+          tabs={['Próximos', 'Mis eventos']}
+          activeTab={activeTab}
+          onChange={setActiveTab}
+          ariaLabel="Filtrar eventos"
+        />
+      )}
+      count={visibleEvents.length}
+      countNoun="evento"
+      loading={loading}
+      loadingMessage="Cargando calendario de eventos..."
+      error={error}
+      isEmpty={visibleEvents.length === 0}
+      emptyIcon="calendar"
+      emptyTitle="No hay eventos para mostrar"
+      emptyDescription="Guarda un evento con el marcador para verlo en Mis eventos."
+    >
+      {visibleEvents.map((event) => {
+        const saved = savedEventIds.includes(event.id);
+        return (
+          <div key={event.id} className="catalog-item">
+            <Card
+              image={event.imagen_url}
+              title={event.nombre}
+              subtitle={formatDate(event.fecha_inicio, event.fecha_fin)}
+              badge={event.categoria}
+              metaExtra={event.lugar || event.direccion}
+              to={`/eventos/${event.id}`}
             />
-            <div className="events-featured__content container">
-              <span className="events-featured__eyebrow">Próximo evento destacado</span>
-              <h1 className="events-featured__title">{featuredEvent.nombre}</h1>
-              <p className="events-featured__date">
-                <Icon name="calendar" size={16} />
-                <span>{formatDate(featuredEvent.fecha_inicio, featuredEvent.fecha_fin)}</span>
-              </p>
-              <p className="events-featured__desc">{featuredEvent.descripcion}</p>
-              {featuredEvent.categoria && (
-                <div className="events-featured__tags">
-                  <span className="chip">{featuredEvent.categoria}</span>
-                </div>
-              )}
-            </div>
-          </section>
-        )}
-
-        <div className="container page-content">
-          <FilterTabs
-            tabs={['Próximos', 'Mis eventos']}
-            activeTab={activeTab}
-            onChange={setActiveTab}
-            ariaLabel="Mis eventos"
-          />
-
-          <FeedbackBanner type="error" message={error} />
-
-          {loading ? (
-            <LoadingState message="Cargando calendario de eventos..." />
-          ) : events.length === 0 ? (
-            <EmptyState
-              icon="calendar"
-              title="No hay eventos para mostrar"
-              description="Explora las próximas festividades de Andacollo y guárdalas con el marcador."
-            />
-          ) : (
-            <div className="events-grid">
-              {events.map((event, idx) => {
-                const isSaved = savedEventIds.includes(event.id);
-                return (
-                  <article
-                    key={event.id}
-                    className={`event-card ${idx === 0 ? 'event-card--highlight' : ''}`}
-                  >
-                    <Link to={`/eventos/${event.id}`} className="event-card__img-wrap">
-                      <SmartImage
-                        src={event.imagen_url}
-                        alt={event.nombre}
-                        className="event-card__img"
-                      />
-                      {idx === 0 && (
-                        <span className="event-card__highlight-badge">Destacado</span>
-                      )}
-                    </Link>
-                    <div className="event-card__body">
-                      <div className="event-card__top">
-                        <p className="event-card__date">
-                          <Icon name="calendar" size={14} />
-                          <span>{formatDate(event.fecha_inicio, event.fecha_fin)}</span>
-                        </p>
-                        <button
-                          type="button"
-                          className={`event-card__bookmark ${isSaved ? 'saved' : ''}`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleSaveEvent(event.id);
-                          }}
-                          aria-label={isSaved ? 'Quitar evento guardado' : 'Guardar evento'}
-                        >
-                          <Icon name="bookmark" size={18} filled={isSaved} />
-                        </button>
-                      </div>
-                      <Link to={`/eventos/${event.id}`} className="event-card__title-link">
-                        <h3 className="event-card__title">{event.nombre}</h3>
-                      </Link>
-                      <p className="event-card__category">{event.descripcion}</p>
-                      {event.categoria && (
-                        <div className="event-card__tags">
-                          <span className="chip">{event.categoria}</span>
-                        </div>
-                      )}
-                      <Link to={`/eventos/${event.id}`} className="event-card__detail-btn">
-                        <span>Ver detalles</span>
-                        <Icon name="arrow-right" size={14} />
-                      </Link>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </main>
-      <Footer />
-    </>
+            <button
+              type="button"
+              className={`catalog-item__save${saved ? ' saved' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                toggleSaveEvent(event.id);
+              }}
+              aria-label={saved ? 'Quitar evento guardado' : 'Guardar evento'}
+            >
+              <Icon name="bookmark" size={16} filled={saved} />
+            </button>
+          </div>
+        );
+      })}
+    </CatalogLayout>
   );
 }

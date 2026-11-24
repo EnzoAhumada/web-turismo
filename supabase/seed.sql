@@ -40,7 +40,7 @@ VALUES
     'Basílica Menor de Andacollo',
     'Fe, historia y tradición',
     'Monumento Nacional inaugurado en 1893 y diseñado por Eusebio Chelli. Es el centro espiritual de la Fiesta de Nuestra Señora del Rosario de Andacollo y destaca por su estructura en madera de pino oregón y adobe.',
-    'https://images.unsplash.com/photo-1596496181871-9681eacf9764?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Bas%C3%ADlica_mayor_de_Andacollo.jpg/1600px-Bas%C3%ADlica_mayor_de_Andacollo.jpg',
     'Plaza Videla s/n, Centro de Andacollo',
     '08:00 - 20:00',
     4.8, 120, '1 – 2 horas', '+56 51 243 1020',
@@ -53,7 +53,7 @@ VALUES
     'Observatorio Turístico Collowara',
     'Cielos increíbles en altura',
     'Ubicado a 1.300 metros sobre el nivel del mar en el Cerro El Churqui, es uno de los observatorios turísticos pioneros de Chile con cúpula principal, telescopios de alta precisión y terrazas astronómicas.',
-    'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Lights-out_event_in_Andacollo%2C_Chile_%28ann22004b%29.jpg/1600px-Lights-out_event_in_Andacollo%2C_Chile_%28ann22004b%29.jpg',
     'Cerro El Churqui s/n, a 5 km de Andacollo',
     '19:30 - 00:30',
     4.9, 148, '2.5 – 3 horas', '+56 51 243 1300',
@@ -66,7 +66,7 @@ VALUES
     'Mirador Natural El Toro',
     'Atardeceres únicos y vista panorámica',
     'Mirador cordillerano ubicado en el acceso norte de la comuna. Ofrece una panorámica limpia de los cerros semiáridos y cielo libre de contaminación lumínica para astrofotografía.',
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Panor%C3%A1mica_de_Andacollo.jpg/1600px-Panor%C3%A1mica_de_Andacollo.jpg',
     'Ruta D-51, Acceso Norte Andacollo',
     'Abierto 24 horas',
     4.7, 82, '1 hora', '+56 51 243 1200',
@@ -79,7 +79,7 @@ VALUES
     'Museo de Ofrendas y Casa del Peregrino',
     'Memoria religiosa y bailes chinos',
     'Resguarda cientos de exvotos, trajes históricos de bailes chinos, estandartes y piezas devocionales entregadas a la Virgen del Rosario desde el siglo XIX.',
-    'https://images.unsplash.com/photo-1569761316261-9a8696fa2ca3?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Bas%C3%ADlica_de_Andacollo%2C_interior.jpg/1600px-Bas%C3%ADlica_de_Andacollo%2C_interior.jpg',
     'Calle Urmeneta 599, Centro de Andacollo',
     '10:00 - 18:00',
     4.8, 94, '1 – 1.5 horas', '+56 51 243 1088',
@@ -92,7 +92,7 @@ VALUES
     'Cumbre Astronómica Cerro El Churqui',
     'Observación de la Vía Láctea',
     'Explanada natural en altura rodeada de cielos oscuros clase Bortle 2, utilizada para sesiones de observación a simple vista y telescopios portátiles.',
-    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/The_lights_of_the_town_of_Andacollo%2C_Chile_%28ann22004d%29.tiff/lossy-page1-1600px-The_lights_of_the_town_of_Andacollo%2C_Chile_%28ann22004d%29.tiff.jpg',
     'Sector Alto El Churqui, Andacollo',
     'Abierto 24 horas',
     4.8, 57, '2 horas', '+56 51 243 1300',
@@ -105,7 +105,7 @@ VALUES
     'Parque Minero y Trapiche Churrumata',
     'Historia viva de pirquineros',
     'Circuito patrimonial dedicado a la pequeña minería aurífera y cuprífera de Andacollo, donde se conserva el funcionamiento tradicional de los trapiches de piedra.',
-    'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Trapiche_minero_de_Andacollo%2C_Chile.tif/lossy-page1-1600px-Trapiche_minero_de_Andacollo%2C_Chile.tif.jpg',
     'Sector Churrumata Alto, Andacollo',
     '09:30 - 17:30',
     4.7, 68, '1.5 – 2 horas', '+56 51 243 1410',
@@ -118,7 +118,7 @@ VALUES
     'Templo Chico (Parroquia San Miguel)',
     'Templo histórico del siglo XVIII',
     'Conocido tradicionalmente como el Templo Chico, fue el primer gran santuario de Andacollo antes de la construcción de la Basílica Menor, conservando altares coloniales.',
-    'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Iglesia_Parroquial_de_Andacollo.JPG/1600px-Iglesia_Parroquial_de_Andacollo.JPG',
     'Costado Poniente Plaza Videla, Andacollo',
     '08:30 - 19:00',
     4.8, 76, '45 min', '+56 51 243 1020',
@@ -131,7 +131,7 @@ VALUES
     'Lavaderos de Oro y Mina El Culebrón',
     'Tradición aurífera artesanal',
     'Antigua quebrada aurífera donde generaciones de andacollinos practicaron el bateo artesanal de oro en polvo y vetas de cobre.',
-    'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/7/7b/Templo_Grande_de_Andacollo_bajo_la_Escoria_de_las_Faenas_Mineras.jpg',
     'Quebrada El Culebrón, Andacollo',
     '09:00 - 18:00',
     4.6, 41, '1.5 horas', '+56 51 243 1410',
@@ -144,7 +144,7 @@ VALUES
     'Quebrada y Oasis de Chepiquilla',
     'Senderismo y flora nativa',
     'Sector rural y oasis cordillerano al sur de Andacollo rodeado de algarrobos, espinos y vertientes naturales ideales para caminatas familiares.',
-    'https://images.unsplash.com/photo-1551632811-561732d1e306?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Paisaje_de_Andacollo%2C_Chile.tif/lossy-page1-1600px-Paisaje_de_Andacollo%2C_Chile.tif.jpg',
     'Camino a Chepiquilla Km 6, Andacollo',
     '08:00 - 19:00',
     4.7, 53, '2 – 3 horas', '+56 51 243 1200',
@@ -157,7 +157,7 @@ VALUES
     'Cerro El Curque y Ruta de Petroglifos',
     'Arte rupestre diaguita y paisaje',
     'Sitio arqueológico con grabados rupestres prehispánicos y vistas limpias hacia los valles transversales de la Región de Coquimbo.',
-    'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Paisaje_de_Table_Lume.tif/lossy-page1-1600px-Paisaje_de_Table_Lume.tif.jpg',
     'Sector El Curque, Andacollo',
     'Abierto 24 horas',
     4.7, 39, '2 horas', '+56 51 243 1200',
@@ -170,7 +170,7 @@ VALUES
     'Mirador Astronómico Cruz Verde',
     'Balcón natural sobre la comuna',
     'Punto alto en el sector poniente desde donde se aprecia la silueta iluminada de la Basílica Menor al atardecer y la bóveda celeste nocturna.',
-    'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Llegada_a_Andacollo.jpg/1600px-Llegada_a_Andacollo.jpg',
     'Sector Cruz Verde Alto, Andacollo',
     'Abierto 24 horas',
     4.8, 61, '1 hora', '+56 51 243 1200',
@@ -183,7 +183,7 @@ VALUES
     'Casa del Encuentro Ciudadano',
     'Centro cultural y exposiciones',
     'Espacio municipal de difusión artística, exposiciones fotográficas de Andacollo, artesanía local en piedra combarbalita y cobre.',
-    'https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/5/53/Andacollo_Plaza.jpg',
     'Plaza Videla 50, Andacollo',
     '09:00 - 18:30',
     4.6, 35, '45 min', '+56 51 243 1150',
@@ -226,7 +226,7 @@ VALUES
     'Restaurante Tradicional El Valle',
     'Cabrito al jugo y cazuelas de campo',
     'Clásico andacollino en el centro histórico, reconocido por su cabrito al jugo, cazuelas de ave, empanadas de horno y churrascas con queso de cabra.',
-    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Residencial_y_restaurante_La_Criollita_en_Andacollo%2C_Chile.jpg/1600px-Residencial_y_restaurante_La_Criollita_en_Andacollo%2C_Chile.jpg',
     'Av. Urmeneta 412, Andacollo',
     '12:00 - 22:00 hrs',
     '$$', 4.8, 74, '+56 51 243 1510', 0.6, -30.229100, -71.084900, 45, 58, '#c94a1a', true
@@ -236,7 +236,7 @@ VALUES
     'La Picada del Pirquinero',
     'Comida casera minera y porotos con riendas',
     'Cocina tradicional abundante con menú diario para trabajadores, viajeros y familias, incluyendo pastel de choclo y pan amasado.',
-    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/f/ff/Andacollo_003.jpg',
     'Calle Colón 218, Andacollo',
     '11:30 - 17:30 hrs',
     '$', 4.6, 52, '+56 51 243 1522', 0.9, -30.230200, -71.086100, 41, 52, '#c94a1a', true
@@ -246,7 +246,7 @@ VALUES
     'Terraza Astronómica Collowara & Sabores',
     'Gastronomía regional y maridaje del Elqui',
     'Cenas antes de la observación nocturna con preparaciones de cordero, quesos caprinos premiados y degustación de piscos artesanales de Coquimbo.',
-    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/1/16/Andacollo_City_view.jpg',
     'Camino a Collowara Km 2, Andacollo',
     '18:00 - 23:30 hrs',
     '$$$', 4.9, 63, '+56 51 243 1535', 2.5, -30.241000, -71.075000, 65, 42, '#c94a1a', true
@@ -256,7 +256,7 @@ VALUES
     'Cocinería Patrimonial Doña Rosa',
     'Churrascas al rescoldo y carbonada',
     'Tradicional cocinería familiar frente al circuito religioso, famosa por sus desayunos andacollinos, humitas y guisos caseros.',
-    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Letrero_tur%C3%ADstico_de_Andacollo%2C_Regi%C3%B3n_de_Coquimbo%2C_Chile.jpg/1600px-Letrero_tur%C3%ADstico_de_Andacollo%2C_Regi%C3%B3n_de_Coquimbo%2C_Chile.jpg',
     'Calle Quiteria Varas 210, Andacollo',
     '08:30 - 20:00 hrs',
     '$', 4.7, 45, '+56 51 243 1540', 0.7, -30.228000, -71.083800, 56, 53, '#c94a1a', true
@@ -266,7 +266,7 @@ VALUES
     'Café y Salón de Té El Peregrino',
     'Repostería de nuez, papaya y café de grano',
     'Acogedor café junto a la Plaza Videla con terraza para descansar después de recorrer la Basílica Menor y el Museo de Ofrendas.',
-    'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/9/94/AndacolloPlaza.jpg',
     'Plaza Videla 112, Andacollo',
     '09:00 - 21:00 hrs',
     '$$', 4.8, 58, '+56 51 243 1560', 0.4, -30.228500, -71.084800, 49, 49, '#c94a1a', true
@@ -276,7 +276,7 @@ VALUES
     'Asaduría Solar Las Estrellas de Chepiquilla',
     'Asado caprino en horno solar',
     'Experiencia culinaria sustentable que aprovecha la alta radiación solar de Andacollo para cocinar carnes, panes y dulces típicos.',
-    'https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Aves_de_Andacollo.jpg/1600px-Aves_de_Andacollo.jpg',
     'Sector Chepiquilla Km 4, Andacollo',
     '12:30 - 18:00 hrs (Vie a Dom)',
     '$$', 4.9, 41, '+56 51 243 1599', 4.6, -30.256000, -71.087000, 32, 74, '#c94a1a', true
@@ -307,7 +307,7 @@ VALUES
     'Hostal Patrimonio Minero',
     'Hostal',
     'Habitaciones privadas y familiares a pasos de la Plaza Videla, incluye desayuno campestre con queso de cabra local y estacionamiento interior.',
-    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Llegada_a_Andacollo.jpg/1600px-Llegada_a_Andacollo.jpg',
     'Calle Quiteria Varas 145, Andacollo',
     35000, 4.7, 54, '+56 51 243 1810', 0.8, -30.227900, -71.083500, 62, 55, '#15803d', true
   ),
@@ -316,7 +316,7 @@ VALUES
     'Cabañas Cielos de Collowara',
     'Cabañas',
     'Cabañas equipadas con terraza privada de observación estelar, quincho y vista panorámica hacia el Observatorio Collowara.',
-    'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Paisaje_de_Andacollo%2C_Chile.tif/lossy-page1-1600px-Paisaje_de_Andacollo%2C_Chile.tif.jpg',
     'Parcelación El Churqui Lote 8, Andacollo',
     58000, 4.9, 68, '+56 51 243 1820', 4.2, -30.246000, -71.069000, 68, 36, '#15803d', true
   ),
@@ -325,7 +325,7 @@ VALUES
     'Hostería Plaza del Peregrino',
     'Hostería',
     'Alojamiento tradicional frente al circuito de la Basílica Menor y Templo Chico, ideal para peregrinos y viajeros culturales.',
-    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Bas%C3%ADlica_de_Andacollo_vista_a_trav%C3%A9s_de_la_reja_frontal.jpg/1600px-Bas%C3%ADlica_de_Andacollo_vista_a_trav%C3%A9s_de_la_reja_frontal.jpg',
     'Plaza Videla 88, Andacollo',
     42000, 4.7, 47, '+56 51 243 1830', 0.3, -30.228400, -71.085000, 52, 49, '#15803d', true
   ),
@@ -334,7 +334,7 @@ VALUES
     'Hotel Andacollo Real',
     'Hotel',
     'Habitaciones ejecutivas y familiares en el acceso norte de la comuna con restaurante, climatización y recepción 24 horas.',
-    'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/1/16/Andacollo_City_view.jpg',
     'Ruta D-51 Acceso Norte 320, Andacollo',
     65000, 4.8, 39, '+56 51 243 1840', 1.5, -30.221000, -71.089000, 36, 38, '#15803d', true
   ),
@@ -343,7 +343,7 @@ VALUES
     'Domos Astronómicos Valle del Oro',
     'Domos',
     'Domos geodésicos con techo panorámico transparente para contemplar las estrellas desde la cama en un entorno silencioso.',
-    'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Lights-out_event_in_Andacollo%2C_Chile_%28ann22004b%29.jpg/1600px-Lights-out_event_in_Andacollo%2C_Chile_%28ann22004b%29.jpg',
     'Sector Pan de Azúcar Alto, Andacollo',
     75000, 4.9, 51, '+56 51 243 1855', 5.1, -30.249000, -71.071000, 72, 46, '#15803d', true
   ),
@@ -352,7 +352,7 @@ VALUES
     'Residencial Familiar Los Maitenes',
     'Residencial',
     'Ambiente cálido y económico en calle Urmeneta con cocina compartida, patio interior y atención personalizada.',
-    'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Residencial_y_restaurante_La_Criollita_en_Andacollo%2C_Chile.jpg/1600px-Residencial_y_restaurante_La_Criollita_en_Andacollo%2C_Chile.jpg',
     'Av. Urmeneta 740, Andacollo',
     28000, 4.6, 33, '+56 51 243 1870', 1.1, -30.232000, -71.084500, 44, 68, '#15803d', true
   )
@@ -380,7 +380,7 @@ VALUES
     '50000000-0000-0000-0000-000000000001',
     'Fiesta Grande de la Virgen de Andacollo',
     'Tradición, fe y música que reúne a cientos de miles de peregrinos y cofradías de bailes chinos, turbantes y danzas ancestrales en honor a Nuestra Señora del Rosario.',
-    'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Iglesia_Parroquial_de_Andacollo.JPG/1600px-Iglesia_Parroquial_de_Andacollo.JPG',
     '2026-12-23', '2026-12-27',
     'Religión y Patrimonio', 'Basílica Menor y Plaza Videla, Andacollo', false, true
   ),
@@ -388,7 +388,7 @@ VALUES
     '50000000-0000-0000-0000-000000000002',
     'Festival de las Estrellas en Collowara',
     'Jornadas de observación astronómica comunitaria con telescopios profesionales, astrofotografía y charlas científicas bajo los cielos de Coquimbo.',
-    'https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/The_lights_of_the_town_of_Andacollo%2C_Chile_%28ann22004d%29.tiff/lossy-page1-1600px-The_lights_of_the_town_of_Andacollo%2C_Chile_%28ann22004d%29.tiff.jpg',
     '2027-01-10', '2027-01-12',
     'Astronomía y Ciencia', 'Observatorio Collowara, Andacollo', true, true
   ),
@@ -396,7 +396,7 @@ VALUES
     '50000000-0000-0000-0000-000000000003',
     'Feria Gastronómica y Costumbrista del Valle',
     'Sabores del valle con productores de queso de cabra, asado caprino, repostería tradicional, artesanía en cobre y música folclórica.',
-    'https://images.unsplash.com/photo-1555244162-803834f70033?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/5/53/Andacollo_Plaza.jpg',
     '2027-02-15', '2027-02-16',
     'Gastronomía y Cultura', 'Parque Oasis de Andacollo', false, true
   ),
@@ -404,7 +404,7 @@ VALUES
     '50000000-0000-0000-0000-000000000004',
     'Fiesta Chica de Nuestra Señora de Andacollo',
     'Tradicional peregrinación de primavera celebrada el primer domingo de octubre con procesión por las calles céntricas y bailes religiosos.',
-    'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Bas%C3%ADlica_mayor_de_Andacollo.jpg/1600px-Bas%C3%ADlica_mayor_de_Andacollo.jpg',
     '2027-10-03', '2027-10-04',
     'Religión y Tradición', 'Santuario de Andacollo', false, true
   ),
@@ -412,7 +412,7 @@ VALUES
     '50000000-0000-0000-0000-000000000005',
     'Celebración Día del Minero de San Lorenzo',
     'Homenaje a los pirquineros y trabajadores mineros de Andacollo con misa minera, feria patrimonial y demostración de trapiches.',
-    'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Trabajador_en_Trapiche_minero_de_Andacollo%2C_Chile.tif/lossy-page1-1600px-Trabajador_en_Trapiche_minero_de_Andacollo%2C_Chile.tif.jpg',
     '2027-08-10', '2027-08-10',
     'Minería y Cultura', 'Plaza Videla y Parque Churrumata', false, true
   ),
@@ -420,7 +420,7 @@ VALUES
     '50000000-0000-0000-0000-000000000006',
     'Velada Astronómica Equinoccio y Meteoros',
     'Observación nocturna guiada de cielo profundo y lluvia de meteoros desde las cumbres de Andacollo.',
-    'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Panor%C3%A1mica_de_Andacollo.jpg/1600px-Panor%C3%A1mica_de_Andacollo.jpg',
     '2027-03-21', '2027-03-21',
     'Astronomía', 'Mirador El Toro y Cerro Collowara', true, true
   )
@@ -444,42 +444,42 @@ VALUES
     '60000000-0000-0000-0000-000000000001',
     'Tour Minero Guiado',
     'Recorrido guiado junto a pirquineros locales por el Parque Minero Churrumata con demostración en vivo de molienda en trapiche y bateo de oro.',
-    'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Trapiche_minero_de_Andacollo%2C_Chile.tif/lossy-page1-1600px-Trapiche_minero_de_Andacollo%2C_Chile.tif.jpg',
     'Tours', 25000, '2.5 horas', true, 4.8, 52, 'pickaxe'
   ),
   (
     '60000000-0000-0000-0000-000000000002',
     'Cabalgata por el Valle',
     'Cabalgata guiada por senderos cordilleranos y quebradas semiáridas de Chepiquilla con detención en miradores panorámicos.',
-    'https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Aves_de_Andacollo.jpg/1600px-Aves_de_Andacollo.jpg',
     'Aventura', 30000, '3 horas', true, 4.7, 38, 'mountain'
   ),
   (
     '60000000-0000-0000-0000-000000000003',
     'Noche de Estrellas en Collowara',
     'Observación astronómica por telescopios de 14 y 16 pulgadas, charla de cosmovisión andina y sesión fotográfica nocturna.',
-    'https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Lights-out_event_in_Andacollo%2C_Chile_%28ann22004b%29.jpg/1600px-Lights-out_event_in_Andacollo%2C_Chile_%28ann22004b%29.jpg',
     'Tours', 20000, '3 horas', true, 4.9, 89, 'moon-star'
   ),
   (
     '60000000-0000-0000-0000-000000000004',
     'Taller de Churrascas y Cata Caprina',
     'Aprende a preparar churrascas tradicionales al rescoldo acompañadas de quesos artesanales de crianceros de Andacollo.',
-    'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/f/ff/Andacollo_003.jpg',
     'Gastronomía', 15000, '2 horas', true, 4.8, 41, 'utensils'
   ),
   (
     '60000000-0000-0000-0000-000000000005',
     'Trekking Fotográfico Mirador El Toro',
     'Caminata interpretativa al atardecer hasta la cumbre del Mirador El Toro con guía especializado en paisaje y astrofotografía.',
-    'https://images.unsplash.com/photo-1551632811-561732d1e306?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Paisaje_de_Table_Lume.tif/lossy-page1-1600px-Paisaje_de_Table_Lume.tif.jpg',
     'Aventura', 18000, '3 horas', true, 4.8, 34, 'camera'
   ),
   (
     '60000000-0000-0000-0000-000000000006',
     'Ruta Gastronómica del Cabrito y Horno Solar',
     'Degustación guiada por cocinerías tradicionales y demostración de cocina en horno solar en el sector rural de Chepiquilla.',
-    'https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Letrero_tur%C3%ADstico_de_Andacollo%2C_Regi%C3%B3n_de_Coquimbo%2C_Chile.jpg/1600px-Letrero_tur%C3%ADstico_de_Andacollo%2C_Regi%C3%B3n_de_Coquimbo%2C_Chile.jpg',
     'Gastronomía', 22000, '2.5 horas', true, 4.9, 29, 'sun'
   )
 ON CONFLICT (id) DO UPDATE SET

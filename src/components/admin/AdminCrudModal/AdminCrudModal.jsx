@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { RichTextEditor } from '../../ui/RichText';
 import '../AdminCrud.css';
 
 export default function AdminCrudModal({ title, fields, record, onSave, onClose }) {
@@ -35,7 +36,13 @@ export default function AdminCrudModal({ title, fields, record, onSave, onClose 
           {fields.map((field) => (
             <div key={field.key} className="modal__field">
               <label htmlFor={`f-${field.key}`}>{field.label}</label>
-              {field.type === 'textarea' ? (
+              {field.type === 'richtext' ? (
+                <RichTextEditor
+                  id={`f-${field.key}`}
+                  value={form[field.key]}
+                  onChange={(value) => handleChange(field.key, value)}
+                />
+              ) : field.type === 'textarea' ? (
                 <textarea
                   id={`f-${field.key}`}
                   value={form[field.key]}

@@ -3,10 +3,12 @@ import Header from '../Header';
 import Footer from '../Footer';
 import SmartImage from '../../ui/SmartImage';
 import Icon from '../../ui/Icon';
+import RichText from '../../ui/RichText';
 import LoadingState from '../../ui/LoadingState';
 import EmptyState from '../../ui/EmptyState';
 import Card from '../../ui/Card';
 import StarRating from '../../ui/StarRating';
+import { googleMapsDirectionsUrl, googleMapsEmbedUrl } from '../../../lib/andacolloGeo';
 import './DetailLayout.css';
 
 export default function DetailLayout({
@@ -32,6 +34,7 @@ export default function DetailLayout({
   infoRows = [],
   relatedSection = null,
   mapPreview = false,
+  mapQuery = '',
   sidebarCards = [],
 }) {
   if (loading) {
@@ -139,9 +142,10 @@ export default function DetailLayout({
               {item.descripcion && (
                 <section className="place-section">
                   <h2 className="place-section__title">Descripción</h2>
-                  <p className={`place-desc ${showFullDesc ? '' : 'truncated'}`}>
-                    {item.descripcion}
-                  </p>
+                  <RichText
+                    value={item.descripcion}
+                    className={`place-desc ${showFullDesc ? '' : 'truncated'}`}
+                  />
                   {onToggleDesc && (
                     <button
                       type="button"
@@ -199,7 +203,26 @@ export default function DetailLayout({
             </article>
 
             <aside className="place-sidebar">
-              {mapPreview && (
+              {mapQuery && (
+                <div className="place-map-preview">
+                  <iframe
+                    className="place-map-preview__frame"
+                    title={`Ubicación de ${item.nombre}`}
+                    src={googleMapsEmbedUrl(mapQuery, 16)}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                  <a
+                    className="place-map-preview__btn place-map-preview__btn--float"
+                    href={googleMapsDirectionsUrl(mapQuery)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Cómo llegar
+                  </a>
+                </div>
+              )}
+              {mapPreview && !mapQuery && (
                 <div className="place-map-preview">
                   <SmartImage src={item.imagen_url} alt="Mapa de ubicación" />
                   <div className="place-map-preview__overlay">
