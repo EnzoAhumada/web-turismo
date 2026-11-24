@@ -625,22 +625,90 @@ ON CONFLICT (id) DO UPDATE SET
   progreso_base = EXCLUDED.progreso_base,
   completado_base = EXCLUDED.completado_base;
 
--- 13. PROFILES DE COMUNIDAD (5 perfiles para ranking)
-INSERT INTO public.profiles (id, nombre, apellido, avatar_url, rol, nivel, xp, lugares_visitados, rutas_completadas, resenas_count, titulo_nivel)
+-- 13. USUARIOS DE COMUNIDAD (cuentas de Auth + perfil público)
+-- El rol queda siempre en viajero. La contraseña se genera al azar y no permite ingreso.
+ALTER TABLE public.profiles DROP CONSTRAINT IF EXISTS profiles_rol_check;
+ALTER TABLE public.profiles
+  ADD CONSTRAINT profiles_rol_check
+  CHECK (rol IN ('user', 'viajero', 'admin'));
+INSERT INTO auth.users (
+  instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+  raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
+  is_sso_user, is_anonymous
+)
+SELECT
+  '00000000-0000-0000-0000-000000000000',
+  comunidad.id,
+  'authenticated',
+  'authenticated',
+  comunidad.email,
+  extensions.crypt(encode(extensions.gen_random_bytes(32), 'hex'), extensions.gen_salt('bf')),
+  now(),
+  '{"provider":"email","providers":["email"]}'::jsonb,
+  jsonb_build_object('nombre', comunidad.nombre, 'apellido', comunidad.apellido),
+  now(),
+  now(),
+  false,
+  false
+FROM (
+  VALUES
+    ('a0000000-0000-0000-0000-000000000001'::uuid, 'carlos.munoz@visitantes.andacollo.local', 'Carlos', 'Muñoz'),
+    ('a0000000-0000-0000-0000-000000000002'::uuid, 'maria.torres@visitantes.andacollo.local', 'María', 'Torres'),
+    ('a0000000-0000-0000-0000-000000000003'::uuid, 'ana.valdes@visitantes.andacollo.local', 'Ana', 'Valdés'),
+    ('a0000000-0000-0000-0000-000000000004'::uuid, 'pedro.silva@visitantes.andacollo.local', 'Pedro', 'Silva'),
+    ('a0000000-0000-0000-0000-000000000005'::uuid, 'lucia.perez@visitantes.andacollo.local', 'Lucía', 'Pérez')
+) AS comunidad(id, email, nombre, apellido)
+ON CONFLICT (id) DO UPDATE SET
+  email = EXCLUDED.email,
+  raw_user_meta_data = EXCLUDED.raw_user_meta_data,
+  email_confirmed_at = COALESCE(auth.users.email_confirmed_at, now()),
+  updated_at = now();
+
+INSERT INTO auth.identities (
+  id, user_id, identity_data, provider, provider_id, last_sign_in_at, created_at, updated_at
+)
+SELECT
+  gen_random_uuid(),
+  comunidad.id,
+  jsonb_build_object('sub', comunidad.id::text, 'email', comunidad.email, 'email_verified', true),
+  'email',
+  comunidad.id::text,
+  now(),
+  now(),
+  now()
+FROM (
+  VALUES
+    ('a0000000-0000-0000-0000-000000000001'::uuid, 'carlos.munoz@visitantes.andacollo.local'),
+    ('a0000000-0000-0000-0000-000000000002'::uuid, 'maria.torres@visitantes.andacollo.local'),
+    ('a0000000-0000-0000-0000-000000000003'::uuid, 'ana.valdes@visitantes.andacollo.local'),
+    ('a0000000-0000-0000-0000-000000000004'::uuid, 'pedro.silva@visitantes.andacollo.local'),
+    ('a0000000-0000-0000-0000-000000000005'::uuid, 'lucia.perez@visitantes.andacollo.local')
+) AS comunidad(id, email)
+ON CONFLICT (provider_id, provider) DO NOTHING;
+
+INSERT INTO public.profiles (
+  id, nombre, apellido, avatar_url, rol, nivel, xp,
+  lugares_visitados, rutas_completadas, resenas_count, titulo_nivel,
+  biografia, ciudad_origen
+)
 VALUES
-  ('a0000000-0000-0000-0000-000000000001', 'Carlos', 'Muñoz',  'https://i.pravatar.cc/80?img=33', 'viajero', 12, 5820, 42, 15, 19, 'Maestro de Andacollo'),
-  ('a0000000-0000-0000-0000-000000000002', 'María',  'Torres', 'https://i.pravatar.cc/80?img=47', 'viajero', 10, 4950, 36, 12, 14, 'Guía de las Estrellas'),
-  ('a0000000-0000-0000-0000-000000000003', 'Ana',    'Valdés', 'https://i.pravatar.cc/80?img=44', 'viajero', 3,  1200, 23, 8,  7,  'Viajero Experto'),
-  ('a0000000-0000-0000-0000-000000000004', 'Pedro',  'Silva',  'https://i.pravatar.cc/80?img=12', 'viajero', 2,  840,  11, 4,  3,  'Explorador Curioso'),
-  ('a0000000-0000-0000-0000-000000000005', 'Lucía',  'Pérez',  'https://i.pravatar.cc/80?img=9',  'viajero', 1,  620,  7,  2,  2,  'Viajero Inicial')
+  ('a0000000-0000-0000-0000-000000000001', 'Carlos', 'Muñoz',  'https://i.pravatar.cc/80?img=33', 'viajero', 12, 5820, 42, 15, 19, 'Maestro de Andacollo', 'Recorre Andacollo hace años y comparte reseñas de sus lugares, picadas y hospedajes favoritos.', 'Andacollo'),
+  ('a0000000-0000-0000-0000-000000000002', 'María',  'Torres', 'https://i.pravatar.cc/80?img=47', 'viajero', 10, 4950, 36, 12, 14, 'Guía de las Estrellas', 'Guía local de observación astronómica en Collowara y los miradores de la comuna.', 'Andacollo'),
+  ('a0000000-0000-0000-0000-000000000003', 'Ana',    'Valdés', 'https://i.pravatar.cc/80?img=44', 'viajero', 3,  1200, 23, 8,  7,  'Viajero Experto', 'Viaja por la Región de Coquimbo y documenta patrimonio, gastronomía y senderos.', 'La Serena'),
+  ('a0000000-0000-0000-0000-000000000004', 'Pedro',  'Silva',  'https://i.pravatar.cc/80?img=12', 'viajero', 2,  840,  11, 4,  3,  'Explorador Curioso', 'Visita Andacollo en familia y recomienda paseos cortos cerca de la plaza.', 'Coquimbo'),
+  ('a0000000-0000-0000-0000-000000000005', 'Lucía',  'Pérez',  'https://i.pravatar.cc/80?img=9',  'viajero', 1,  620,  7,  2,  2,  'Viajero Inicial', 'Primera visita a Andacollo, con reseñas de la basílica y los alojamientos del centro.', 'Ovalle')
 ON CONFLICT (id) DO UPDATE SET
   nombre = EXCLUDED.nombre,
   apellido = EXCLUDED.apellido,
+  avatar_url = EXCLUDED.avatar_url,
+  rol = 'viajero',
   nivel = EXCLUDED.nivel,
   xp = EXCLUDED.xp,
   lugares_visitados = EXCLUDED.lugares_visitados,
   rutas_completadas = EXCLUDED.rutas_completadas,
-  titulo_nivel = EXCLUDED.titulo_nivel;
+  titulo_nivel = EXCLUDED.titulo_nivel,
+  biografia = EXCLUDED.biografia,
+  ciudad_origen = EXCLUDED.ciudad_origen;
 
 -- 14. RUTAS_PARADAS (10 paradas reales de Andacollo)
 INSERT INTO public.rutas_paradas (
