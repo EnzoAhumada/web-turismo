@@ -16,12 +16,13 @@ export default function ExperienceDetailPage() {
   } = useEntityDetail('experiencia', id);
 
   function formatPrice(p) {
-    if (!p) return null;
+    if (p === 0 || p === '0') return 'Gratis';
+    if (p == null || p === '') return null;
     return `$${Number(p).toLocaleString('es-CL')} CLP`;
   }
 
   const statusBadges = [];
-  if (item?.precio) {
+  if (item?.precio != null && formatPrice(item.precio)) {
     statusBadges.push({ label: formatPrice(item.precio), className: 'place-status open' });
   }
   if (item?.duracion) {
@@ -36,8 +37,13 @@ export default function ExperienceDetailPage() {
   }
 
   const infoRows = [];
-  if (item?.precio) {
-    infoRows.push({ icon: 'award', label: 'Precio', value: `${formatPrice(item.precio)} por persona` });
+  if (item?.precio != null && formatPrice(item.precio)) {
+    const priceLabel = formatPrice(item.precio);
+    infoRows.push({
+      icon: 'award',
+      label: 'Precio',
+      value: priceLabel === 'Gratis' ? 'Ingreso gratuito' : `${priceLabel} por persona`,
+    });
   }
   if (item?.duracion) {
     infoRows.push({ icon: 'clock', label: 'Duración', value: item.duracion });
@@ -66,12 +72,13 @@ export default function ExperienceDetailPage() {
     },
   ];
 
-  if (item?.precio) {
+  if (item?.precio != null && formatPrice(item.precio)) {
+    const priceLabel = formatPrice(item.precio);
     sidebarCards.push({
       icon: 'award',
       title: 'Tarifa',
-      highlight: formatPrice(item.precio),
-      text: `por persona · ${item.duracion || 'consultar duración'}`,
+      highlight: priceLabel,
+      text: priceLabel === 'Gratis' ? 'Ingreso gratuito' : `por persona · ${item.duracion || 'consultar duración'}`,
     });
   }
 

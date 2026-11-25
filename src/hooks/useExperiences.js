@@ -4,7 +4,6 @@ import { getExperiences } from '../services/experiences.service';
 export const EXPERIENCE_TABS = ['Todas', 'Tours', 'Gastronomía', 'Aventura', 'Astroturismo', 'Cultura'];
 
 export function useExperiences() {
-  const [activeTab, setActiveTab] = useState('Todas');
   const [experiences, setExperiences] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -15,7 +14,7 @@ export function useExperiences() {
       setLoading(true);
       setError('');
       try {
-        const data = await getExperiences({ category: activeTab });
+        const data = await getExperiences();
         if (active) setExperiences(data);
       } catch (err) {
         if (active) setError(err?.message || 'Error al cargar experiencias.');
@@ -27,17 +26,16 @@ export function useExperiences() {
     return () => {
       active = false;
     };
-  }, [activeTab]);
+  }, []);
 
   function formatPrice(p) {
-    if (!p) return '';
+    if (p === 0 || p === '0') return 'Gratis';
+    if (p == null || p === '') return 'Consultar';
     return `$${Number(p).toLocaleString('es-CL')} CLP`;
   }
 
   return {
     tabs: EXPERIENCE_TABS,
-    activeTab,
-    setActiveTab,
     experiences,
     loading,
     error,

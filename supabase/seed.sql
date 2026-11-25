@@ -437,50 +437,63 @@ ON CONFLICT (id) DO UPDATE SET
 
 -- 6. EXPERIENCIAS (6 experiencias reales en Andacollo)
 INSERT INTO public.experiencias (
-  id, nombre, descripcion, imagen_url, categoria, precio, duracion, disponible, rating_promedio, resenas_count, icono
+  id, nombre, descripcion, imagen_url, categoria, precio, duracion, incluye,
+  disponible, rating_promedio, resenas_count, icono, comuna, region
 )
 VALUES
   (
     '60000000-0000-0000-0000-000000000001',
-    'Tour Minero Guiado',
-    'Recorrido guiado junto a pirquineros locales por el Parque Minero Churrumata con demostración en vivo de molienda en trapiche y bateo de oro.',
+    'Parque Minero y Trapiche de Churrumata',
+    'Visita al trapiche histórico y al parque minero de Churrumata, donde se conserva la molienda tradicional de Andacollo. No hay una tarifa de entrada publicada para esta experiencia.',
     'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Trapiche_minero_de_Andacollo%2C_Chile.tif/lossy-page1-1600px-Trapiche_minero_de_Andacollo%2C_Chile.tif.jpg',
-    'Tours', 25000, '2.5 horas', true, 4.8, 52, 'pickaxe'
+    'Tours', NULL, '1 hora 30 minutos',
+    ARRAY['Trapiche histórico', 'Paisaje minero', 'Sin tarifa publicada'],
+    true, NULL, 0, 'pickaxe', 'Andacollo', 'Coquimbo'
   ),
   (
     '60000000-0000-0000-0000-000000000002',
-    'Cabalgata por el Valle',
-    'Cabalgata guiada por senderos cordilleranos y quebradas semiáridas de Chepiquilla con detención en miradores panorámicos.',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Aves_de_Andacollo.jpg/1600px-Aves_de_Andacollo.jpg',
-    'Aventura', 30000, '3 horas', true, 4.7, 38, 'mountain'
+    'Mirador astronómico Cruz Verde',
+    'Mirador público sobre Andacollo, usado para ver el pueblo y el cielo nocturno. El acceso no tiene tarifa de entrada publicada.',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Llegada_a_Andacollo.jpg/1600px-Llegada_a_Andacollo.jpg',
+    'Astroturismo', 0, '1 hora',
+    ARRAY['Acceso público', 'Vista del pueblo', 'Sin cobro de entrada'],
+    true, NULL, 0, 'moon-star', 'Andacollo', 'Coquimbo'
   ),
   (
     '60000000-0000-0000-0000-000000000003',
-    'Noche de Estrellas en Collowara',
-    'Observación astronómica por telescopios de 14 y 16 pulgadas, charla de cosmovisión andina y sesión fotográfica nocturna.',
+    'Tour astronómico en el Observatorio Collowara',
+    'Visita al observatorio del Cerro El Churqui: charla en el auditorio, observación en la cúpula y sesión a cielo abierto. Entrada general de $10.000 por persona. Dura 1 hora 30 minutos. Horario de invierno: 19:00, 21:00 y 22:00. Horario de verano: 21:30, 23:00 y 00:30. Reserva al +56 9 9440 8422. El observatorio no incluye transporte.',
     'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Lights-out_event_in_Andacollo%2C_Chile_%28ann22004b%29.jpg/1600px-Lights-out_event_in_Andacollo%2C_Chile_%28ann22004b%29.jpg',
-    'Tours', 20000, '3 horas', true, 4.9, 89, 'moon-star'
+    'Astroturismo', 10000, '1 hora 30 minutos',
+    ARRAY['Charla en el auditorio', 'Observación en la cúpula', 'Sesión a cielo abierto'],
+    true, NULL, 0, 'moon-star', 'Andacollo', 'Coquimbo'
   ),
   (
     '60000000-0000-0000-0000-000000000004',
-    'Taller de Churrascas y Cata Caprina',
-    'Aprende a preparar churrascas tradicionales al rescoldo acompañadas de quesos artesanales de crianceros de Andacollo.',
-    'https://upload.wikimedia.org/wikipedia/commons/f/ff/Andacollo_003.jpg',
-    'Gastronomía', 15000, '2 horas', true, 4.8, 41, 'utensils'
+    'Museo de Ofrendas y Templo Antiguo',
+    'Visita al Museo de Ofrendas, junto al Templo Parroquial de Nuestra Señora del Rosario, inaugurado en 1789. El ingreso al museo y a los templos es gratuito. El santuario publica horario de museo de 10:00 a 14:00 y de 15:00 a 18:00. La imagen de la Virgen permanece en el templo antiguo fuera de las fiestas.',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Bas%C3%ADlica_de_Andacollo%2C_interior.jpg/1600px-Bas%C3%ADlica_de_Andacollo%2C_interior.jpg',
+    'Cultura', 0, '1 hora',
+    ARRAY['Ingreso gratuito', 'Museo de Ofrendas', 'Templo antiguo de 1789'],
+    true, NULL, 0, 'landmark', 'Andacollo', 'Coquimbo'
   ),
   (
     '60000000-0000-0000-0000-000000000005',
-    'Trekking Fotográfico Mirador El Toro',
-    'Caminata interpretativa al atardecer hasta la cumbre del Mirador El Toro con guía especializado en paisaje y astrofotografía.',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Paisaje_de_Table_Lume.tif/lossy-page1-1600px-Paisaje_de_Table_Lume.tif.jpg',
-    'Aventura', 18000, '3 horas', true, 4.8, 34, 'camera'
+    'Mirador El Toro',
+    'Subida al mirador natural El Toro, con vista a los cerros de Andacollo. Es un acceso público, sin tarifa de entrada ni operador de trekking asociado.',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Panor%C3%A1mica_de_Andacollo.jpg/1600px-Panor%C3%A1mica_de_Andacollo.jpg',
+    'Aventura', 0, '1 hora 30 minutos',
+    ARRAY['Acceso público', 'Vista panorámica', 'Sin cobro de entrada'],
+    true, NULL, 0, 'mountain', 'Andacollo', 'Coquimbo'
   ),
   (
     '60000000-0000-0000-0000-000000000006',
-    'Ruta Gastronómica del Cabrito y Horno Solar',
-    'Degustación guiada por cocinerías tradicionales y demostración de cocina en horno solar en el sector rural de Chepiquilla.',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Letrero_tur%C3%ADstico_de_Andacollo%2C_Regi%C3%B3n_de_Coquimbo%2C_Chile.jpg/1600px-Letrero_tur%C3%ADstico_de_Andacollo%2C_Regi%C3%B3n_de_Coquimbo%2C_Chile.jpg',
-    'Gastronomía', 22000, '2.5 horas', true, 4.9, 29, 'sun'
+    'Tour astro solar en el Observatorio Collowara',
+    'Observación solar guiada en el Observatorio Collowara. Entrada general de $4.500 por persona y duración de 1 hora. Horario de invierno a las 16:00 y de verano a las 17:00, ambos modificables. Reserva al +56 9 9440 8422.',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/The_lights_of_the_town_of_Andacollo%2C_Chile_%28ann22004d%29.tiff/lossy-page1-1600px-The_lights_of_the_town_of_Andacollo%2C_Chile_%28ann22004d%29.tiff.jpg',
+    'Astroturismo', 4500, '1 hora',
+    ARRAY['Observación solar guiada', 'Entrada general', 'Horario de temporada'],
+    true, NULL, 0, 'sun', 'Andacollo', 'Coquimbo'
   )
 ON CONFLICT (id) DO UPDATE SET
   nombre = EXCLUDED.nombre,
@@ -489,10 +502,13 @@ ON CONFLICT (id) DO UPDATE SET
   categoria = EXCLUDED.categoria,
   precio = EXCLUDED.precio,
   duracion = EXCLUDED.duracion,
+  incluye = EXCLUDED.incluye,
   disponible = EXCLUDED.disponible,
   rating_promedio = EXCLUDED.rating_promedio,
   resenas_count = EXCLUDED.resenas_count,
-  icono = EXCLUDED.icono;
+  icono = EXCLUDED.icono,
+  comuna = EXCLUDED.comuna,
+  region = EXCLUDED.region;
 
 -- 7. ASTRONOMIA_CONDICIONES (5 condiciones reales del cielo de Andacollo)
 INSERT INTO public.astronomia_condiciones (id, etiqueta, valor, icono, orden, activo)

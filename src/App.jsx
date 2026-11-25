@@ -34,6 +34,7 @@ import EventsAdminPage from './pages/admin/EventsAdminPage';
 import NewsAdminPage from './pages/admin/NewsAdminPage';
 import AstronomyAdminPage from './pages/admin/AstronomyAdminPage';
 import ExperiencesAdminPage from './pages/admin/ExperiencesAdminPage';
+import AstroPhotosAdminPage from './pages/admin/AstroPhotosAdminPage';
 import BookingsAdminPage from './pages/admin/BookingsAdminPage';
 import GuidesAdminPage from './pages/admin/GuidesAdminPage';
 
@@ -74,6 +75,7 @@ export default function App() {
           <Route path="/admin/noticias" element={<AdminRoute><NewsAdminPage /></AdminRoute>} />
           <Route path="/admin/lugares" element={<AdminRoute><PlacesAdminPage /></AdminRoute>} />
           <Route path="/admin/astronomia" element={<AdminRoute><AstronomyAdminPage /></AdminRoute>} />
+          <Route path="/admin/astrofotos" element={<AdminRoute><AstroPhotosAdminPage /></AdminRoute>} />
           <Route path="/admin/experiencias" element={<AdminRoute><ExperiencesAdminPage /></AdminRoute>} />
           <Route path="/admin/restaurantes" element={<AdminRoute><RestaurantsAdminPage /></AdminRoute>} />
           <Route path="/admin/alojamientos" element={<AdminRoute><AccommodationsAdminPage /></AdminRoute>} />
