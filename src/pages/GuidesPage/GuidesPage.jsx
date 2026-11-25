@@ -103,8 +103,8 @@ export default function GuidesPage() {
 
   return (
     <>
-      <Header darkNav />
-      <main className="page-wrapper page-wrapper--dark">
+      <Header />
+      <main className="page-wrapper">
         <div className="container page-content guides-wrap">
           <section className="guides-hero">
             <div className="guides-hero__copy">

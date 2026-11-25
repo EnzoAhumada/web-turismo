@@ -11,6 +11,7 @@ import LoadingState from '../../components/ui/LoadingState';
 import EmptyState from '../../components/ui/EmptyState';
 import FeedbackBanner from '../../components/ui/FeedbackBanner';
 import AstroPhotoUploadModal from '../../components/ui/AstroPhotoUploadModal';
+import AstroPhotoModal from '../../components/ui/AstroPhotoModal';
 import './AstroGalleryPage.css';
 
 export default function AstroGalleryPage() {
@@ -50,8 +51,8 @@ export default function AstroGalleryPage() {
 
   return (
     <>
-      <Header darkNav />
-      <main className="page-wrapper page-wrapper--dark">
+      <Header />
+      <main className="page-wrapper">
         <div className="container page-content astro-gallery-wrap">
           <section className="astro-gallery-hero" aria-label="Condiciones del cielo y galería">
             <div className="astro-gallery-hero__copy">
@@ -195,7 +196,7 @@ export default function AstroGalleryPage() {
 
                   <footer className="astro-photo-card__foot">
                     <Link
-                      to={`/fotografo/${encodeURIComponent(photo.authorHandle)}`}
+                      to={`/usuario/${encodeURIComponent(photo.authorHandle)}`}
                       className="astro-author-link"
                     >
                       <span className="astro-author-avatar">
@@ -231,98 +232,11 @@ export default function AstroGalleryPage() {
         </div>
       </main>
 
-      {activePhoto && (
-        <div
-          className="astro-detail-backdrop"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="astro-detail-title"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setActivePhotoId(null);
-          }}
-        >
-          <div className="astro-detail-modal">
-            <div className="astro-detail-modal__media">
-              <img src={resolveAstroImage(activePhoto.image)} alt={activePhoto.title} />
-            </div>
-
-            <div className="astro-detail-modal__info">
-              <div className="astro-detail-modal__top">
-                <span className="astro-detail-spot">
-                  <Icon name="map-pin" size={13} />
-                  <span>{activePhoto.spot}</span>
-                </span>
-                <button
-                  type="button"
-                  className="astro-detail-close"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActivePhotoId(null);
-                  }}
-                  aria-label="Cerrar detalle"
-                >
-                  <Icon name="x" size={18} />
-                </button>
-              </div>
-
-              <h2 id="astro-detail-title" className="astro-detail-title">
-                {activePhoto.title}
-              </h2>
-              <p className="astro-detail-desc">{activePhoto.description}</p>
-
-              <div className="astro-exif-box">
-                <h3>Parámetros Técnicos (EXIF)</h3>
-                <dl className="astro-exif-grid">
-                  <div>
-                    <dt>Equipo</dt>
-                    <dd>{activePhoto.exif.camera}</dd>
-                  </div>
-                  <div>
-                    <dt>ISO</dt>
-                    <dd>{activePhoto.exif.iso}</dd>
-                  </div>
-                  <div>
-                    <dt>Exposición</dt>
-                    <dd>{activePhoto.exif.shutter}</dd>
-                  </div>
-                  <div>
-                    <dt>Apertura</dt>
-                    <dd>{activePhoto.exif.aperture}</dd>
-                  </div>
-                </dl>
-              </div>
-
-              <div className="astro-detail-modal__foot">
-                <Link
-                  to={`/fotografo/${encodeURIComponent(activePhoto.authorHandle)}`}
-                  className="astro-author-link"
-                  onClick={() => setActivePhotoId(null)}
-                >
-                  <span className="astro-author-avatar">
-                    {activePhoto.authorName.charAt(0).toUpperCase()}
-                  </span>
-                  <div>
-                    <strong>{activePhoto.authorName}</strong>
-                    <span className="astro-author-cta">Ver portafolio completo →</span>
-                  </div>
-                </Link>
-
-                <button
-                  type="button"
-                  className={`astro-like-btn ${activePhoto.liked ? 'liked' : ''}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleToggleLike(activePhoto);
-                  }}
-                >
-                  <Icon name="heart" size={15} filled={activePhoto.liked} />
-                  <span>{activePhoto.likes}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <AstroPhotoModal
+        photo={activePhoto}
+        onClose={() => setActivePhotoId(null)}
+        onToggleLike={handleToggleLike}
+      />
 
       <AstroPhotoUploadModal
         isOpen={uploadOpen}

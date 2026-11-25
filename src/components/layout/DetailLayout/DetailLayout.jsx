@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -8,6 +9,8 @@ import LoadingState from '../../ui/LoadingState';
 import EmptyState from '../../ui/EmptyState';
 import Card from '../../ui/Card';
 import StarRating from '../../ui/StarRating';
+import BookingSection from '../../ui/BookingSection';
+import { useEntityBooking } from '../../../hooks/useEntityBooking';
 import { googleMapsDirectionsUrl, googleMapsEmbedUrl } from '../../../lib/andacolloGeo';
 import './DetailLayout.css';
 
@@ -32,6 +35,7 @@ export default function DetailLayout({
   onToggleDesc,
   infoTitle = 'Información',
   infoRows = [],
+  bookingProps = null,
   bookingSection = null,
   reviewsSection = null,
   relatedSection = null,
@@ -39,6 +43,21 @@ export default function DetailLayout({
   mapQuery = '',
   sidebarCards = [],
 }) {
+  const [activeTab, setActiveTab] = useState('detalle');
+  const booking = useEntityBooking(
+    bookingProps?.entityType || null,
+    bookingProps?.entityId || null,
+    bookingProps?.entityName || item?.nombre || ''
+  );
+
+  useEffect(() => {
+    setActiveTab('detalle');
+  }, [bookingProps?.entityType, bookingProps?.entityId]);
+
+  const hasBooking = Boolean(bookingProps && !booking.loading && booking.config);
+  const activePassesCount = hasBooking
+    ? booking.userBookings.filter((b) => b.estado !== 'cancelada').length
+    : 0;
   if (loading) {
     return <LoadingState fullPage message="Cargando detalles..." />;
   }
@@ -141,70 +160,127 @@ export default function DetailLayout({
                 </div>
               )}
 
-              {item.descripcion && (
-                <section className="place-section">
-                  <h2 className="place-section__title">Descripción</h2>
-                  <RichText
-                    value={item.descripcion}
-                    className={`place-desc ${showFullDesc ? '' : 'truncated'}`}
+              {hasBooking && (
+                <nav
+                  className="detail-submenu"
+                  role="tablist"
+                  aria-label="Secciones del detalle"
+                >
+                  <button
+                    type="button"
+                    role="tab"
+                    id="detail-tab-info"
+                    aria-selected={activeTab === 'detalle'}
+                    className={`detail-submenu__tab ${activeTab === 'detalle' ? 'active' : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveTab('detalle');
+                    }}
+                  >
+                    <Icon name="compass" size={16} />
+                    <span>Información y Detalle</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="detail-tab-booking"
+                    aria-selected={activeTab === 'reservas'}
+                    className={`detail-submenu__tab ${activeTab === 'reservas' ? 'active' : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveTab('reservas');
+                    }}
+                  >
+                    <Icon name="calendar" size={16} />
+                    <span>Servicios y Reserva</span>
+                    {activePassesCount > 0 && (
+                      <span className="detail-submenu__badge">{activePassesCount}</span>
+                    )}
+                  </button>
+                </nav>
+              )}
+
+              {hasBooking && activeTab === 'reservas' ? (
+                <div
+                  role="tabpanel"
+                  aria-labelledby="detail-tab-booking"
+                  className="detail-submenu-panel"
+                >
+                  <BookingSection
+                    booking={booking}
+                    entityType={bookingProps.entityType}
+                    entityId={bookingProps.entityId}
+                    entityName={bookingProps.entityName || item?.nombre}
                   />
-                  {onToggleDesc && (
-                    <button
-                      type="button"
-                      className="place-desc__toggle"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onToggleDesc();
-                      }}
-                    >
-                      {showFullDesc ? 'Ver menos' : 'Ver más'}
-                    </button>
-                  )}
-                </section>
-              )}
-
-              {infoRows.length > 0 && (
-                <section className="place-section">
-                  <h2 className="place-section__title">{infoTitle}</h2>
-                  <dl className="place-info-list">
-                    {infoRows.map((row) => (
-                      <div key={row.label} className="place-info-row">
-                        <dt>
-                          {row.icon && <Icon name={row.icon} size={16} />}
-                          <span>{row.label}</span>
-                        </dt>
-                        <dd>{row.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </section>
-              )}
-
-              {bookingSection}
-
-              {reviewsSection}
-
-              {relatedSection && relatedSection.items?.length > 0 && (
-                <section className="place-section">
-                  <div className="section-header">
-                    <h2 className="section-title">{relatedSection.title}</h2>
-                    <Link to={relatedSection.linkTo} className="section-link">
-                      {relatedSection.linkLabel || 'Ver todos'}
-                    </Link>
-                  </div>
-                  <div className="grid-3">
-                    {relatedSection.items.map((rel) => (
-                      <Card
-                        key={rel.id}
-                        image={rel.image}
-                        title={rel.title}
-                        subtitle={rel.subtitle}
-                        rating={rel.rating}
-                        to={rel.to}
+                </div>
+              ) : (
+                <div role="tabpanel" aria-labelledby="detail-tab-info">
+                  {item.descripcion && (
+                    <section className="place-section">
+                      <h2 className="place-section__title">Descripción</h2>
+                      <RichText
+                        value={item.descripcion}
+                        className={`place-desc ${showFullDesc ? '' : 'truncated'}`}
                       />
-                    ))}
-                  </div>
-                </section>
+                      {onToggleDesc && (
+                        <button
+                          type="button"
+                          className="place-desc__toggle"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            onToggleDesc();
+                          }}
+                        >
+                          {showFullDesc ? 'Ver menos' : 'Ver más'}
+                        </button>
+                      )}
+                    </section>
+                  )}
+
+                  {infoRows.length > 0 && (
+                    <section className="place-section">
+                      <h2 className="place-section__title">{infoTitle}</h2>
+                      <dl className="place-info-list">
+                        {infoRows.map((row) => (
+                          <div key={row.label} className="place-info-row">
+                            <dt>
+                              {row.icon && <Icon name={row.icon} size={16} />}
+                              <span>{row.label}</span>
+                            </dt>
+                            <dd>{row.value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </section>
+                  )}
+
+                  {!bookingProps && bookingSection}
+
+                  {reviewsSection}
+
+                  {relatedSection && relatedSection.items?.length > 0 && (
+                    <section className="place-section">
+                      <div className="section-header">
+                        <h2 className="section-title">{relatedSection.title}</h2>
+                        <Link to={relatedSection.linkTo} className="section-link">
+                          {relatedSection.linkLabel || 'Ver todos'}
+                        </Link>
+                      </div>
+                      <div className="grid-3">
+                        {relatedSection.items.map((rel) => (
+                          <Card
+                            key={rel.id}
+                            image={rel.image}
+                            title={rel.title}
+                            subtitle={rel.subtitle}
+                            rating={rel.rating}
+                            to={rel.to}
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  )}
+                </div>
               )}
             </article>
 

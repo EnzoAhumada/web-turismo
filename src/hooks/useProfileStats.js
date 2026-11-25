@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getProfileDashboardData } from '../services/gamification.service';
-import { getAstroPhotos } from '../services/astrophotos.service';
+import { getAstroPhotos, toggleAstroPhotoLike } from '../services/astrophotos.service';
 import { updateUserGearBag } from '../services/photographers.service';
 import { getUserBookings } from '../services/bookings.service';
 import { getUserGuideRequests } from '../services/guides.service';
@@ -159,6 +159,25 @@ export function useProfileStats() {
     });
   }
 
+  async function handleTogglePhotoLike(photo) {
+    if (!user?.id || !photo?.id) return;
+    try {
+      const res = await toggleAstroPhotoLike(photo.id, user.id, Boolean(photo.liked));
+      setAstroPhotos((prev) =>
+        prev.map((item) =>
+          item.id === photo.id
+            ? { ...item, liked: res.liked, likes: res.likesCount }
+            : item
+        )
+      );
+    } catch (err) {
+      setFeedback({
+        type: 'error',
+        message: err?.message || 'No se pudo actualizar el me gusta de la fotografía.',
+      });
+    }
+  }
+
   async function handleToggleOffline(e) {
     if (e && e.preventDefault) e.preventDefault();
     const nextValue = !offlineMode;
@@ -249,6 +268,7 @@ export function useProfileStats() {
     handleAddGear,
     handleRemoveGear,
     handlePhotoUploaded,
+    handleTogglePhotoLike,
     userBookings,
     guideRequests,
   };

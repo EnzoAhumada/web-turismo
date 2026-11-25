@@ -4,6 +4,7 @@ import {
   getPhotographerProfile,
   toggleFollowPhotographer,
 } from '../services/photographers.service';
+import { toggleAstroPhotoLike } from '../services/astrophotos.service';
 
 export function usePhotographerProfile(handleOrId) {
   const { user } = useAuth();
@@ -65,6 +66,39 @@ export function usePhotographerProfile(handleOrId) {
     }
   }
 
+  async function handleTogglePhotoLike(photo) {
+    if (!photo?.id) return;
+    if (!user?.id) {
+      setFeedback({
+        type: 'info',
+        message: 'Inicia sesión para dar me gusta a esta fotografía.',
+      });
+      return;
+    }
+    try {
+      const res = await toggleAstroPhotoLike(photo.id, user.id, Boolean(photo.liked));
+      setData((prev) => {
+        if (!prev) return prev;
+        const nextPhotos = prev.photos.map((item) =>
+          item.id === photo.id
+            ? { ...item, liked: res.liked, likes: res.likesCount }
+            : item
+        );
+        const totalLikes = nextPhotos.reduce((sum, item) => sum + Number(item.likes || 0), 0);
+        return {
+          ...prev,
+          photos: nextPhotos,
+          stats: { ...prev.stats, totalLikes },
+        };
+      });
+    } catch (err) {
+      setFeedback({
+        type: 'error',
+        message: err?.message || 'No se pudo actualizar el me gusta.',
+      });
+    }
+  }
+
   return {
     data,
     loading,
@@ -72,5 +106,6 @@ export function usePhotographerProfile(handleOrId) {
     setFeedback,
     isOwnProfile: Boolean(user?.id && data?.profile?.id === user.id),
     handleToggleFollow,
+    handleTogglePhotoLike,
   };
 }

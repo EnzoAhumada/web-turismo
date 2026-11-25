@@ -59,6 +59,7 @@ export default function App() {
           <Route path="/fotografia" element={<AstroGalleryPage />} />
           <Route path="/guias" element={<GuidesPage />} />
           <Route path="/fotografo/:handleOrId" element={<PhotographerProfilePage />} />
+          <Route path="/usuario/:handleOrId" element={<PhotographerProfilePage />} />
 
           {/* Requiere auth */}
           <Route path="/inicio" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />

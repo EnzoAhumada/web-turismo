@@ -15,8 +15,13 @@ const STATUS_LABELS = {
   cancelada: 'Cancelada',
 };
 
-export default function BookingSection({ entityType, entityId, entityName }) {
+export default function BookingSection({ entityType, entityId, entityName, booking: injectedBooking = null }) {
   const { user } = useAuth();
+  const internalBooking = useEntityBooking(
+    injectedBooking ? null : entityType,
+    injectedBooking ? null : entityId,
+    entityName
+  );
   const {
     config,
     packages,
@@ -52,7 +57,7 @@ export default function BookingSection({ entityType, entityId, entityName }) {
     handleSubmit,
     handleCancelBooking,
     handleCopyCode,
-  } = useEntityBooking(entityType, entityId, entityName);
+  } = injectedBooking || internalBooking;
 
   const [lightboxItem, setLightboxItem] = useState(null);
   const [cancelTarget, setCancelTarget] = useState(null);

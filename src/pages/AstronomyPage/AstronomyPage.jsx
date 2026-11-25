@@ -14,8 +14,8 @@ export default function AstronomyPage() {
 
   return (
     <>
-      <Header darkNav />
-      <main className="page-wrapper page-wrapper--dark">
+      <Header />
+      <main className="page-wrapper">
         <section className="astro-banner">
           <div className="container">
             <Link to="/explorar" className="astro-banner__back">

@@ -1,15 +1,14 @@
 .astro-banner {
-  background: radial-gradient(circle at top right, rgba(30, 58, 138, 0.45), transparent 55%),
-              linear-gradient(180deg, #020b1a 0%, #031126 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #0d2b57 100%);
   padding-block: var(--space-8) var(--space-6);
-  border-bottom: 0.1rem solid var(--color-dark-line);
+  border-bottom: 0.1rem solid var(--color-border);
 }
 
 .astro-banner__back {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.85);
   font-size: var(--text-sm);
   font-weight: 600;
   margin-bottom: var(--space-4);
@@ -39,12 +38,12 @@
 
 .astro-banner__subtitle {
   font-size: var(--text-base);
-  color: rgba(203, 213, 225, 0.78);
+  color: rgba(255, 255, 255, 0.84);
 }
 
 .astro-layout {
   display: grid;
-  grid-template-columns: 1fr 32rem;
+  grid-template-columns: 1fr 34rem;
   gap: var(--space-6);
   align-items: flex-start;
 }
@@ -56,21 +55,22 @@
 }
 
 .astro-panel {
-  background: rgba(12, 34, 68, 0.72);
-  border: 0.1rem solid var(--color-dark-line);
+  background: var(--color-white);
+  border: 0.1rem solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
+  box-shadow: var(--shadow-card);
 }
 
 .astro-panel--tip {
-  background: rgba(255, 184, 0, 0.08);
-  border-color: rgba(255, 184, 0, 0.25);
+  background: #fffbeb;
+  border-color: rgba(255, 184, 0, 0.45);
 }
 
 .astro-panel__title {
   font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--color-white);
+  font-weight: 800;
+  color: var(--color-primary);
   margin-bottom: var(--space-4);
 }
 
@@ -78,12 +78,16 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  color: var(--color-gold);
+  color: var(--color-primary);
+}
+
+.astro-panel__title--icon svg {
+  color: var(--color-orange);
 }
 
 .astro-panel__text {
   font-size: var(--text-sm);
-  color: rgba(203, 213, 225, 0.85);
+  color: var(--color-text);
   line-height: 1.65;
 }
 
@@ -92,7 +96,7 @@
   grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   gap: var(--space-3);
   padding-bottom: var(--space-5);
-  border-bottom: 0.1rem solid var(--color-dark-line);
+  border-bottom: 0.1rem solid var(--color-border);
 }
 
 .astro-condition-item {
@@ -103,15 +107,16 @@
   gap: 0.6rem;
   padding: var(--space-3);
   border-radius: var(--radius-card);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--color-soft);
+  border: 0.1rem solid var(--color-border);
 }
 
 .astro-condition-item__icon {
   width: 4.4rem;
   height: 4.4rem;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--color-white);
+  background: rgba(255, 184, 0, 0.16);
+  color: var(--color-primary);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -119,13 +124,13 @@
 
 .astro-condition-item__label {
   font-size: var(--text-xs);
-  color: rgba(203, 213, 225, 0.7);
+  color: var(--color-muted);
 }
 
 .astro-condition-item__value {
   font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--color-white);
+  font-weight: 800;
+  color: var(--color-primary);
 }
 
 .astro-best-hours {
@@ -135,10 +140,23 @@
   gap: var(--space-3);
 }
 
+.astro-best-hours__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
 .astro-best-hours__label {
   font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-white);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.astro-best-hours__range {
+  font-size: var(--text-sm);
+  color: var(--color-orange);
+  font-weight: 800;
 }
 
 .astro-best-hours__list {
@@ -153,15 +171,17 @@
   gap: 0.6rem;
   padding: 0.6rem 1.2rem;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.06);
-  border: 0.1rem solid var(--color-dark-line);
+  background: var(--color-soft);
+  border: 0.1rem solid var(--color-border);
   font-size: var(--text-xs);
-  color: rgba(203, 213, 225, 0.85);
+  color: var(--color-text);
 }
 
 .astro-hour-pill--best {
-  border-color: rgba(255, 184, 0, 0.4);
-  color: var(--color-gold);
+  background: rgba(255, 184, 0, 0.16);
+  border-color: var(--color-gold);
+  color: var(--color-primary);
+  font-weight: 700;
 }
 
 .astro-spots-list {
@@ -176,14 +196,16 @@
   gap: var(--space-4);
   padding: var(--space-3);
   border-radius: var(--radius-card);
-  background: rgba(255, 255, 255, 0.04);
-  border: 0.1rem solid rgba(255, 255, 255, 0.08);
-  transition: background 0.2s, border-color 0.2s;
+  background: var(--color-soft);
+  border: 0.1rem solid var(--color-border);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
 }
 
 .astro-spot-row:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 184, 0, 0.4);
+  background: var(--color-white);
+  border-color: var(--color-gold);
+  transform: translateY(-0.15rem);
+  box-shadow: var(--shadow-sm);
 }
 
 .astro-spot-row__img-wrap {
@@ -201,14 +223,14 @@
 
 .astro-spot-row__title {
   font-size: var(--text-base);
-  font-weight: 700;
-  color: var(--color-white);
+  font-weight: 800;
+  color: var(--color-primary);
   margin-bottom: 0.3rem;
 }
 
 .astro-spot-row__desc {
   font-size: var(--text-xs);
-  color: rgba(203, 213, 225, 0.65);
+  color: var(--color-muted);
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -223,7 +245,7 @@
 }
 
 .astro-spot-row__meta .star-rating__value {
-  color: var(--color-white);
+  color: var(--color-primary);
 }
 
 .astro-spot-row__dist {
@@ -231,11 +253,11 @@
   align-items: center;
   gap: 0.4rem;
   font-size: var(--text-xs);
-  color: rgba(203, 213, 225, 0.72);
+  color: var(--color-muted);
 }
 
 .astro-spot-row__chevron {
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--color-muted);
 }
 
 .astro-sidebar {
@@ -251,31 +273,46 @@
   margin-bottom: var(--space-4);
 }
 
+.astro-event-item {
+  padding-bottom: var(--space-3);
+  border-bottom: 0.1rem solid var(--color-border);
+}
+
+.astro-event-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
 .astro-event-item__date {
   display: block;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-gold);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-orange);
   text-transform: uppercase;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 }
 
 .astro-event-item__title {
   display: block;
   font-size: var(--text-sm);
-  color: var(--color-white);
-  margin-bottom: 0.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
 }
 
 .astro-event-item__desc {
   font-size: var(--text-xs);
-  color: rgba(203, 213, 225, 0.68);
+  color: var(--color-muted);
 }
 
 .astro-link {
   font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-gold);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.astro-link:hover {
+  color: var(--color-orange);
 }
 
 .astro-gear-list {
@@ -289,11 +326,12 @@
   align-items: center;
   gap: var(--space-3);
   font-size: var(--text-sm);
-  color: rgba(203, 213, 225, 0.85);
+  color: var(--color-text);
 }
 
 .astro-gear-list li svg {
-  color: var(--color-gold);
+  color: var(--color-orange);
+  flex-shrink: 0;
 }
 
 @media (max-width: 75rem) {
@@ -306,19 +344,4 @@
   .astro-banner__title {
     font-size: var(--text-3xl);
   }
-}
-
-
-.astro-best-hours__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-.astro-best-hours__range {
-  font-size: 1.45rem;
-  color: var(--color-gold);
-  font-weight: 700;
 }

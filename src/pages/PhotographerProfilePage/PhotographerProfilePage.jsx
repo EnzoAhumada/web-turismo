@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { usePhotographerProfile } from '../../hooks/usePhotographerProfile';
 import { resolveAstroImage } from '../../lib/astroScenes';
@@ -8,6 +9,7 @@ import Button from '../../components/ui/Button';
 import LoadingState from '../../components/ui/LoadingState';
 import EmptyState from '../../components/ui/EmptyState';
 import FeedbackBanner from '../../components/ui/FeedbackBanner';
+import AstroPhotoModal from '../../components/ui/AstroPhotoModal';
 import './PhotographerProfilePage.css';
 
 export default function PhotographerProfilePage() {
@@ -19,18 +21,22 @@ export default function PhotographerProfilePage() {
     setFeedback,
     isOwnProfile,
     handleToggleFollow,
+    handleTogglePhotoLike,
   } = usePhotographerProfile(handleOrId);
+
+  const [activePhotoId, setActivePhotoId] = useState(null);
+  const activePhoto = data?.photos?.find((p) => p.id === activePhotoId) || null;
 
   return (
     <>
-      <Header darkNav />
-      <main className="page-wrapper page-wrapper--dark">
+      <Header />
+      <main className="page-wrapper">
         <div className="container page-content pub-profile-wrap">
           <div className="pub-profile-top">
             <Link to="/fotografia" className="pub-profile-back">
-              ← Volver a la Galería Comunitaria
+              ← Volver a Astrofotos
             </Link>
-            <span className="pub-profile-verified">Perfil Verificado · Comunidad ThakiGo</span>
+            <span className="pub-profile-verified">Perfil Público · Comunidad ThakiGo</span>
           </div>
 
           {feedback && (
@@ -42,13 +48,13 @@ export default function PhotographerProfilePage() {
           )}
 
           {loading ? (
-            <LoadingState message="Cargando perfil del astrofotógrafo..." />
+            <LoadingState message="Cargando perfil de usuario..." />
           ) : !data ? (
             <EmptyState
               icon="user"
               title="Perfil no encontrado"
-              description="No encontramos este perfil de astrofotógrafo en la comunidad."
-              actionLabel="Volver a Galería"
+              description="No encontramos este perfil de usuario en la comunidad de Andacollo."
+              actionLabel="Volver a Astrofotos"
               actionTo="/fotografia"
             />
           ) : (
@@ -67,7 +73,7 @@ export default function PhotographerProfilePage() {
                         data.displayName.charAt(0).toUpperCase()
                       )}
                     </div>
-                    <div>
+                    <div className="pub-profile-meta">
                       <div className="pub-profile-name-row">
                         <h1>{data.displayName}</h1>
                         {data.profile.certificacion && (
@@ -76,8 +82,14 @@ export default function PhotographerProfilePage() {
                       </div>
                       <p className="pub-profile-handle">
                         @{data.profile.handle || 'viajero'} ·{' '}
-                        {data.profile.rol_fotografico || data.profile.titulo_nivel || 'Astrofotógrafo Local'}
+                        {data.profile.rol_fotografico || data.profile.titulo_nivel || 'Explorador de Andacollo'}
                       </p>
+                      {data.profile.ciudad_origen && (
+                        <p className="pub-profile-origin">
+                          <Icon name="map-pin" size={14} />
+                          <span>{data.profile.ciudad_origen}</span>
+                        </p>
+                      )}
                       {data.profile.biografia && (
                         <p className="pub-profile-bio">{data.profile.biografia}</p>
                       )}
@@ -106,7 +118,7 @@ export default function PhotographerProfilePage() {
 
                     {isOwnProfile ? (
                       <Link to="/perfil" className="btn btn--gold">
-                        Editar Mi Perfil
+                        Ir a Mi Perfil
                       </Link>
                     ) : (
                       <Button
@@ -117,7 +129,7 @@ export default function PhotographerProfilePage() {
                           handleToggleFollow();
                         }}
                       >
-                        {data.isFollowing ? '✓ Siguiendo' : '+ Seguir Astrofotógrafo'}
+                        {data.isFollowing ? '✓ Siguiendo' : '+ Seguir Usuario'}
                       </Button>
                     )}
                   </div>
@@ -129,7 +141,7 @@ export default function PhotographerProfilePage() {
                   <section className="pub-profile-card">
                     <h2>
                       <Icon name="camera" size={17} />
-                      <span>Gear Bag &amp; Óptica</span>
+                      <span>Equipamiento &amp; Óptica</span>
                     </h2>
                     {data.gearBag.length === 0 ? (
                       <p className="pub-profile-empty">Sin equipamiento listado todavía.</p>
@@ -169,27 +181,61 @@ export default function PhotographerProfilePage() {
                 </aside>
 
                 <section className="pub-profile-col-right">
-                  <h2>Portafolio de {data.displayName} ({data.photos.length})</h2>
+                  <h2>Galería de {data.displayName} ({data.photos.length})</h2>
                   {data.photos.length === 0 ? (
                     <EmptyState
                       icon="camera"
                       title="Sin capturas publicadas"
-                      description="Este perfil aún no ha compartido astrofotografías."
+                      description="Este usuario aún no ha compartido fotografías en su galería."
                     />
                   ) : (
                     <div className="pub-photos-grid">
                       {data.photos.map((p) => (
                         <article key={p.id} className="pub-photo-card">
-                          <div className="pub-photo-card__img">
+                          <button
+                            type="button"
+                            className="pub-photo-card__img"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setActivePhotoId(p.id);
+                            }}
+                            aria-label={`Ver detalles de ${p.title}`}
+                          >
                             <img src={resolveAstroImage(p.image)} alt={p.title} loading="lazy" />
-                            <span>{p.spot}</span>
-                          </div>
+                            <span className="pub-photo-card__spot">
+                              <Icon name="map-pin" size={12} />
+                              <span>{p.spot}</span>
+                            </span>
+                            <span className="pub-photo-card__exif">
+                              {p.exif?.iso || 'EXIF'} · {p.exif?.shutter || 'Ver'}
+                            </span>
+                          </button>
                           <div className="pub-photo-card__body">
-                            <h3>{p.title}</h3>
+                            <button
+                              type="button"
+                              className="pub-photo-card__title"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setActivePhotoId(p.id);
+                              }}
+                            >
+                              {p.title}
+                            </button>
                             <p>{p.description}</p>
                             <div className="pub-photo-card__meta">
-                              <span>{p.exif.camera} · {p.exif.shutter}</span>
-                              <strong>❤️ {p.likes}</strong>
+                              <span>{p.exif?.camera || 'Cámara'} · {p.exif?.shutter || 'No especificado'}</span>
+                              <button
+                                type="button"
+                                className={`pub-like-btn ${p.liked ? 'liked' : ''}`}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleTogglePhotoLike(p);
+                                }}
+                                aria-pressed={Boolean(p.liked)}
+                              >
+                                <Icon name="heart" size={13} filled={Boolean(p.liked)} />
+                                <span>{p.likes}</span>
+                              </button>
                             </div>
                           </div>
                         </article>
@@ -202,6 +248,14 @@ export default function PhotographerProfilePage() {
           )}
         </div>
       </main>
+
+      <AstroPhotoModal
+        photo={activePhoto}
+        onClose={() => setActivePhotoId(null)}
+        onToggleLike={handleTogglePhotoLike}
+        hideAuthorLink
+      />
+
       <Footer />
     </>
   );

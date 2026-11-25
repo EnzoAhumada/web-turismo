@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import { useEntityDetail } from '../../hooks/useEntityDetail';
 import { googleMapsDirectionsUrl, googleMapsQuery } from '../../lib/andacolloGeo';
 import DetailLayout from '../../components/layout/DetailLayout';
-import BookingSection from '../../components/ui/BookingSection';
 import ReviewsSection from '../../components/ui/ReviewsSection';
 
 export default function PlaceDetailPage() {
@@ -99,13 +98,11 @@ export default function PlaceDetailPage() {
       showFullDesc={showFullDesc}
       onToggleDesc={toggleDesc}
       infoRows={infoRows}
-      bookingSection={
-        <BookingSection
-          entityType="lugar"
-          entityId={id}
-          entityName={place?.nombre}
-        />
-      }
+      bookingProps={{
+        entityType: 'lugar',
+        entityId: id,
+        entityName: place?.nombre,
+      }}
       reviewsSection={
         <ReviewsSection
           entityType="lugar"
