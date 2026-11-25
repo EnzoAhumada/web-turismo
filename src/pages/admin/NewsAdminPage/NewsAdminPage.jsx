@@ -18,6 +18,14 @@ function formatNewsDate(value) {
   });
 }
 
+function toDatetimeLocal(value) {
+  if (!value) return '';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  const pad = (part) => String(part).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
 const FIELDS = [
   { key: 'titulo', label: 'Titular', type: 'text', required: true },
   {
@@ -39,6 +47,20 @@ const FIELDS = [
   { key: 'contenido', label: 'Contenido completo', type: 'textarea', required: true },
   { key: 'imagen_url', label: 'URL de imagen', type: 'url' },
   { key: 'url_externa', label: 'Enlace externo (opcional)', type: 'url' },
+  { key: 'slug', label: 'Identificador en la URL', type: 'text' },
+  { key: 'fecha_publicacion', label: 'Fecha de publicación', type: 'datetime-local' },
+  { key: 'comuna', label: 'Comuna', type: 'text', default: 'Andacollo' },
+  { key: 'region', label: 'Región', type: 'text', default: 'Coquimbo' },
+  {
+    key: 'origen',
+    label: 'Origen',
+    type: 'select',
+    default: 'manual',
+    options: [
+      { value: 'manual', label: 'Manual' },
+      { value: 'automatica', label: 'Automática' },
+    ],
+  },
   {
     key: 'destacada',
     label: 'Noticia destacada',
@@ -111,16 +133,21 @@ export default function NewsAdminPage() {
     ascending: false,
     transformPayload: (form) => ({
       titulo: form.titulo?.trim(),
-      slug: buildNewsSlug(form.titulo),
+      slug: form.slug?.trim() || buildNewsSlug(form.titulo),
       categoria: form.categoria || 'Comuna',
       fuente: form.fuente?.trim() || 'Municipalidad de Andacollo',
       resumen: form.resumen?.trim(),
       contenido: form.contenido?.trim(),
       imagen_url: form.imagen_url?.trim() || null,
       url_externa: form.url_externa?.trim() || null,
+      fecha_publicacion: form.fecha_publicacion
+        ? new Date(form.fecha_publicacion).toISOString()
+        : new Date().toISOString(),
+      comuna: form.comuna?.trim() || 'Andacollo',
+      region: form.region?.trim() || 'Coquimbo',
       destacada: form.destacada === 'true' || form.destacada === true,
       activa: form.activa === 'true' || form.activa === true,
-      origen: 'manual',
+      origen: form.origen === 'automatica' ? 'automatica' : 'manual',
       updated_at: new Date().toISOString(),
     }),
   });
@@ -145,6 +172,22 @@ export default function NewsAdminPage() {
         message: result?.message || 'No se pudieron traer noticias externas. Se mantienen los registros locales.',
       });
     }
+  }
+
+  function openModal(record) {
+    if (!record?.id) {
+      crud.setModalRecord({});
+      return;
+    }
+    crud.setModalRecord({
+      ...record,
+      fecha_publicacion: toDatetimeLocal(record.fecha_publicacion),
+      destacada: record.destacada ? 'true' : 'false',
+      activa: record.activa === false ? 'false' : 'true',
+      origen: record.origen === 'automatica' ? 'automatica' : 'manual',
+      comuna: record.comuna || 'Andacollo',
+      region: record.region || 'Coquimbo',
+    });
   }
 
   return (
@@ -185,7 +228,19 @@ export default function NewsAdminPage() {
         createButtonLabel="+ Nueva noticia"
         columns={COLUMNS}
         fields={FIELDS}
-        crud={crud}
+        rows={crud.rows}
+        loading={crud.loading}
+        feedback={crud.feedback}
+        onClearFeedback={crud.clearFeedback}
+        modalRecord={crud.modalRecord}
+        onOpenModal={openModal}
+        onCloseModal={() => crud.setModalRecord(null)}
+        onSave={crud.handleSave}
+        confirmDeleteTarget={crud.confirmDeleteTarget}
+        deleting={crud.deleting}
+        onRequestDelete={crud.requestDelete}
+        onCancelDelete={crud.cancelDelete}
+        onConfirmDelete={crud.confirmDelete}
       />
     </div>
   );

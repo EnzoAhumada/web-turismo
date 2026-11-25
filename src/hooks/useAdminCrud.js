@@ -97,6 +97,7 @@ export function useAdminCrud({
     feedback,
     clearFeedback: () => setFeedback(null),
     handleSave,
+    reload: fetchRows,
     requestDelete,
     cancelDelete,
     confirmDelete,
