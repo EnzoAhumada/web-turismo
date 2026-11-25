@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEntityDetail } from '../../hooks/useEntityDetail';
 import DetailLayout from '../../components/layout/DetailLayout';
+import BookingSection from '../../components/ui/BookingSection';
 import ReviewsSection from '../../components/ui/ReviewsSection';
 
 export default function AccommodationDetailPage() {
@@ -95,6 +96,13 @@ export default function AccommodationDetailPage() {
       showFullDesc={showFullDesc}
       onToggleDesc={toggleDesc}
       infoRows={infoRows}
+      bookingSection={
+        <BookingSection
+          entityType="alojamiento"
+          entityId={id}
+          entityName={item?.nombre}
+        />
+      }
       reviewsSection={
         <ReviewsSection
           entityType="alojamiento"

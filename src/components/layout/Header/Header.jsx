@@ -15,6 +15,8 @@ const NAV_LINKS = [
   { to: '/eventos',      label: 'Eventos' },
   { to: '/experiencias', label: 'Experiencias' },
   { to: '/astronomia',   label: 'Astronomía' },
+  { to: '/fotografia',   label: 'Astrofotos' },
+  { to: '/guias',        label: 'Guías' },
 ];
 
 export default function Header({ darkNav = false }) {

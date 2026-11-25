@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEntityDetail } from '../../hooks/useEntityDetail';
 import DetailLayout from '../../components/layout/DetailLayout';
+import BookingSection from '../../components/ui/BookingSection';
 
 export default function ExperienceDetailPage() {
   const { id } = useParams();
@@ -96,6 +97,13 @@ export default function ExperienceDetailPage() {
       showFullDesc={showFullDesc}
       onToggleDesc={toggleDesc}
       infoRows={infoRows}
+      bookingSection={
+        <BookingSection
+          entityType="experiencia"
+          entityId={id}
+          entityName={item?.nombre}
+        />
+      }
       relatedSection={{
         title: 'Otras experiencias',
         linkTo: '/experiencias',

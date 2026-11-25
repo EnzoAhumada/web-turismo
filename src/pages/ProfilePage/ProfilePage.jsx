@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProfileStats } from '../../hooks/useProfileStats';
+import { resolveAstroImage } from '../../lib/astroScenes';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import Icon from '../../components/ui/Icon';
 import Button from '../../components/ui/Button';
 import FeedbackBanner from '../../components/ui/FeedbackBanner';
+import AstroPhotoUploadModal from '../../components/ui/AstroPhotoUploadModal';
 import './ProfilePage.css';
 
 export default function ProfilePage() {
@@ -29,6 +32,12 @@ export default function ProfilePage() {
     setBiografia,
     avatarUrl,
     setAvatarUrl,
+    handle,
+    setHandle,
+    rolFotografico,
+    setRolFotografico,
+    certificacion,
+    setCertificacion,
     offlineMode,
     handleToggleOffline,
     saving,
@@ -36,11 +45,34 @@ export default function ProfilePage() {
     setFeedback,
     handleSave,
     signOut,
+    astroPhotos,
+    astroStats,
+    astroBadges,
+    gearBag,
+    handleAddGear,
+    handleRemoveGear,
+    handlePhotoUploaded,
+    userBookings,
+    guideRequests,
   } = useProfileStats();
+
+  const [uploadOpen, setUploadOpen] = useState(false);
+  const [gearName, setGearName] = useState('');
+  const [gearDetail, setGearDetail] = useState('');
 
   const placesCount = Number(profile?.lugares_visitados || 0);
   const routesCount = Number(profile?.rutas_completadas || 0);
   const reviewsCount = Number(profile?.resenas_count || 0);
+  const activeBookings = userBookings.filter((b) => b.estado !== 'cancelada');
+
+  async function onSubmitGear(e) {
+    e.preventDefault();
+    const ok = await handleAddGear(gearName, gearDetail);
+    if (ok) {
+      setGearName('');
+      setGearDetail('');
+    }
+  }
 
   return (
     <>
@@ -58,8 +90,16 @@ export default function ProfilePage() {
               )}
             </div>
             <h1 className="profile-name">{displayName}</h1>
+            {(profile?.handle || profile?.certificacion) && (
+              <div className="profile-astro-tags">
+                {profile?.handle && <span className="profile-handle">@{profile.handle}</span>}
+                {profile?.certificacion && (
+                  <span className="profile-cert-pill">✓ {profile.certificacion}</span>
+                )}
+              </div>
+            )}
             <p className="profile-level-label">
-              Explorador nivel {nivel} · {profile?.titulo_nivel || 'Viajero Inicial'} ·{' '}
+              Explorador nivel {nivel} · {profile?.rol_fotografico || profile?.titulo_nivel || 'Viajero Inicial'} ·{' '}
               {profile?.rol === 'admin' ? 'Administrador' : 'Viajero'}
             </p>
             {profile?.ciudad_origen && (
@@ -84,6 +124,45 @@ export default function ProfilePage() {
               <span className="profile-xp__text">
                 {xp.toLocaleString('es-CL')} / {nextThreshold.toLocaleString('es-CL')} XP
               </span>
+            </div>
+
+            {/* Métricas fotográficas + Subir Captura */}
+            <div className="profile-astro-bar">
+              <div className="profile-astro-metrics">
+                <div>
+                  <strong>{astroStats.capturesCount}</strong>
+                  <span>Capturas</span>
+                </div>
+                <div>
+                  <strong>{astroStats.totalLikes}</strong>
+                  <span>Me gusta</span>
+                </div>
+                <div>
+                  <strong>{astroStats.uniqueSpots}</strong>
+                  <span>Spots</span>
+                </div>
+              </div>
+              <div className="profile-astro-bar__actions">
+                <Button
+                  type="button"
+                  variant="gold"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setUploadOpen(true);
+                  }}
+                >
+                  <Icon name="camera" size={15} />
+                  <span>+ Subir Captura</span>
+                </Button>
+                {user?.id && (
+                  <Link
+                    to={`/fotografo/${encodeURIComponent(profile?.handle || user.id)}`}
+                    className="profile-public-link"
+                  >
+                    Ver perfil público
+                  </Link>
+                )}
+              </div>
             </div>
           </section>
 
@@ -127,6 +206,151 @@ export default function ProfilePage() {
               <span className="profile-row__label">Reseñas publicadas</span>
               <span className="profile-row__count">{reviewsCount}</span>
             </div>
+          </section>
+
+          {/* Mis Reservas y Pases */}
+          <section className="profile-menu-card profile-extra-card" aria-label="Mis reservas y pases">
+            <div className="profile-recent-card__head">
+              <h2>Mis Reservas y Pases ({activeBookings.length + guideRequests.length})</h2>
+              <Link to="/explorar">Explorar lugares</Link>
+            </div>
+            {userBookings.length === 0 && guideRequests.length === 0 ? (
+              <p className="profile-extra-empty">
+                Aún no tienes pases emitidos. Reserva en Observatorio Collowara o solicita un guía certificado.
+              </p>
+            ) : (
+              <div className="profile-passes-list">
+                {userBookings.slice(0, 5).map((b) => (
+                  <div key={b.id} className="profile-pass-item">
+                    <div>
+                      <span className="profile-pass-code">{b.codigo}</span>
+                      <strong>{b.entity_name} · {b.package_name}</strong>
+                      <p>
+                        {b.fecha_inicio}
+                        {b.hora_inicio ? ` · ${b.hora_inicio} hrs` : ''} ·{' '}
+                        {b.total_clp > 0 ? `$${Number(b.total_clp).toLocaleString('es-CL')} CLP` : 'Sin costo'}
+                      </p>
+                    </div>
+                    <span className={`profile-pass-status profile-pass-status--${b.estado}`}>
+                      {b.estado}
+                    </span>
+                  </div>
+                ))}
+                {guideRequests.slice(0, 3).map((r) => (
+                  <div key={r.id} className="profile-pass-item">
+                    <div>
+                      <span className="profile-pass-code">GUÍA</span>
+                      <strong>{r.tour_guides?.nombre || 'Guía Local'}</strong>
+                      <p>{r.fecha} · {r.personas} personas</p>
+                    </div>
+                    <span className={`profile-pass-status profile-pass-status--${r.estado}`}>
+                      {r.estado}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          {/* Equipo Fotográfico (Gear Bag) */}
+          <section className="profile-menu-card profile-extra-card" aria-label="Equipo fotográfico">
+            <div className="profile-recent-card__head">
+              <h2>Mi Equipo Fotográfico (Gear Bag)</h2>
+            </div>
+            {gearBag.length > 0 ? (
+              <div className="profile-gear-list">
+                {gearBag.map((g) => (
+                  <div key={g.id} className="profile-gear-item">
+                    <div>
+                      <strong>{g.name}</strong>
+                      {g.detail && <span>{g.detail}</span>}
+                    </div>
+                    <button
+                      type="button"
+                      className="profile-gear-del"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleRemoveGear(g.id);
+                      }}
+                      aria-label="Eliminar equipo"
+                    >
+                      <Icon name="trash" size={14} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="profile-extra-empty">
+                Agrega tu cámara, telescopio, trípode o apps de planificación nocturna.
+              </p>
+            )}
+
+            <form className="profile-gear-form" onSubmit={onSubmitGear}>
+              <input
+                type="text"
+                required
+                value={gearName}
+                onChange={(e) => setGearName(e.target.value)}
+                placeholder="Equipo (ej. Sony DSC-H300, Trípode...)"
+              />
+              <input
+                type="text"
+                value={gearDetail}
+                onChange={(e) => setGearDetail(e.target.value)}
+                placeholder="Uso o detalle breve"
+              />
+              <Button type="submit" variant="outline">
+                + Añadir
+              </Button>
+            </form>
+          </section>
+
+          {/* Insignias de Observación */}
+          {astroBadges.length > 0 && (
+            <section className="profile-menu-card profile-extra-card" aria-label="Insignias de observación">
+              <div className="profile-recent-card__head">
+                <h2>Insignias de Observación</h2>
+              </div>
+              <div className="profile-badges-grid">
+                {astroBadges.map((b, idx) => (
+                  <div key={idx} className="profile-badge-card">
+                    <Icon name={b.icon || 'award'} size={18} />
+                    <div>
+                      <strong>{b.title}</strong>
+                      <span>{b.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Portafolio de Capturas */}
+          <section className="profile-menu-card profile-extra-card" aria-label="Portafolio de capturas">
+            <div className="profile-recent-card__head">
+              <h2>Mi Portafolio de Capturas ({astroPhotos.length})</h2>
+              <Link to="/fotografia">Ir a Galería</Link>
+            </div>
+            {astroPhotos.length === 0 ? (
+              <p className="profile-extra-empty">
+                Todavía no has publicado capturas nocturnas. Usa el botón "+ Subir Captura" para empezar.
+              </p>
+            ) : (
+              <div className="profile-portfolio-grid">
+                {astroPhotos.map((p) => (
+                  <Link key={p.id} to="/fotografia" className="profile-portfolio-card">
+                    <div className="profile-portfolio-card__img">
+                      <img src={resolveAstroImage(p.image)} alt={p.title} loading="lazy" />
+                      <span>{p.spot}</span>
+                    </div>
+                    <div className="profile-portfolio-card__body">
+                      <strong>{p.title}</strong>
+                      <small>{p.exif.camera} · ❤️ {p.likes}</small>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </section>
 
           {dashboard.recentFavorites.length > 0 && (
@@ -199,7 +423,7 @@ export default function ProfilePage() {
 
           {editing && (
             <section className="profile-edit-card">
-              <h2 className="profile-edit-card__title">Datos personales</h2>
+              <h2 className="profile-edit-card__title">Datos personales y perfil público</h2>
               <form className="profile-form" onSubmit={handleSave}>
                 <div className="profile-field-row">
                   <div className="profile-field">
@@ -225,6 +449,29 @@ export default function ProfilePage() {
 
                 <div className="profile-field-row">
                   <div className="profile-field">
+                    <label htmlFor="pf-handle">Usuario público (@handle)</label>
+                    <input
+                      id="pf-handle"
+                      type="text"
+                      value={handle}
+                      onChange={(e) => setHandle(e.target.value)}
+                      placeholder="Ej: mi_astrofoto"
+                    />
+                  </div>
+                  <div className="profile-field">
+                    <label htmlFor="pf-rol-foto">Rol o especialidad</label>
+                    <input
+                      id="pf-rol-foto"
+                      type="text"
+                      value={rolFotografico}
+                      onChange={(e) => setRolFotografico(e.target.value)}
+                      placeholder="Ej: Astrofotógrafo Local · Andacollo"
+                    />
+                  </div>
+                </div>
+
+                <div className="profile-field-row">
+                  <div className="profile-field">
                     <label htmlFor="pf-ciudad">Ciudad de origen</label>
                     <input
                       id="pf-ciudad"
@@ -235,15 +482,26 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div className="profile-field">
-                    <label htmlFor="pf-avatar">URL de foto de perfil (opcional)</label>
+                    <label htmlFor="pf-cert">Certificación / Sello (opcional)</label>
                     <input
-                      id="pf-avatar"
-                      type="url"
-                      value={avatarUrl}
-                      onChange={(e) => setAvatarUrl(e.target.value)}
-                      placeholder="https://..."
+                      id="pf-cert"
+                      type="text"
+                      value={certificacion}
+                      onChange={(e) => setCertificacion(e.target.value)}
+                      placeholder="Ej: Embajador Cielos Andacollo"
                     />
                   </div>
+                </div>
+
+                <div className="profile-field">
+                  <label htmlFor="pf-avatar">URL de foto de perfil (opcional)</label>
+                  <input
+                    id="pf-avatar"
+                    type="url"
+                    value={avatarUrl}
+                    onChange={(e) => setAvatarUrl(e.target.value)}
+                    placeholder="https://..."
+                  />
                 </div>
 
                 <div className="profile-field">
@@ -297,6 +555,13 @@ export default function ProfilePage() {
           </div>
         </div>
       </main>
+
+      <AstroPhotoUploadModal
+        isOpen={uploadOpen}
+        onClose={() => setUploadOpen(false)}
+        onUploaded={handlePhotoUploaded}
+      />
+
       <Footer />
     </>
   );

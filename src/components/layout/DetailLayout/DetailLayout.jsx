@@ -32,6 +32,7 @@ export default function DetailLayout({
   onToggleDesc,
   infoTitle = 'Información',
   infoRows = [],
+  bookingSection = null,
   reviewsSection = null,
   relatedSection = null,
   mapPreview = false,
@@ -178,6 +179,8 @@ export default function DetailLayout({
                   </dl>
                 </section>
               )}
+
+              {bookingSection}
 
               {reviewsSection}
 

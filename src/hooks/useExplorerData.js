@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { getPlaces } from '../services/places.service';
 import { getRestaurants } from '../services/restaurants.service';
 import { getAccommodations } from '../services/accommodations.service';
@@ -16,7 +16,7 @@ export const EXPLORER_CATEGORIES = [
   { id: 'trekking',    label: 'Trekking' },
   { id: 'fotografia',  label: 'Fotografía' },
   { id: 'eventos',     label: 'Eventos' },
-  { id: 'otros',       label: 'Otros' },
+  { id: 'guias',       label: 'Guías Turísticos' },
 ];
 
 export const POPULAR_FILTERS = [
@@ -35,6 +35,7 @@ export const EXPLORER_TABS = [
 ];
 
 export function useExplorerData() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'lugares');
   const [categoryFilter, setCategoryFilter] = useState(searchParams.get('categoria') || '');
@@ -182,10 +183,12 @@ export function useExplorerData() {
       changeTab('restaurantes');
       return;
     }
-    if (slug === 'otros') {
-      setActiveTab('lugares');
-      setCategoryFilter('');
-      setSearchParams({ tab: 'lugares' });
+    if (slug === 'fotografia') {
+      navigate('/fotografia');
+      return;
+    }
+    if (slug === 'guias' || slug === 'otros') {
+      navigate('/guias');
       return;
     }
     const next = categoryFilter === slug ? '' : slug;

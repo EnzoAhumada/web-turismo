@@ -12,6 +12,8 @@ const MENU = [
   { icon: 'utensils',   label: 'Restaurantes', to: '/admin/restaurantes' },
   { icon: 'building',   label: 'Alojamientos', to: '/admin/alojamientos' },
   { icon: 'calendar',   label: 'Eventos',      to: '/admin/eventos' },
+  { icon: 'clock',      label: 'Reservas',     to: '/admin/reservas' },
+  { icon: 'users',      label: 'Guías',        to: '/admin/guias' },
 ];
 
 export default function AdminSidebar() {

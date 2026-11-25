@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEntityDetail } from '../../hooks/useEntityDetail';
 import { PRICE_LABELS } from '../../hooks/useRestaurants';
 import DetailLayout from '../../components/layout/DetailLayout';
+import BookingSection from '../../components/ui/BookingSection';
 import ReviewsSection from '../../components/ui/ReviewsSection';
 
 export default function RestaurantDetailPage() {
@@ -93,6 +94,13 @@ export default function RestaurantDetailPage() {
       showFullDesc={showFullDesc}
       onToggleDesc={toggleDesc}
       infoRows={infoRows}
+      bookingSection={
+        <BookingSection
+          entityType="restaurante"
+          entityId={id}
+          entityName={item?.nombre}
+        />
+      }
       reviewsSection={
         <ReviewsSection
           entityType="restaurante"

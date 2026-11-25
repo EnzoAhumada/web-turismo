@@ -12,6 +12,7 @@ const CATEGORY_STYLES = {
   trekking:    { bg: '#137b3d', color: '#ffffff', icon: 'mountain' },
   fotografia:  { bg: '#2b243c', color: '#ffffff', icon: 'camera' },
   eventos:     { bg: '#f26a4b', color: '#ffffff', icon: 'calendar' },
+  guias:       { bg: '#16b3ac', color: '#ffffff', icon: 'compass' },
   otros:       { bg: '#16b3ac', color: '#ffffff', icon: 'compass' },
 };
 

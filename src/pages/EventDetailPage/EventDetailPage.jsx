@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEntityDetail } from '../../hooks/useEntityDetail';
 import DetailLayout from '../../components/layout/DetailLayout';
+import BookingSection from '../../components/ui/BookingSection';
 
 export default function EventDetailPage() {
   const { id } = useParams();
@@ -91,6 +92,13 @@ export default function EventDetailPage() {
       onToggleDesc={toggleDesc}
       infoTitle="Detalles del evento"
       infoRows={infoRows}
+      bookingSection={
+        <BookingSection
+          entityType="evento"
+          entityId={id}
+          entityName={item?.nombre}
+        />
+      }
       relatedSection={{
         title: 'Otros eventos',
         linkTo: '/eventos',

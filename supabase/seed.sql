@@ -16,7 +16,7 @@ VALUES
   ('10000000-0000-0000-0000-000000000007', 'trekking',    'Trekking',    'mountain',  '#137b3d', '#d1fae5', 7, false, true),
   ('10000000-0000-0000-0000-000000000008', 'fotografia',  'Fotografía',  'camera',    '#2b243c', '#f3e8ff', 8, false, false),
   ('10000000-0000-0000-0000-000000000009', 'eventos',     'Eventos',     'calendar',  '#f26a4b', '#ffedd5', 9, false, false),
-  ('10000000-0000-0000-0000-000000000010', 'otros',       'Otros',       'compass',   '#16b3ac', '#ccfbf1', 10, false, false)
+  ('10000000-0000-0000-0000-000000000010', 'guias',       'Guías Turísticos', 'compass', '#16b3ac', '#ccfbf1', 10, false, false)
 ON CONFLICT (slug) DO UPDATE SET
   nombre = EXCLUDED.nombre,
   icono = EXCLUDED.icono,

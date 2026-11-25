@@ -1,0 +1,426 @@
+.bookings-admin-tabs {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.bookings-admin-tab {
+  padding: 0.9rem 1.6rem;
+  border-radius: var(--radius-card);
+  border: 0.1rem solid var(--color-border);
+  background: var(--color-white);
+  color: var(--color-primary);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bookings-admin-tab.active {
+  background: var(--color-primary);
+  color: var(--color-gold);
+  border-color: var(--color-primary);
+}
+
+.bookings-admin-workspace {
+  display: grid;
+  grid-template-columns: 31rem 1fr;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.bookings-admin-sidebar-list {
+  background: var(--color-white);
+  border: 0.1rem solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.bookings-type-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.bookings-type-pill {
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-full);
+  border: 0.1rem solid var(--color-border);
+  background: var(--color-soft);
+  color: var(--color-text);
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bookings-type-pill.active {
+  background: var(--color-primary);
+  color: var(--color-gold);
+  border-color: var(--color-primary);
+}
+
+.bookings-entity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-height: 62rem;
+  overflow-y: auto;
+}
+
+.bookings-entity-item {
+  width: 100%;
+  text-align: left;
+  padding: 1.1rem 1.2rem;
+  border-radius: var(--radius-card);
+  border: 0.1rem solid var(--color-border);
+  background: var(--color-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  cursor: pointer;
+}
+
+.bookings-entity-item.selected {
+  border-color: var(--color-primary);
+  background: rgba(7, 27, 58, 0.06);
+}
+
+.bookings-entity-item strong {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+}
+
+.bookings-entity-item span {
+  font-size: 1.1rem;
+  color: var(--color-muted);
+}
+
+.bookings-dot {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.bookings-dot.on {
+  background: rgba(22, 163, 74, 0.15);
+  color: var(--color-success);
+}
+
+.bookings-dot.off {
+  background: #e2e8f0;
+  color: var(--color-muted);
+}
+
+.bookings-admin-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.bookings-admin-card {
+  background: var(--color-white);
+  border: 0.1rem solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.bookings-admin-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-bottom: 0.1rem solid var(--color-border);
+  padding-bottom: var(--space-3);
+}
+
+.bookings-admin-card__head h2 {
+  font-size: var(--text-xl);
+  color: var(--color-primary);
+}
+
+.bookings-admin-card__head p {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+.bookings-active-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--color-gold);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.bookings-active-switch input {
+  width: 1.6rem;
+  height: 1.6rem;
+  accent-color: var(--color-gold);
+}
+
+.bookings-form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.bookings-form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.bookings-admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bookings-admin-field label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.bookings-admin-field input,
+.bookings-admin-field select,
+.bookings-subform input,
+.bookings-subform select,
+.bookings-inline-add input,
+.bookings-filters-bar select,
+.bookings-filters-bar input {
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 0.1rem solid var(--color-border);
+  background: var(--color-soft);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  font-family: inherit;
+}
+
+.bookings-check-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.bookings-subblock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bookings-subblock h3,
+.bookings-admin-card h3 {
+  font-size: var(--text-base);
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.bookings-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.bookings-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius-full);
+  background: var(--color-soft);
+  border: 0.1rem solid var(--color-border);
+  font-size: var(--text-xs);
+}
+
+.bookings-chip button {
+  border: none;
+  background: transparent;
+  color: var(--color-danger);
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.bookings-inline-add {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.8rem;
+}
+
+.bookings-subform {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.bookings-list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.bookings-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-card);
+  background: var(--color-soft);
+  border: 0.1rem solid var(--color-border);
+}
+
+.bookings-list-row strong {
+  font-size: var(--text-sm);
+  color: var(--color-primary);
+}
+
+.bookings-list-row p {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+.bookings-del-btn {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: var(--radius-sm);
+  border: 0.1rem solid rgba(220, 38, 38, 0.25);
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--color-danger);
+  cursor: pointer;
+}
+
+.bookings-muted {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+.bookings-admin-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bookings-filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.bookings-table-wrap {
+  overflow-x: auto;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-xs);
+}
+
+.bookings-table th,
+.bookings-table td {
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 0.1rem solid var(--color-border);
+}
+
+.bookings-table th {
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.bookings-table td strong {
+  display: block;
+  color: var(--color-primary);
+}
+
+.bookings-table td small {
+  display: block;
+  color: var(--color-muted);
+}
+
+.bookings-state-pill {
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.bookings-state-pill--confirmada {
+  background: rgba(22, 163, 74, 0.14);
+  color: var(--color-success);
+}
+
+.bookings-state-pill--pendiente {
+  background: rgba(255, 184, 0, 0.2);
+  color: #a16207;
+}
+
+.bookings-state-pill--cancelada {
+  background: rgba(220, 38, 38, 0.14);
+  color: var(--color-danger);
+}
+
+.bookings-row-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.bookings-action-ok,
+.bookings-action-cancel {
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-xs);
+  border: none;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bookings-action-ok {
+  background: var(--color-success);
+  color: var(--color-white);
+}
+
+.bookings-action-cancel {
+  background: rgba(220, 38, 38, 0.14);
+  color: var(--color-danger);
+}
+
+.bookings-empty-td {
+  text-align: center !important;
+  color: var(--color-muted);
+  padding: var(--space-6) !important;
+}
+
+@media (max-width: 1024px) {
+  .bookings-admin-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .bookings-form-grid-3,
+  .bookings-subform {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .bookings-form-grid-2,
+  .bookings-inline-add {
+    grid-template-columns: 1fr;
+  }
+}
