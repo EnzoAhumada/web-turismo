@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import BrandLogo from '../../ui/BrandLogo';
 import Icon from '../../ui/Icon';
 import './AdminSidebar.css';
@@ -20,9 +20,9 @@ const MENU = [
 export default function AdminSidebar() {
   return (
     <aside className="admin-sidebar">
-      <div className="admin-sidebar__logo">
+      <Link to="/inicio" className="admin-sidebar__logo" aria-label="Ir al inicio">
         <BrandLogo variant="dark" size="sm" />
-      </div>
+      </Link>
 
       <nav className="admin-sidebar__nav" aria-label="Menú administrativo">
         {MENU.map(({ icon, label, to }) => (

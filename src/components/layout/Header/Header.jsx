@@ -38,7 +38,7 @@ export default function Header({ darkNav = false }) {
     <>
       <header className="header">
         <div className="header__inner container">
-          <Link to={user ? '/inicio' : '/'} className="header__logo">
+          <Link to="/inicio" className="header__logo" aria-label="Ir al inicio">
             <BrandLogo variant="dark" size="sm" />
           </Link>
 

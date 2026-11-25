@@ -7,7 +7,9 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__inner container">
         <div className="footer__brand">
-          <BrandLogo variant="dark" size="md" />
+          <Link to="/inicio" className="footer__logo" aria-label="Ir al inicio">
+            <BrandLogo variant="dark" size="md" />
+          </Link>
           <p className="footer__tagline">
             Explora tu próximo camino en Andacollo, Región de Coquimbo, Chile.
           </p>
