@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMapExplorer } from '../../hooks/useMapExplorer';
-import { googleMapsDirectionsUrl, googleMapsEmbedUrl } from '../../lib/andacolloGeo';
+import { googleMapsDirectionsUrl, googleMapsEmbedUrl, googleMapsPlaceUrl } from '../../lib/andacolloGeo';
 import Header from '../../components/layout/Header';
 import SmartImage from '../../components/ui/SmartImage';
 import Icon from '../../components/ui/Icon';
@@ -27,6 +27,7 @@ export default function MapPage() {
   const [zoom, setZoom] = useState(17);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const mapsQuery = selectedPin?.mapsQuery || 'Andacollo, Coquimbo, Chile';
+  const externalMapsUrl = googleMapsPlaceUrl(mapsQuery);
   const hasActiveFilters = activeFilter !== 'Todos' || Boolean(searchQuery.trim());
 
   useEffect(() => {
@@ -182,10 +183,22 @@ export default function MapPage() {
                     </span>
                   )}
                 </div>
-                <Link to={selectedPin.to} className="map-selected-card__link">
-                  <span>Ver detalles</span>
-                  <Icon name="arrow-right" size={14} />
-                </Link>
+                <div className="map-selected-card__actions">
+                  <Link to={selectedPin.to} className="map-selected-card__link">
+                    <span>Ver detalles</span>
+                    <Icon name="arrow-right" size={14} />
+                  </Link>
+                  <a
+                    href={externalMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="map-selected-card__maps-link"
+                    aria-label={`Ver ${selectedPin.label} en Google Maps`}
+                  >
+                    <Icon name="external-link" size={12} />
+                    <span>Ver en Maps</span>
+                  </a>
+                </div>
               </div>
             </div>
           )}
@@ -223,27 +236,54 @@ export default function MapPage() {
             />
 
             {selectedPin && !isDrawerOpen && (
-              <Link to={selectedPin.to} className="map-mobile-preview">
-                <div className="map-mobile-preview__img-wrap">
+              <article
+                className="map-mobile-preview"
+                aria-label={`Resumen de ${selectedPin.label}`}
+              >
+                <Link
+                  to={selectedPin.to}
+                  className="map-mobile-preview__img-wrap"
+                  aria-label={`Ver detalles de ${selectedPin.label}`}
+                >
                   <SmartImage
                     src={selectedPin.image}
                     alt={selectedPin.label}
                     className="map-mobile-preview__img"
                   />
-                </div>
+                </Link>
                 <div className="map-mobile-preview__body">
-                  <h3 className="map-mobile-preview__title">{selectedPin.label}</h3>
-                  <p className="map-mobile-preview__sub">{selectedPin.categoryLabel}</p>
+                  <Link to={selectedPin.to} className="map-mobile-preview__heading">
+                    <h3 className="map-mobile-preview__title">{selectedPin.label}</h3>
+                    <p className="map-mobile-preview__sub">{selectedPin.categoryLabel}</p>
+                  </Link>
                   <div className="map-mobile-preview__meta">
                     <StarRating value={selectedPin.rating} />
-                    <span className="map-mobile-preview__dist">
-                      <Icon name="map-pin" size={12} />
-                      <span>{selectedPin.distance}</span>
-                    </span>
+                    {selectedPin.distance && (
+                      <span className="map-mobile-preview__dist">
+                        <Icon name="map-pin" size={12} />
+                        <span>{selectedPin.distance}</span>
+                      </span>
+                    )}
+                    <a
+                      href={externalMapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="map-mobile-preview__maps-link"
+                      aria-label={`Ver ${selectedPin.label} en Google Maps`}
+                    >
+                      <Icon name="external-link" size={11} />
+                      <span>Maps</span>
+                    </a>
                   </div>
                 </div>
-                <Icon name="chevron-right" size={18} />
-              </Link>
+                <Link
+                  to={selectedPin.to}
+                  className="map-mobile-preview__go"
+                  aria-label={`Ver detalles de ${selectedPin.label}`}
+                >
+                  <Icon name="chevron-right" size={18} />
+                </Link>
+              </article>
             )}
           </div>
 

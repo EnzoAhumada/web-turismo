@@ -37,3 +37,7 @@ export function googleMapsEmbedUrl(query, zoom = 17) {
 export function googleMapsDirectionsUrl(query) {
   return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`;
 }
+
+export function googleMapsPlaceUrl(query) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
