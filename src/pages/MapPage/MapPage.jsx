@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMapExplorer } from '../../hooks/useMapExplorer';
 import { googleMapsDirectionsUrl, googleMapsEmbedUrl } from '../../lib/andacolloGeo';
@@ -25,19 +25,66 @@ export default function MapPage() {
     error,
   } = useMapExplorer();
   const [zoom, setZoom] = useState(17);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const mapsQuery = selectedPin?.mapsQuery || 'Andacollo, Coquimbo, Chile';
+  const hasActiveFilters = activeFilter !== 'Todos' || Boolean(searchQuery.trim());
+
+  useEffect(() => {
+    if (!isDrawerOpen) return undefined;
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') {
+        setIsDrawerOpen(false);
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isDrawerOpen]);
 
   function selectPin(pin) {
     setSelectedPin(pin);
     setZoom(18);
+    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 48rem)').matches) {
+      setIsDrawerOpen(false);
+    }
   }
 
   return (
     <>
       <Header />
       <main className="map-page">
-        <aside className="map-panel">
+        {isDrawerOpen && (
+          <div
+            className="map-drawer-backdrop"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsDrawerOpen(false);
+            }}
+            aria-hidden="true"
+          />
+        )}
+
+        <aside
+          id="map-explorer-drawer"
+          className={`map-panel ${isDrawerOpen ? 'map-panel--open' : ''}`}
+          aria-label="Menú de exploración del mapa"
+          aria-hidden={!isDrawerOpen}
+        >
           <div className="map-panel__header">
+            <div className="map-panel__top">
+              <h2 className="map-panel__title">Explorar mapa</h2>
+              <button
+                type="button"
+                className="map-panel__close"
+                aria-label="Cerrar menú del mapa"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsDrawerOpen(false);
+                }}
+              >
+                <Icon name="x" size={18} />
+              </button>
+            </div>
+
             <div className="map-panel__search">
               <Icon name="search" size={17} />
               <input
@@ -77,36 +124,6 @@ export default function MapPage() {
                 </button>
               ))}
             </div>
-
-            {!loading && (
-              <div className="map-mobile-results" aria-label="Resultados en el mapa">
-                {pins.length === 0 ? (
-                  <p className="map-mobile-results__empty">
-                    Sin resultados para tu búsqueda actual.
-                  </p>
-                ) : (
-                  <div className="map-mobile-results__strip">
-                    {pins.slice(0, 12).map((pin) => (
-                      <button
-                        key={pin.id}
-                        type="button"
-                        className={`map-mobile-pill ${selectedPin?.id === pin.id ? 'active' : ''}`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          selectPin(pin);
-                        }}
-                      >
-                        <span
-                          className="map-place-item__dot"
-                          style={{ background: pin.color }}
-                        />
-                        <span>{pin.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
           </div>
 
           <FeedbackBanner type="error" message={error} />
@@ -175,6 +192,26 @@ export default function MapPage() {
         </aside>
 
         <div className="map-area" role="region" aria-label="Mapa de Andacollo en Google Maps">
+          {!isDrawerOpen && (
+            <button
+              type="button"
+              className="map-drawer-toggle"
+              aria-expanded={isDrawerOpen}
+              aria-controls="map-explorer-drawer"
+              aria-label="Abrir menú del mapa"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsDrawerOpen(true);
+              }}
+            >
+              <Icon name="menu" size={18} />
+              <span>Explorar lugares</span>
+              {hasActiveFilters && (
+                <span className="map-drawer-toggle__badge" aria-hidden="true" />
+              )}
+            </button>
+          )}
+
           <div className="map-canvas">
             <iframe
               key={`${selectedPin?.id || 'andacollo'}-${zoom}`}
@@ -185,21 +222,7 @@ export default function MapPage() {
               referrerPolicy="no-referrer-when-downgrade"
             />
 
-            {selectedPin && (
-              <div className="map-focus" aria-live="polite">
-                <span className="map-focus__pin" style={{ '--pin-color': selectedPin.color }}>
-                  <span className="map-focus__ring" />
-                  <Icon name="map-pin" size={28} filled />
-                </span>
-                <div className="map-focus__card">
-                  <span className="map-focus__kicker">Ubicación seleccionada</span>
-                  <strong>{selectedPin.label}</strong>
-                  <span>{selectedPin.address}</span>
-                </div>
-              </div>
-            )}
-
-            {selectedPin && (
+            {selectedPin && !isDrawerOpen && (
               <Link to={selectedPin.to} className="map-mobile-preview">
                 <div className="map-mobile-preview__img-wrap">
                   <SmartImage
